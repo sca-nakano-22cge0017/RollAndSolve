@@ -9,8 +9,15 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    [SerializeField] private float speed = 1.0f;
-    [SerializeField] private float jumpForce = 3f;
+    private float speed = 1.0f;
+    [SerializeField] private float HumansSpeed = 1.0f; //人形態のときのスピード
+    [SerializeField] private float CirclesSpeed = 3.0f; //球体形態の時のスピード
+
+     private float jumpForce = 3f;
+    [SerializeField] private float HumansJump = 400f; //人形態のときのジャンプ力
+    [SerializeField] private float CirclesJump = 300f; //球体形態のときのジャンプ力
+
+    [SerializeField] private float accelertion = 1f; 
 
     bool isGround = false;
 
@@ -30,6 +37,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     playerstate = PlayerState.Circle;
+                    speed = CirclesSpeed;
                 }
                     Human();
                 break;
@@ -37,6 +45,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     playerstate = PlayerState.Human;
+                    speed = HumansSpeed;
                 }
                 Circle();
                 break;
@@ -47,15 +56,15 @@ public class PlayerController : MonoBehaviour
 
     void Human()
     {
-        speed = 1.0f;
-        jumpForce = 400f;
+        //speed = HumansSpeed;
+        jumpForce = HumansJump;
         //Debug.Log("人です");
     }
 
     void Circle()
     {
-        speed = 3.0f;
-        jumpForce = 300f;
+        //speed = CirclesSpeed;
+        jumpForce = CirclesJump;
         //Debug.Log("球体です");
     }
 
@@ -63,11 +72,38 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
+            speed += accelertion * Time.deltaTime;
+            Debug.Log(speed);
             transform.Translate(new Vector3(speed, 0,0) * Time.deltaTime) ;
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKeyUp(KeyCode.D))//ボタンを離したときに加速度を初期化
         {
+            if(playerstate == PlayerState.Human)
+            {
+                speed = HumansSpeed;
+            }
+            else if(playerstate == PlayerState.Circle)
+            {
+                speed = CirclesSpeed;
+            }
+        }
+
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            speed += accelertion * Time.deltaTime;
             transform.Translate(new Vector3(-speed, 0, 0) * Time.deltaTime);
+        }
+        else if (Input.GetKeyUp(KeyCode.A)) //ボタンを離したときに加速度を初期化
+        {
+            if (playerstate == PlayerState.Human)
+            {
+                speed = HumansSpeed;
+            }
+            else if (playerstate == PlayerState.Circle)
+            {
+                speed = CirclesSpeed;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
