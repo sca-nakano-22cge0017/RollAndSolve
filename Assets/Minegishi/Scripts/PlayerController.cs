@@ -7,10 +7,16 @@ public class PlayerController : MonoBehaviour
     public enum PlayerState { Human, Circle}
     PlayerState playerstate;
 
+    private Rigidbody2D rb;
+
     [SerializeField] private float speed = 1.0f;
+    [SerializeField] private float jumpForce = 3f;
+
+    bool isGround = false;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         playerstate = PlayerState.Circle;
     }
 
@@ -42,13 +48,15 @@ public class PlayerController : MonoBehaviour
     void Human()
     {
         speed = 1.0f;
-        Debug.Log("êlÇ≈Ç∑");
+        jumpForce = 400f;
+        //Debug.Log("êlÇ≈Ç∑");
     }
 
     void Circle()
     {
         speed = 3.0f;
-        Debug.Log("ãÖëÃÇ≈Ç∑");
+        jumpForce = 300f;
+        //Debug.Log("ãÖëÃÇ≈Ç∑");
     }
 
     void Run()
@@ -60,6 +68,28 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(new Vector3(-speed, 0, 0) * Time.deltaTime);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGround)
+        {
+            this.rb.AddForce(transform.up * jumpForce);
+            Debug.Log(jumpForce);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            isGround = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGround = false;
         }
     }
 }
