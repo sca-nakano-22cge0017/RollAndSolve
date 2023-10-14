@@ -13,13 +13,11 @@ public class PlayerController : MonoBehaviour
     [Header("加速度")]
     [SerializeField] private float HumansAccelertion = 1.0f; //人形態の時の加速度
     [SerializeField] private float CirclesAccelertion = 2.0f; //球体形態の時の加速度
-    //[SerializeField] private float HumansSpeed = 1.0f; //人形態のときのスピード
-    //[SerializeField] private float CirclesSpeed = 3.0f; //球体形態の時のスピード
 
     [Header("減速度")]
     [SerializeField] private float deceleration;
     bool RightDeceleration = false;
-    bool LeftDeceleration = false;
+    bool LeftDeceleration  = false;
 
     [Header("ジャンプ力")]
     [SerializeField] private float HumansJump = 400f; //人形態のときのジャンプ力
@@ -59,8 +57,6 @@ public class PlayerController : MonoBehaviour
                 Circle();
                 break;
         }
-
-
     }
 
     void Human()
@@ -77,11 +73,12 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-       // Debug.Log(speed);
+        //Debug.Log(speed);
         if (Input.GetKey(KeyCode.D))
         {
             RightDeceleration = false;
             LeftDeceleration = false;
+
             if (playerstate == PlayerState.Human)
             {
                 speed += HumansAccelertion * Time.deltaTime;
@@ -90,51 +87,62 @@ public class PlayerController : MonoBehaviour
             {
                 speed += CirclesAccelertion * Time.deltaTime;
             }
-            
             transform.Translate(new Vector3(speed, 0,0) * Time.deltaTime) ;
         }
-        else if (Input.GetKeyUp(KeyCode.D))//ボタンを離したら減速
+        if (Input.GetKeyUp(KeyCode.D))
         {
-            RightDeceleration = true;
-        }
-        if (RightDeceleration)
-        {
-            Debug.Log("減速");
-            speed -= deceleration * Time.deltaTime;
-            transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
-            if (speed < 0.0f)
+            if (!Input.GetKey(KeyCode.A))
             {
-                speed = 0.0f;
+                RightDeceleration = true;
             }
         }
-
+        else if(RightDeceleration)
+        {
+            Debug.Log("Dを離す");
+            if(speed > 0)
+            {
+                speed -= deceleration * Time.deltaTime;
+                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
+                if (speed <= 0.0f)
+                {
+                    //speed = 0.0f;
+                }
+            }
+        }
 
         if (Input.GetKey(KeyCode.A))
         {
             RightDeceleration = false;
             LeftDeceleration = false;
+
             if (playerstate == PlayerState.Human)
             {
-                speed += HumansAccelertion * Time.deltaTime;
+                speed -= HumansAccelertion * Time.deltaTime;
             }
             else if (playerstate == PlayerState.Circle)
             {
-                speed += CirclesAccelertion * Time.deltaTime;
+                speed -= CirclesAccelertion * Time.deltaTime;
             }
-            transform.Translate(new Vector3(-speed, 0, 0) * Time.deltaTime);
+            transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
         }
-        else if (Input.GetKeyUp(KeyCode.A))//ボタンを離したら減速
+        else if (Input.GetKeyUp(KeyCode.A))
         {
-            LeftDeceleration = true;
-        }
-        if (LeftDeceleration)
-        {
-            Debug.Log("減速");
-            speed -= deceleration * Time.deltaTime;
-            transform.Translate(new Vector3(-speed, 0, 0) * Time.deltaTime);
-            if (speed < 0.0f)
+            if (!Input.GetKey(KeyCode.D))
             {
-                speed = 0.0f;
+                LeftDeceleration = true;
+            }           
+        }
+        if(LeftDeceleration)
+        {
+            Debug.Log("Aを離す");
+            if(speed < 0)
+            {
+                speed += deceleration * Time.deltaTime;
+                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
+                if (speed >= 0.0f)
+                {
+                    //speed = 0.0f;
+                }
             }
         }
 
@@ -157,7 +165,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Wall")
         {
-            speed = 0.1f;
+            speed = 0.0f;
         }
     }
 
