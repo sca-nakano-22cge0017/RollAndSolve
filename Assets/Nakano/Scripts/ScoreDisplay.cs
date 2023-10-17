@@ -6,8 +6,12 @@ using UnityEngine.UI;
 public class ScoreDisplay : MonoBehaviour
 {
     [SerializeField] Text scoreText;
+    [SerializeField] float countSpeed;
+
     int score;
     int lateScore;
+
+    bool isCount;
 
     void Start()
     {
@@ -17,16 +21,34 @@ public class ScoreDisplay : MonoBehaviour
         lateScore = score;
 
         scoreText.text = score.ToString();
+
+        isCount = false;
     }
 
     void Update()
     {
         //‚±‚±‚ÅGameManager‚È‚Ç‚ÅŒvŽZ‚µ‚Ä‚¢‚éScore‚ðŽæ“¾‚·‚é
 
-        if(lateScore != score)
+        if(lateScore != score && !isCount)
         {
-            scoreText.text = score.ToString();
-            lateScore = score;
+            isCount = true;
+            StartCoroutine(countUp());
         }
+
+        if (Input.GetKeyDown(KeyCode.A)) //Debug
+        {
+            score += 100;
+        }
+    }
+
+    IEnumerator countUp()
+    {
+        while (score > lateScore)
+        {
+            lateScore++;
+            scoreText.text = lateScore.ToString();
+            yield return new WaitForSeconds(countSpeed);
+        }
+        isCount = false;
     }
 }
