@@ -38,5 +38,10 @@ public class HPDisplay : MonoBehaviour
 
             lateHp = hp;
         }
+
+        if(Input.GetKeyDown(KeyCode.A)) //Debug
+        {
+            hp--;
+        }
     }
 }
