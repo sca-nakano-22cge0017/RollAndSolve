@@ -28,6 +28,7 @@ public class ThornBallController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //ˆêŽž“I‚Éƒ^ƒO‚ªWall‚Ì‚à‚Ì‚É‚Ô‚Â‚©‚Á‚½‚Æ‚«‚Ì‚ÝˆÚ“®•ûŒü‚ð”½“]‚·‚é
         if(collision.gameObject.tag == "Wall")
         {
             direction *= -1;
