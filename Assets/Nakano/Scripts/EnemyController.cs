@@ -40,16 +40,9 @@ public class EnemyController : MonoBehaviour
         if(isChase)
         {
             direction = (playerPos - thisPos).normalized;
+            transform.Translate(new Vector3(direction.x, 0, 0) * speed * Time.deltaTime);
         }
-        transform.Translate(new Vector3(direction.x, 0, 0) * speed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //ˆêŽž“I‚Éƒ^ƒO‚ªWall‚Ì‚à‚Ì‚É‚Ô‚Â‚©‚Á‚½‚Æ‚«‚Ì‚ÝˆÚ“®•ûŒü‚ð”½“]‚·‚é
-        if (collision.gameObject.tag == "Wall" && !isChase)
-        {
-            direction.x *= -1;
-        }
-    }
+    
 }

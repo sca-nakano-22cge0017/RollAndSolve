@@ -16,7 +16,7 @@ public class HPDisplay : MonoBehaviour
     {
         //player = GameObject.FindWithTag("Player");
         //playerController = player.GetComponent<PlayerController>();
-        hp = 5; //‚ ‚Æ‚ÅplayerController‚Ìhp‚ğ“ü‚ê‚é‚æ‚¤‚É•ÏX
+        hp = 3; //‚ ‚Æ‚ÅplayerController‚Ìhp‚ğ“ü‚ê‚é‚æ‚¤‚É•ÏX
         lateHp = hp;
     }
 
