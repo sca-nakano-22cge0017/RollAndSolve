@@ -29,4 +29,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/goto/Scenses/SettingScense.unity
     guid: a5fe0f5c342e853448c89e220e681d27
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: d9f1414ddf90e774392c70b13a5fe279, type: 2}
