@@ -13,7 +13,7 @@ public class Board : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Playerの状態も条件に加える
+        //後でPlayerの状態(カプセルかどうか/速度は一定以上かどうか)も条件に加える
         if(collision.gameObject.tag == "Player")
         {
             anim.SetTrigger("Break");
