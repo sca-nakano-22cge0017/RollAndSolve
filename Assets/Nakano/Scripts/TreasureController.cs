@@ -6,20 +6,28 @@ public class TreasureController : MonoBehaviour
 {
     Animator anim;
     [SerializeField, Header("獲得確認ウィンドウ")] GameObject window;
+
+    [SerializeField, Header("メダル")] GameObject medal;
+
     bool isOpen; //宝箱が開けるか
+    public bool isClear; //クリア判定
 
     void Start()
     {
         anim = GetComponent<Animator>();
+
         window.SetActive(false);
         isOpen = false;
+        isClear = false;
     }
 
     void Update()
     {
-        if(isOpen && Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             anim.SetTrigger("Open");
+            Instantiate(medal, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 0.1f, 0), Quaternion.identity);
+            isClear = true;
         }
     }
 

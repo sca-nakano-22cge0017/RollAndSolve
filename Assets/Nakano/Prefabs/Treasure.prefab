@@ -167,6 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 6810196713706743148}
+  medal: {fileID: 6467752619929630908, guid: 8a8a55e9c4021314bafa98a241528b09, type: 3}
+  medalSpeed: 0
+  redSpeed: 0
+  speed: 0
 --- !u!1 &6810196713706743148
 GameObject:
   m_ObjectHideFlags: 0
