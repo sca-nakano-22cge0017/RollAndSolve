@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TreasureController : MonoBehaviour
 {
@@ -10,7 +11,12 @@ public class TreasureController : MonoBehaviour
     [SerializeField, Header("メダル")] GameObject medal;
 
     bool isOpen; //宝箱が開けるか
-    public bool isClear; //クリア判定
+    bool isClear; //クリア判定
+
+    public bool IsClear // プロパティ
+    {
+        get { return isClear; }  // 通称ゲッター。呼び出した側がscoreを参照できる
+    }
 
     void Start()
     {
@@ -23,7 +29,7 @@ public class TreasureController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) /*&& isOpen*/)
         {
             anim.SetTrigger("Open");
             Instantiate(medal, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 0.1f, 0), Quaternion.identity);
