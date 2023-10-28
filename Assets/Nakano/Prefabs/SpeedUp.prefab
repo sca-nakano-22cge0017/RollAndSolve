@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7558065812235119198}
   m_Layer: 0
   m_Name: SpeedUp
-  m_TagString: Untagged
+  m_TagString: SpeedUP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

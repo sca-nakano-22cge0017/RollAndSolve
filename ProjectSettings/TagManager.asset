@@ -10,6 +10,10 @@ TagManager:
   - Hole
   - Poison
   - Enemy
+  - Treasure
+  - EmptyHeart
+  - HealHeart
+  - SpeedUP
   layers:
   - Default
   - TransparentFX
