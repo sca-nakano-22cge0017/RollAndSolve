@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class RedButton : MonoBehaviour
 {
-    public bool isActive; //trueのとき、ギミックが発動する
+    bool isActive; //trueのとき、ギミックが発動する
+
+    public bool IsActive
+    {
+        get { return isActive; }
+    }
 
     void Start()
     {
