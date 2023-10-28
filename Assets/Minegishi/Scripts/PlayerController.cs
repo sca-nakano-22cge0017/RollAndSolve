@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    Box box;
+
     public enum PlayerState { Human, Circle}
     PlayerState playerstate;
 
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        box = GameObject.Find("Box").GetComponent<Box>();
         rb = GetComponent<Rigidbody2D>();
         playerstate = PlayerState.Circle;
     }
@@ -76,6 +79,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(speed);
         if (Input.GetKey(KeyCode.D))
         {
+            Debug.Log(speed);
             RightDeceleration = false;
             LeftDeceleration = false;
 
@@ -160,13 +164,35 @@ public class PlayerController : MonoBehaviour
         {
             isGround = true;
         }
+
+        if(collision.gameObject.tag == "Enemy") //ìGÇ∆ê⁄êG
+        {
+            Debug.Log("ìGÇ∆ê⁄êG");
+            //life--;
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Wall" ||
+            collision.gameObject.tag == "Box")
         {
             speed = 0.0f; 
+        }
+
+        //êlå`ë‘ÇÃéûÇ…î†Ç…ê⁄êGÇµÇƒÇ¢ÇÈéû
+        if (playerstate == PlayerState.Human && collision.gameObject.tag == "Box")
+        {
+            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.F))
+            {
+                box.BoxRightMove();
+                speed = 1.0f;
+            }
+            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.F))
+            {
+                box.BoxLeftMove();
+                speed = -1.0f;
+            }
         }
     }
 
