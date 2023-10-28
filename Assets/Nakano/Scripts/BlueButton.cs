@@ -7,7 +7,12 @@ public class BlueButton : MonoBehaviour
     Rigidbody2D rb;
     Vector3 defaultPosition;
 
-    public bool isActive; //trueのとき、ギミックが発動する
+    bool isActive; //trueのとき、ギミックが発動する
+    
+    public bool IsActive
+    {
+        get { return isActive; }
+    }
 
     void Start()
     {
@@ -24,7 +29,7 @@ public class BlueButton : MonoBehaviour
             rb.AddForce(new Vector3(0, 1, 0));
         }
 
-        if(transform.position.y >= defaultPosition.y)
+        if (transform.position.y >= defaultPosition.y)
         {
             transform.position = defaultPosition;
             rb.velocity = Vector3.zero;
