@@ -13,8 +13,14 @@ public class PlayerController : MonoBehaviour
 
     private float speed = 0;
     [Header("加速度")]
-    [SerializeField] private float HumansAccelertion = 1.0f; //人形態の時の加速度
-    [SerializeField] private float CirclesAccelertion = 2.0f; //球体形態の時の加速度
+    [SerializeField] private float HumansAccelertion; //人形態の時の加速度
+    [SerializeField] private float CirclesAccelertion; //球体形態の時の加速度
+
+    private float HumansSpeed = 0.0f;
+    private float CirclesSpeed = 0.0f;
+
+    private float HumansSpeedUp = 0.0f;
+    private float CirclesSpeedUp = 0.0f;
 
     [Header("減速度")]
     [SerializeField] private float deceleration;
@@ -26,7 +32,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float CirclesJump = 300f; //球体形態のときのジャンプ力
     private float jumpForce;
 
-    //[SerializeField] private float accelertion = 1f; 
+    bool speedUp = false;
+    float speedUpCount = 7.0f; //スピードアップのアイテムを取った時の上昇する時間
 
     bool isGround = false;
 
@@ -35,12 +42,24 @@ public class PlayerController : MonoBehaviour
         box = GameObject.Find("Box").GetComponent<Box>();
         rb = GetComponent<Rigidbody2D>();
         playerstate = PlayerState.Circle;
+        HumansSpeed = HumansAccelertion; //速度初期化
+        CirclesSpeed = CirclesAccelertion; //速度初期化
+
+        HumansSpeedUp = HumansAccelertion * 1.2f; //スピードアップした時の速度
+        CirclesSpeedUp = CirclesAccelertion * 1.2f; //スピードアップした時の速度
     }
 
 
     void Update()
     {
+        Debug.Log(CirclesSpeed);
+
         Run();
+        if (speedUp)
+        {
+            SpeedUp();
+        }
+
         switch (playerstate)
         {
             case PlayerState.Human:
@@ -79,17 +98,16 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(speed);
         if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log(speed);
             RightDeceleration = false;
             LeftDeceleration = false;
 
             if (playerstate == PlayerState.Human)
             {
-                speed += HumansAccelertion * Time.deltaTime;
+                speed += HumansSpeed * Time.deltaTime;
             }
             else if(playerstate == PlayerState.Circle)
             {
-                speed += CirclesAccelertion * Time.deltaTime;
+                speed += CirclesSpeed * Time.deltaTime;
             }
             transform.Translate(new Vector3(speed, 0,0) * Time.deltaTime) ;
         }
@@ -121,11 +139,11 @@ public class PlayerController : MonoBehaviour
 
             if (playerstate == PlayerState.Human)
             {
-                speed -= HumansAccelertion * Time.deltaTime;
+                speed -= HumansSpeed * Time.deltaTime;
             }
             else if (playerstate == PlayerState.Circle)
             {
-                speed -= CirclesAccelertion * Time.deltaTime;
+                speed -= CirclesSpeed * Time.deltaTime;
             }
             transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
         }
@@ -158,6 +176,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void SpeedUp()
+    {
+        speedUpCount -= Time.deltaTime;
+        if (speedUpCount >= 0)
+        {
+            //速度が1.2倍になる
+            HumansSpeed = HumansSpeedUp;
+            CirclesSpeed = CirclesSpeedUp;
+        }
+        else if (speedUpCount < 0)
+        {
+            //カウントが0になったら速度が元の戻る
+            HumansSpeed = HumansAccelertion;
+            CirclesSpeed = CirclesAccelertion;
+
+            speedUpCount = 7.0f;
+            speedUp = false;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Ground")
@@ -170,6 +208,13 @@ public class PlayerController : MonoBehaviour
             Debug.Log("敵と接触");
             //life--;
         }
+
+        if (collision.gameObject.tag == "SpeedUP") //スピードアップ
+        {
+            Destroy(collision.gameObject);
+            speedUpCount = 7.0f;
+            speedUp = true;
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -177,7 +222,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Wall" ||
             collision.gameObject.tag == "Box")
         {
-            speed = 0.0f; 
+            speed = 0.0f; //壁に当たったら１度速度をリセット
         }
 
         //人形態の時に箱に接触している時
@@ -201,6 +246,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGround = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "SpeedUp")
+        {
+            Destroy(collision.gameObject);
         }
     }
 }
