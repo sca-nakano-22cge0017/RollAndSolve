@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -37,10 +38,16 @@ public class PlayerController : MonoBehaviour
 
     bool isGround = false;
 
+    [Header("プレイヤーの画像")]
+    [SerializeField] Sprite Humans;
+    [SerializeField] Sprite Circles;
+    SpriteRenderer sr;
+
     void Start()
     {
         box = GameObject.Find("Box").GetComponent<Box>();
         rb = GetComponent<Rigidbody2D>();
+        sr = gameObject.GetComponent<SpriteRenderer>();
         playerstate = PlayerState.Circle;
         HumansSpeed = HumansAccelertion; //速度初期化
         CirclesSpeed = CirclesAccelertion; //速度初期化
@@ -66,6 +73,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     playerstate = PlayerState.Circle;
+                    sr.sprite = Circles;
                     Debug.Log("球体です");
                 }
                     Human();
@@ -74,6 +82,7 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     playerstate = PlayerState.Human;
+                    sr.sprite = Humans;
                     Debug.Log("人です");
                 }
                 Circle();
@@ -95,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-        Debug.Log(speed);
+        //Debug.Log(speed);
         if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.A)))
         {
             RightDeceleration = false;
