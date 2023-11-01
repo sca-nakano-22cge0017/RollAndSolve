@@ -95,8 +95,8 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-        //Debug.Log(speed);
-        if (Input.GetKey(KeyCode.D))
+        Debug.Log(speed);
+        if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.A)))
         {
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -113,15 +113,12 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
-            if (!Input.GetKey(KeyCode.A))
-            {
-                RightDeceleration = true;
-            }
+            RightDeceleration = true;
         }
-        else if(RightDeceleration)
+        else if (RightDeceleration)
         {
             Debug.Log("D‚ð—£‚·");
-            if(speed > 0)
+            if (speed > 0)
             {
                 speed -= deceleration * Time.deltaTime;
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
@@ -132,7 +129,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && !(Input.GetKey(KeyCode.D)))
         {
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -149,15 +146,12 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.A))
         {
-            if (!Input.GetKey(KeyCode.D))
-            {
-                LeftDeceleration = true;
-            }           
+            LeftDeceleration = true;
         }
-        if(LeftDeceleration)
+        if (LeftDeceleration)
         {
             Debug.Log("A‚ð—£‚·");
-            if(speed < 0)
+            if (speed < 0)
             {
                 speed += deceleration * Time.deltaTime;
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
@@ -165,6 +159,20 @@ public class PlayerController : MonoBehaviour
                 {
                     //speed = 0.0f;
                 }
+            }
+        }
+
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        {
+            if(speed < 0)
+            {
+                speed += deceleration * Time.deltaTime;
+                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
+            }
+            if(speed > 0)
+            {
+                speed -= deceleration * Time.deltaTime;
+                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
             }
         }
 
