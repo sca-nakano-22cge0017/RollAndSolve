@@ -34,6 +34,7 @@ public class TreasureController : MonoBehaviour
             anim.SetTrigger("Open");
             Instantiate(medal, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 0.1f, 0), Quaternion.identity);
             isClear = true;
+            window.SetActive(false);
         }
     }
 
