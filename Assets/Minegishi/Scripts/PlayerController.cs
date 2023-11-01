@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     Box box;
+    HPController HpController;
 
     public enum PlayerState { Human, Circle}
     PlayerState playerstate;
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         box = GameObject.Find("Box").GetComponent<Box>();
+        this.HpController = FindObjectOfType<HPController>();
         rb = GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         playerstate = PlayerState.Circle;
@@ -223,7 +225,7 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Enemy") //ìGÇ∆ê⁄êG
         {
             Debug.Log("ìGÇ∆ê⁄êG");
-            //life--;
+            //HpController.Hp--;
         }
 
         if (collision.gameObject.tag == "SpeedUP") //ÉXÉsÅ[ÉhÉAÉbÉv
@@ -266,11 +268,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "SpeedUp")
-        {
-            Destroy(collision.gameObject);
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if(collision.gameObject.tag == "SpeedUp")
+    //    {
+    //        Destroy(collision.gameObject);
+    //    }
+    //}
 }
