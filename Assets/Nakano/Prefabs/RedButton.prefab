@@ -46,8 +46,9 @@ GameObject:
   - component: {fileID: 3839264465570992340}
   - component: {fileID: 8014556260965379097}
   - component: {fileID: 6665338447610549364}
+  - component: {fileID: 1333915810417423118}
   m_Layer: 6
-  m_Name: Button_red
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,6 +203,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 676d2a05d795b0944b6081568af38614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1333915810417423118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4166557673504975145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89b75ad745865604ea7c5240abaa38ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5326104138930453502
