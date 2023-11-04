@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Stage1Button : MonoBehaviour
 {
+    [SerializeField]
+    Button StartButton;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartButton.Select();
     }
 
     // Update is called once per frame
@@ -18,6 +22,7 @@ public class Stage1Button : MonoBehaviour
     }
     public void OnClick()
     {
+        Time.timeScale =1;
         SceneManager.LoadScene("Stage1");
     }
 }

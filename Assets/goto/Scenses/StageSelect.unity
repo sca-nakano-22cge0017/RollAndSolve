@@ -292,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c024c780089165a4d821df6ab6f41041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartButton: {fileID: 0}
 --- !u!114 &132492394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1373,7 +1374,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3cea0cf9bbab1304c9959b7a20c16f73, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -1938,7 +1939,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3cea0cf9bbab1304c9959b7a20c16f73, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -3644,6 +3645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c024c780089165a4d821df6ab6f41041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartButton: {fileID: 1977432062}
 --- !u!95 &1977432067
 Animator:
   serializedVersion: 5
@@ -3656,7 +3658,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: eabae6aec21a4094eb92f03f7f06328a, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
