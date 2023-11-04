@@ -1909,14 +1909,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212346420}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76477db8e3774f44c9e51cbea3cc6c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Panel: {fileID: 0}
+  Panel: {fileID: 1813298246}
   Panel1: {fileID: 0}
-  StartButton: {fileID: 0}
+  StartButton: {fileID: 2002591774}
 --- !u!1 &1325378925
 GameObject:
   m_ObjectHideFlags: 0
@@ -2341,7 +2341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1563593048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2515,14 +2515,13 @@ GameObject:
   - component: {fileID: 1813298247}
   - component: {fileID: 1813298249}
   - component: {fileID: 1813298248}
-  - component: {fileID: 1813298250}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1813298247
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2585,22 +2584,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1813298246}
   m_CullTransparentMesh: 1
---- !u!111 &1813298250
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1813298246}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: aff7e411505224c419d844425b48afa3, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: aff7e411505224c419d844425b48afa3, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &1952903455
 GameObject:
   m_ObjectHideFlags: 0
