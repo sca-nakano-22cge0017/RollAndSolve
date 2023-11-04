@@ -22,7 +22,7 @@ public class OpenMenuPanel : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
             {
-
+            Time.timeScale = 0;
             var isActive = Panel.activeInHierarchy; // Panelがアクティブか取得
             Panel.SetActive(!isActive);
 
