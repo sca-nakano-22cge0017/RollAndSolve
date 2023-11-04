@@ -66,7 +66,6 @@ public class PlayerController : MonoBehaviour
         this.HpController = FindObjectOfType<HPController>();
         rb = GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
-        //Color color = gameObject.GetComponent<Image>().color;
         playerstate = PlayerState.Circle;
         HumansSpeed = HumansAccelertion; //‘¬“x‰Šú‰»
         CirclesSpeed = CirclesAccelertion; //‘¬“x‰Šú‰»
