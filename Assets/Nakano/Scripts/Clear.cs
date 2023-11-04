@@ -26,12 +26,13 @@ public class Clear : MonoBehaviour
         {
             clearText.enabled = true;
             textAnim.SetTrigger("TextMove");
+            StartCoroutine(ToSelect());
         }
     }
 
     IEnumerator ToSelect()
     {
-        yield return new WaitForSeconds(2);
-        //SceneManager.LoadScene("Select");
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene("StageSelect");
     }
 }
