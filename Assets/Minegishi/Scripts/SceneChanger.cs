@@ -16,7 +16,7 @@ public class SceneChanger : MonoBehaviour
     {
         if (player.IsDead)
         {
-            //SceneManager.LoadScene("GameOverScense");
+            SceneManager.LoadScene("GameOverScense");
         }
     }
 }

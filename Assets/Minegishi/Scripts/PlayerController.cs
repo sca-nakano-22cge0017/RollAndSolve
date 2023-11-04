@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     private float HumansSpeedUp = 0.0f;
     private float CirclesSpeedUp = 0.0f;
 
+    [Header("ç≈çÇë¨ìx")]
+    [SerializeField] private float MaxSpeed;
+
     [Header("å∏ë¨ìx")]
     [SerializeField] private float deceleration;
     bool RightDeceleration = false;
@@ -44,6 +47,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite Circles;
     SpriteRenderer sr;
 
+    bool invincible = false; //ñ≥ìGèÛë‘
+    float invincibleTime = 3.0f; //ñ≥ìGéûä‘
+    int alpha = 255;
+    float interval = 0.15f;
+
     bool isDead = false;
 
     public bool IsDead
@@ -58,6 +66,7 @@ public class PlayerController : MonoBehaviour
         this.HpController = FindObjectOfType<HPController>();
         rb = GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
+        //Color color = gameObject.GetComponent<Image>().color;
         playerstate = PlayerState.Circle;
         HumansSpeed = HumansAccelertion; //ë¨ìxèâä˙âª
         CirclesSpeed = CirclesAccelertion; //ë¨ìxèâä˙âª
@@ -103,6 +112,21 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
+        if (invincible) //ñ≥ìGèÛë‘
+        {
+            invincibleTime -= Time.deltaTime;
+            if(invincibleTime > 0)
+            {
+                Invincible();
+            }
+            else if(invincibleTime <= 0)
+            {
+                invincibleTime = 3.0f;
+                invincible = false;
+                GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 255);
+            }
+        }
+
         Vector2 position = transform.position;
 
         if(position.y < -5.5) //åäÇ…óéÇøÇΩÇÁ
@@ -142,6 +166,11 @@ public class PlayerController : MonoBehaviour
                 speed += CirclesSpeed * Time.deltaTime;
             }
             transform.Translate(new Vector3(speed, 0,0) * Time.deltaTime) ;
+            if(speed >= MaxSpeed)
+            {
+               speed = MaxSpeed;
+            }
+
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
@@ -175,6 +204,11 @@ public class PlayerController : MonoBehaviour
                 speed -= CirclesSpeed * Time.deltaTime;
             }
             transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
+
+            if(speed <= -MaxSpeed)
+            {
+                speed = -MaxSpeed;
+            }
         }
         else if (Input.GetKeyUp(KeyCode.A))
         {
@@ -236,6 +270,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Invincible() //ñ≥ìGèÛë‘
+    {
+        interval -= Time.deltaTime;
+        
+        if(interval <= 0)
+        {
+            if(alpha == 255)
+            {
+                alpha = 0;
+            }else
+                alpha = 255;
+            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
+            interval = 0.15f;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Ground")
@@ -243,22 +293,24 @@ public class PlayerController : MonoBehaviour
             isGround = true;
         }
 
-        if(collision.gameObject.tag == "Enemy") //ìGÇ∆ê⁄êG
+        if(collision.gameObject.tag == "Enemy" && !invincible) //ñ≥ìGèÛë‘Ç∂Ç·Ç»Ç¢Ç∆Ç´Ç…ìGÇ∆ê⁄êG
         {
             Debug.Log("ìGÇ∆ê⁄êG");
+            speed -= speed * 0.5f;
+            invincible = true;
             //HpController.Hp--;
         }
 
-        if(collision.gameObject.tag == "Box" && playerstate == PlayerState.Circle)
+        if(collision.gameObject.tag == "Box" && playerstate == PlayerState.Circle) //î†ÇîjâÛ
         {
-            if (Input.GetKey(KeyCode.D) && speed >= 10.0f)
+            if (Input.GetKey(KeyCode.D) && speed >= 7.0f)
             {
-                speed = 0.0f;
+                speed -= speed * 0.2f;
                 Destroy(collision.gameObject);
             }
-            if (Input.GetKey(KeyCode.A) && speed <= -10.0f)
+            if (Input.GetKey(KeyCode.A) && speed <= -7.0f)
             {
-                speed = 0.0f;
+                speed -= speed * 0.2f;
                 Destroy(collision.gameObject);
             }
         }
@@ -276,10 +328,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Wall" ||
             collision.gameObject.tag == "Box")
         {
-            speed = 0.0f; //ï«Ç…ìñÇΩÇ¡ÇΩÇÁÇPìxë¨ìxÇÉäÉZÉbÉg
+            speed = 0.0f; //ï«Ç…ìñÇΩÇ¡ÇΩÇÁë¨ìxÇÉäÉZÉbÉg
         }
 
-        //êlå`ë‘ÇÃéûÇ…î†Ç…ê⁄êGÇµÇƒÇ¢ÇÈéû
+        //êlå`ë‘ÇÃéûÇ…î†Ç…ê⁄êGÇµÇƒÇ¢ÇÈÇ∆Ç´î†ÇâüÇ∑
         if (playerstate == PlayerState.Human && collision.gameObject.tag == "Box")
         {
             if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.F))
@@ -302,12 +354,4 @@ public class PlayerController : MonoBehaviour
             isGround = false;
         }
     }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if(collision.gameObject.tag == "SpeedUp")
-    //    {
-    //        Destroy(collision.gameObject);
-    //    }
-    //}
 }
