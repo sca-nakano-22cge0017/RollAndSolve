@@ -5,17 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
+    PlayerController player;
 
     void Start()
     {
-        
+        this.player = FindObjectOfType<PlayerController>();
     }
 
     void Update()
     {
-        //if (isDown) 
-        //{
-        //    SceneManager.LoadScene("GameOverScense");
-        //}
+        if (player.IsDead)
+        {
+            //SceneManager.LoadScene("GameOverScense");
+        }
     }
 }

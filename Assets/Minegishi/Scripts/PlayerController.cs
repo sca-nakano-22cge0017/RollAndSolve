@@ -44,6 +44,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite Circles;
     SpriteRenderer sr;
 
+    bool isDead = false;
+
+    public bool IsDead
+    {
+        get { return isDead; }
+        set { isDead = value;}
+    }
+
     void Start()
     {
         box = GameObject.Find("Box").GetComponent<Box>();
@@ -61,9 +69,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(CirclesSpeed);
+        //Debug.Log(CirclesSpeed);
 
-        Run();
+        if (!isDead) 
+        {
+            Run();
+        }
+        
         if (speedUp)
         {
             SpeedUp();
@@ -90,6 +102,15 @@ public class PlayerController : MonoBehaviour
                 Circle();
                 break;
         }
+
+        Vector2 position = transform.position;
+
+        if(position.y < -5.5) //穴に落ちたら
+        {
+            isDead = true;
+        }
+
+        transform.position = position;
     }
 
     void Human()
@@ -106,7 +127,7 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-        //Debug.Log(speed);
+        Debug.Log(speed);
         if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.A)))
         {
             RightDeceleration = false;
@@ -226,6 +247,20 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("敵と接触");
             //HpController.Hp--;
+        }
+
+        if(collision.gameObject.tag == "Box" && playerstate == PlayerState.Circle)
+        {
+            if (Input.GetKey(KeyCode.D) && speed >= 10.0f)
+            {
+                speed = 0.0f;
+                Destroy(collision.gameObject);
+            }
+            if (Input.GetKey(KeyCode.A) && speed <= -10.0f)
+            {
+                speed = 0.0f;
+                Destroy(collision.gameObject);
+            }
         }
 
         if (collision.gameObject.tag == "SpeedUP") //スピードアップ
