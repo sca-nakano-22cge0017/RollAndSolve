@@ -7,18 +7,14 @@ public class BlueButton : MonoBehaviour
     Rigidbody2D rb;
     Vector3 defaultPosition;
 
-    bool isActive; //trueのとき、ギミックが発動する
-    
-    public bool IsActive
-    {
-        get { return isActive; }
-    }
+    ButtonCheck check;
 
     void Start()
     {
-        isActive = false;
         rb = GetComponent<Rigidbody2D>();
         defaultPosition = this.transform.position;
+
+        check = gameObject.GetComponent<ButtonCheck>();
     }
 
     void Update()
@@ -34,18 +30,13 @@ public class BlueButton : MonoBehaviour
             transform.position = defaultPosition;
             rb.velocity = Vector3.zero;
         }
-
-        if (isActive)
-        {
-            Debug.Log("発動中");
-        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         if(collision.gameObject.name == "Button_Base")
         {
-            isActive = true;
+            check.IsActive = true;
         }
     }
 
@@ -53,7 +44,7 @@ public class BlueButton : MonoBehaviour
     {
         if (collision.gameObject.name == "Button_Base")
         {
-            isActive = false;
+            check.IsActive = false;
         }
     }
 }

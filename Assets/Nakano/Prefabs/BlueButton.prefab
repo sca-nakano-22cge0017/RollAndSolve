@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 4677381246595552053}
   - component: {fileID: 7068084101885009356}
   - component: {fileID: 6645079397104852808}
+  - component: {fileID: 2883045645498184774}
   m_Layer: 6
-  m_Name: Button_blue
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,6 +170,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6bb189f58c1c14409e31cff23bbf965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2883045645498184774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272146866416089868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89b75ad745865604ea7c5240abaa38ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3047425594046514768
