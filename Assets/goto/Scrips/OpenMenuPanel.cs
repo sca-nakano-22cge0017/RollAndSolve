@@ -20,8 +20,17 @@ public class OpenMenuPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+            {
 
-        
+            var isActive = Panel.activeInHierarchy; // Panelがアクティブか取得
+            Panel.SetActive(!isActive);
+
+
+            StartButton.Select();
+        }
+
+
     }
 
     public void OnClick()
