@@ -19,7 +19,6 @@ public class BlueButton : MonoBehaviour
 
     void Update()
     {
-        //プレイヤーが離れたら元の位置に戻る
         if (transform.position.y < defaultPosition.y)
         {
             rb.AddForce(new Vector3(0, 1, 0));

@@ -1,9 +1,9 @@
 maine character spine.png
-size:2638,1370
+size:2644,1376
 filter:Linear,Linear
 scale:0.5
 body
-bounds:2,2,1366,1366
+bounds:2,2,1372,1372
 shadow
-bounds:1370,102,1266,1266
+bounds:1376,108,1266,1266
 offsets:1,0,1267,1266
