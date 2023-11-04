@@ -12,16 +12,16 @@ public class MenuPanel : MonoBehaviour
     Button StartButton;
 
 
-    void Update()
+    public void OnClick()
     {
-        if (Input.GetKeyDown(KeyCode.Tab)
-        { 
         Time.timeScale = 0;
         var isActive = Panel.activeInHierarchy; // Panelがアクティブか取得
         Panel.SetActive(!isActive);
 
-        
+        var isActivee = Panel.activeInHierarchy; // Panelがアクティブか取得
+        Panel1.SetActive(!isActivee);
+        //EventSystem.current.SetSelectedGameObject(null);
         StartButton.Select();
-        }
+
     }
 }
