@@ -9,6 +9,8 @@ public class RedButton : MonoBehaviour
 
     ButtonCheck check;
 
+    bool isActive = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -19,10 +21,17 @@ public class RedButton : MonoBehaviour
 
     void Update()
     {
-        if(transform.position.y >= defaultPosition.y)
+        //ã‚É”ò‚ñ‚Å‚¢‚©‚È‚¢‚æ‚¤‚Éˆê‰ž
+        if (transform.position.y > defaultPosition.y)
         {
             transform.position = defaultPosition;
             rb.velocity = Vector3.zero;
+        }
+
+        //‰Ÿ‚³‚ê‚½‚çˆÊ’u‚ðŒÅ’è‚·‚é
+        if(isActive)
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
@@ -31,6 +40,7 @@ public class RedButton : MonoBehaviour
         if(collision.gameObject.name == "Button_Base")
         {
             check.IsActive = true;
+            isActive = true;
         }
     }
 }
