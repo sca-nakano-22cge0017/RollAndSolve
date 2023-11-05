@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4133054710459709218}
   - component: {fileID: 7164578751617514968}
   - component: {fileID: 6538509794572715478}
+  - component: {fileID: 2194028591087802375}
   m_Layer: 0
   m_Name: HealHeart
   m_TagString: HealHeart
@@ -130,3 +131,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 35.077045, y: 30.832705}
   m_EdgeRadius: 0
+--- !u!114 &2194028591087802375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3149931765797518212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8f883ed63b174408f43f16486b245d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -11,6 +11,7 @@ public class HPController : MonoBehaviour
     int lateHp;
     int hpLimit;
     int lateHpLimit;
+    [SerializeField, Header("èâä˙HP")] int defaultHp;
 
     //ÉvÉåÉCÉÑÅ[Ç©ÇÁÇ‡ÇÁÇ§
     bool isDamage = false;
@@ -32,8 +33,8 @@ public class HPController : MonoBehaviour
 
     void Start()
     {
-        hp = 3;
-        hpLimit = 3;
+        hp = defaultHp;
+        hpLimit = defaultHp;
         lateHp = hp;
         lateHpLimit = hpLimit;
 
@@ -99,11 +100,6 @@ public class HPController : MonoBehaviour
         {
             isDown = true;
         }
-
-        //Debug
-        if (Input.GetKeyDown(KeyCode.A)) { isDamage = true; }
-        if(Input.GetKeyDown(KeyCode.S)) { isHeal = true; }
-        if (Input.GetKeyDown(KeyCode.D)) { isLimitBreak = true; }
     }
 
     void Display(Image[] image, int num, bool isDisp)

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5798195794820020821}
   - component: {fileID: 9147876980916261818}
   - component: {fileID: 7116764294229911284}
+  - component: {fileID: 8008425683315056210}
   m_Layer: 0
   m_Name: EmptyHeart
   m_TagString: EmptyHeart
@@ -130,3 +131,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 35.077045, y: 30.832705}
   m_EdgeRadius: 0
+--- !u!114 &8008425683315056210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7556152886097233133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8f883ed63b174408f43f16486b245d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
