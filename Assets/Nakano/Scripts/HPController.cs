@@ -23,12 +23,19 @@ public class HPController : MonoBehaviour
     public bool IsDown
     {
         get { return isDown; }
+        set { isDown = value; }
     }
 
     public int Hp
     {
         get { return hp;}
         set { hp = value; }
+    }
+
+    public int HpLimit
+    {
+        get { return hpLimit;}
+        set { hpLimit = value; }
     }
 
     void Start()
