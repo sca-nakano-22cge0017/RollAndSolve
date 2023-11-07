@@ -9,11 +9,18 @@ public class PlayerController : MonoBehaviour
     HPController HpController;
 
     public enum PlayerState { Human, Circle}
-    PlayerState playerstate;
+    public PlayerState playerstate;
 
     private Rigidbody2D rb;
 
     private float speed = 0;
+
+    public float Speed
+    {
+        get { return speed; }
+        set { speed = value; }
+    }
+
     [Header("加速度")]
     [SerializeField] private float HumansAccelertion; //人形態の時の加速度
     [SerializeField] private float CirclesAccelertion; //球体形態の時の加速度
@@ -305,12 +312,14 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.D) && speed >= 7.0f)
             {
                 speed -= speed * 0.2f;
-                Destroy(collision.gameObject);
+                Debug.Log("箱を破壊");
+                //Destroy(collision.gameObject);
             }
             if (Input.GetKey(KeyCode.A) && speed <= -7.0f)
             {
                 speed -= speed * 0.2f;
-                Destroy(collision.gameObject);
+                Debug.Log("箱を破壊");
+               // Destroy(collision.gameObject);
             }
         }
 
