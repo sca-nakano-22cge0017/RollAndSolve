@@ -17,14 +17,13 @@ public class ObjDestroy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //後でPlayerの状態(カプセルかどうか/速度は一定以上かどうか)も条件に加える
         if(collision.gameObject.tag == "Player")
         {
-            //if (playerController.playerstate == PlayerController.PlayerState.Circle && playerController.speed >= 7.0f)
-            //{
-            //    anim.SetTrigger("Break");
-            //    Destroy(col);
-            //}
+            if (playerController.playerstate == PlayerController.PlayerState.Circle && playerController.Speed >= 7.0f)
+            {
+                anim.SetTrigger("Break");
+                Destroy(col);
+            }
 
             //アニメーション確認用
             //anim.SetTrigger("Break");

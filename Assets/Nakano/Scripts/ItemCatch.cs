@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class ItemCatch : MonoBehaviour
 {
+    HPController hpController;
+
     void Start()
     {
-        
+        hpController = GameObject.FindObjectOfType<HPController>();
     }
 
     void Update()
@@ -18,6 +20,16 @@ public class ItemCatch : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
+            if(this.gameObject.tag == "HealHeart" && hpController.Hp < hpController.HpLimit)
+            {
+                hpController.Hp++;
+            }
+
+            if(this.gameObject.tag == "EmptyHeart")
+            {
+                hpController.HpLimit++;
+            }
+
             Destroy(this.gameObject);
         }
     }
