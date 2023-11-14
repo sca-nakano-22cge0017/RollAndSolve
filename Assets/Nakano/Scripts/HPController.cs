@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HPController : MonoBehaviour
 {
@@ -106,6 +107,12 @@ public class HPController : MonoBehaviour
         if(hp <= 0)
         {
             isDown = true;
+        }
+
+        //とりあえずのゲームオーバー画面への遷移
+        if(isDown)
+        {
+            SceneManager.LoadScene("GameOverScense"); //元のシーン名にスペルミス
         }
     }
 
