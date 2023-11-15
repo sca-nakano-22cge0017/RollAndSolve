@@ -59,14 +59,6 @@ public class PlayerController : MonoBehaviour
     int alpha = 255;
     float interval = 0.15f;
 
-    bool isDead = false;
-
-    public bool IsDead
-    {
-        get { return isDead; }
-        set { isDead = value;}
-    }
-
     void Start()
     {
         box = GameObject.Find("Box").GetComponent<Box>();
@@ -86,7 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log(CirclesSpeed);
 
-        if (!isDead) 
+        if (!HpController.IsDown) 
         {
             Run();
         }
@@ -137,7 +129,7 @@ public class PlayerController : MonoBehaviour
 
         if(position.y < -5.5) //ŒŠ‚É—Ž‚¿‚½‚ç
         {
-            isDead = true;
+            HpController.IsDown = true;
         }
 
         transform.position = position;
@@ -157,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-        Debug.Log(speed);
+        //Debug.Log(speed);
         if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.A)))
         {
             RightDeceleration = false;
@@ -299,13 +291,19 @@ public class PlayerController : MonoBehaviour
             isGround = true;
         }
 
-        if(collision.gameObject.tag == "Enemy" && !invincible) //–³“Gó‘Ô‚¶‚á‚È‚¢‚Æ‚«‚É“G‚ÆÚG
+        if(!invincible) //–³“Gó‘Ô‚¶‚á‚È‚¢‚Æ‚«
         {
-            Debug.Log("“G‚ÆÚG");
-            speed -= speed * 0.5f;
-            invincible = true;
-            //HpController.Hp--;
+            if(collision.gameObject.tag == "Enemy" ||
+               collision.gameObject.tag == "Thorn")
+            {
+                Debug.Log("“G‚ÆÚG");
+                speed -= speed * 0.5f;
+                invincible = true;
+                HpController.Hp--;
+            }
         }
+
+
 
         if(collision.gameObject.tag == "Box" && playerstate == PlayerState.Circle) //” ‚ð”j‰ó
         {
@@ -319,7 +317,7 @@ public class PlayerController : MonoBehaviour
             {
                 speed -= speed * 0.2f;
                 Debug.Log("” ‚ð”j‰ó");
-               // Destroy(collision.gameObject);
+                //Destroy(collision.gameObject);
             }
         }
 
