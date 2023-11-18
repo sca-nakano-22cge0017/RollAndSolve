@@ -35,7 +35,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float MaxSpeed;
 
     [Header("Œ¸‘¬“x")]
-    [SerializeField] private float deceleration;
+    [SerializeField] private float HumansDeceleration;
+    [SerializeField] private float CirclesDeceleration;
     bool RightDeceleration = false;
     bool LeftDeceleration  = false;
 
@@ -188,12 +189,16 @@ public class PlayerController : MonoBehaviour
             Debug.Log("D‚ð—£‚·");
             if (speed > 0)
             {
-                speed -= deceleration * Time.deltaTime;
-                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
-                if (speed <= 0.0f)
+                if(playerstate == PlayerState.Human)
                 {
-                    //speed = 0.0f;
+                    speed -= HumansDeceleration * Time.deltaTime;
                 }
+                else if(playerstate == PlayerState.Circle)
+                {
+                    speed -= CirclesDeceleration * Time.deltaTime;
+                }
+
+                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
             }
         }
 
@@ -226,7 +231,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("A‚ð—£‚·");
             if (speed < 0)
             {
-                speed += deceleration * Time.deltaTime;
+                if (playerstate == PlayerState.Human)
+                {
+                    speed += HumansSpeed * Time.deltaTime;
+                }
+                else if (playerstate == PlayerState.Circle)
+                {
+                    speed += CirclesSpeed * Time.deltaTime;
+                }
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
                 if (speed >= 0.0f)
                 {
@@ -239,12 +251,26 @@ public class PlayerController : MonoBehaviour
         {
             if(speed < 0)
             {
-                speed += deceleration * Time.deltaTime;
+                if (playerstate == PlayerState.Human)
+                {
+                    speed += HumansSpeed * Time.deltaTime;
+                }
+                else if (playerstate == PlayerState.Circle)
+                {
+                    speed += CirclesSpeed * Time.deltaTime;
+                }
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
             }
             if(speed > 0)
             {
-                speed -= deceleration * Time.deltaTime;
+                if (playerstate == PlayerState.Human)
+                {
+                    speed -= HumansSpeed * Time.deltaTime;
+                }
+                else if (playerstate == PlayerState.Circle)
+                {
+                    speed -= CirclesSpeed * Time.deltaTime;
+                }
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
             }
         }
