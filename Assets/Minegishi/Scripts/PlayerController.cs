@@ -54,6 +54,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite Circles;
     SpriteRenderer sr;
 
+    [Header("サウンド")]
+    [SerializeField] AudioClip Move;
+    [SerializeField] AudioClip Jump;
+    AudioSource audioSource;
+    float soundSpan = 0.0f;
+    
+
     bool invincible = false; //無敵状態
     float invincibleTime = 3.0f; //無敵時間
     int alpha = 255;
@@ -65,6 +72,7 @@ public class PlayerController : MonoBehaviour
         this.HpController = FindObjectOfType<HPController>();
         rb = GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         playerstate = PlayerState.Circle;
         HumansSpeed = HumansAccelertion; //速度初期化
         CirclesSpeed = CirclesAccelertion; //速度初期化
@@ -81,6 +89,7 @@ public class PlayerController : MonoBehaviour
         if (!HpController.IsDown)
         {
             Run();
+            Sound();
         }
         
         if (speedUp)
@@ -244,7 +253,29 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             this.rb.AddForce(transform.up * jumpForce);
+            audioSource.PlayOneShot(Jump);
             Debug.Log(jumpForce);
+        }
+    }
+
+    private void Sound()
+    {
+        if(soundSpan >= 0)
+        {
+            soundSpan -= Time.deltaTime;
+        }
+
+        //球体形態の時に移動中再生
+        if (playerstate == PlayerState.Circle && speed != 0 && soundSpan <= 0)
+        {
+            audioSource.PlayOneShot(Move);
+            soundSpan = 2.1f;
+        }
+
+        if(speed == 0)
+        {
+            audioSource.Stop();
+            soundSpan = 0.0f;
         }
     }
 
