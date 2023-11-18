@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class Stage1Button : MonoBehaviour
 {
-    [SerializeField]
-    Button StartButton;
+    //[SerializeField]
+    //Button StartButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartButton.Select();
+        //StartButton.Select();
     }
 
     // Update is called once per frame

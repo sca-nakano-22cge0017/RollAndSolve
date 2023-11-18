@@ -930,7 +930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4209242109237010253, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
       propertyPath: CirclesAccelertion
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4713617520876049712, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
       propertyPath: m_LocalScale.x
