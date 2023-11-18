@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log(CirclesSpeed);
 
-        if (!HpController.IsDown) 
+        if (!HpController.IsDown)
         {
             Run();
         }
@@ -293,8 +293,7 @@ public class PlayerController : MonoBehaviour
 
         if(!invincible) //ñ≥ìGèÛë‘Ç∂Ç·Ç»Ç¢Ç∆Ç´
         {
-            if(collision.gameObject.tag == "Enemy" ||
-               collision.gameObject.tag == "Thorn")
+            if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Thorn")
             {
                 Debug.Log("ìGÇ∆ê⁄êG");
                 speed -= speed * 0.5f;
@@ -302,8 +301,6 @@ public class PlayerController : MonoBehaviour
                 HpController.Hp--;
             }
         }
-
-
 
         if(collision.gameObject.tag == "Box" && playerstate == PlayerState.Circle) //î†ÇîjâÛ
         {
@@ -358,6 +355,19 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isGround = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!invincible)
+        {
+            if (collision.gameObject.tag == "Thorn")
+            {
+                speed -= speed * 0.5f;
+                invincible = true;
+                HpController.Hp--;
+            }
         }
     }
 }
