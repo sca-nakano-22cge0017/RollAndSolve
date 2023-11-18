@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/goto/Scenses/GameOverScense.unity
     guid: 577e3b91df42c554ab2bb3192c09515c
   - enabled: 1
-    path: "Assets/goto/Scenses/\uFF23learScense.unity"
-    guid: 9fb1df48b7957124c89826646ed58084
+    path: Assets/Nakano/Scenes/ClearScene.unity
+    guid: fea6a10e01cd9fd4bb4b2cc255439ce6
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d9f1414ddf90e774392c70b13a5fe279, type: 2}
