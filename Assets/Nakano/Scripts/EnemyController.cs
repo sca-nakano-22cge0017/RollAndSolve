@@ -26,10 +26,12 @@ public class EnemyController : MonoBehaviour
     SkeletonAnimation skeletonAnimation;
     bool isWalk = false;
 
+    [SerializeField] int track;
+
     void Start()
     {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
-        skeletonAnimation.AnimationState.SetAnimation(0, "blessing", true);
+        skeletonAnimation.AnimationState.SetAnimation(track, "blessing", true);
         isWalk = false;
 
         player = GameObject.FindWithTag("Player");
@@ -51,28 +53,23 @@ public class EnemyController : MonoBehaviour
         leftHit = leftRay.GetComponent<EnemyRay>().isHit;
         rightHit = rightRay.GetComponent<EnemyRay>().isHit;
 
-        var distance = Vector3.Distance(playerPos, thisPos);
+        var distance = (playerPos - thisPos).sqrMagnitude;
 
-        if (distance <= dis)
+        if (distance <= dis * dis)
         {
             isChase = true;
         }
-        else if(distance > dis)
+        else if(distance > dis * dis)
         {
             isChase = false;
         }
 
-        if(isChase)
-        {
-            direction = (playerPos - thisPos).normalized;
-            if(isMove)
-            {
-                if(!isWalk)
-                {
-                    skeletonAnimation.AnimationState.SetAnimation(0, "walk", true);
-                    isWalk = true;
-                }
+        direction = (playerPos - thisPos).normalized;
 
+        if (isChase)
+        {
+            if (isMove)
+            {
                 transform.Translate(new Vector3(direction.x, 0, 0) * speed * Time.deltaTime);
 
                 if(direction.x > 0)
@@ -85,13 +82,19 @@ public class EnemyController : MonoBehaviour
                 }
             }
 
-            else
-            {
-                if (isWalk)
+            if (!isWalk)
                 {
-                    skeletonAnimation.AnimationState.SetAnimation(0, "blessing", true);
-                    isWalk = false;
+                    skeletonAnimation.AnimationState.SetAnimation(track, "walk", true);
+                    isWalk = true;
                 }
+        }
+
+        else
+        {
+            if (isWalk)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(track, "blessing", true);
+                isWalk = false;
             }
         }
 
@@ -99,13 +102,13 @@ public class EnemyController : MonoBehaviour
         {
             isMove = false;
         }
-        else if(!leftHit && direction.x < 0) { isMove = true; }
+        else { isMove = true; }
 
-        if(rightHit && direction.x >= 0)
+        if (rightHit && direction.x > 0)
         {
             isMove = false;
         }
-        else if(!rightHit && direction.x >= 0) { isMove = true; }
+        else { isMove = true; }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
