@@ -25,7 +25,10 @@ public class EnemyRay : MonoBehaviour
 
         if(hit.collider)
         {
-            isHit = true;
+            if(hit.collider.tag != "Enemy" && hit.collider.tag != "Player")
+            {
+                isHit = true;
+            }
         }
         else { isHit = false; }
     }

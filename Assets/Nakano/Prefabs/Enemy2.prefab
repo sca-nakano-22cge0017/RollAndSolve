@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3096282360256199387}
   m_Layer: 0
   m_Name: Enemy2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,6 +145,7 @@ MonoBehaviour:
   dis: 5
   leftRay: {fileID: 8124852386590913829}
   rightRay: {fileID: 7172536886967171990}
+  track: 0
 --- !u!61 &1569303451707474924
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -243,7 +244,7 @@ Transform:
   m_GameObject: {fileID: 7172536886967171990}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.31, y: 0, z: 0}
+  m_LocalPosition: {x: 6.41, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -262,7 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 1, y: 0}
-  maxRange: 0.05
+  maxRange: 0.1
   isHit: 0
 --- !u!1 &8124852386590913829
 GameObject:
@@ -290,7 +291,7 @@ Transform:
   m_GameObject: {fileID: 8124852386590913829}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.2, y: 0, z: 0}
+  m_LocalPosition: {x: -7.7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -309,5 +310,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: -1, y: 0}
-  maxRange: 0.05
+  maxRange: 0.1
   isHit: 0
