@@ -167,6 +167,10 @@ public class PlayerController : MonoBehaviour
 
             if (playerstate == PlayerState.Human)
             {
+                if (speed <= -3)
+                {
+                    speed = -2;
+                }
                 speed += HumansSpeed * Time.deltaTime;
             }
             else if(playerstate == PlayerState.Circle)
@@ -195,7 +199,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (playerstate == PlayerState.Circle)
                 {
-                    speed -= CirclesSpeed * Time.deltaTime;
+                    speed -= CirclesDeceleration * Time.deltaTime;
                 }
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
             }
@@ -208,6 +212,10 @@ public class PlayerController : MonoBehaviour
 
             if (playerstate == PlayerState.Human)
             {
+                if (speed >= 3)
+                {
+                    speed = 2;
+                }
                 speed -= HumansSpeed * Time.deltaTime;
             }
             else if (playerstate == PlayerState.Circle)
@@ -236,7 +244,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (playerstate == PlayerState.Circle)
                 {
-                    speed += CirclesSpeed * Time.deltaTime;
+                    speed += CirclesDeceleration * Time.deltaTime;
                 }
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
                 if (speed >= 0.0f)
@@ -285,7 +293,6 @@ public class PlayerController : MonoBehaviour
 
     private void Sound()
     {
-        Debug.Log(speed);
         if(soundSpan >= 0)
         {
             soundSpan -= Time.deltaTime;
@@ -298,7 +305,7 @@ public class PlayerController : MonoBehaviour
             soundSpan = 2.1f;
         }
 
-        if(speed == 0)
+        if(speed <= 0.5f  && speed >= -0.5f) //スピードが-0.5～0.5になったらストップ
         {
             audioSource.Stop();
             soundSpan = 0.0f;
