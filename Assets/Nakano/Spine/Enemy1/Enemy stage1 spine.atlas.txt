@@ -1,0 +1,36 @@
+Enemy stage1 spine.png
+size:3390,774
+filter:Linear,Linear
+scale:0.5
+arm left
+bounds:2255,276,356,496
+arm right
+bounds:1921,231,332,541
+body
+bounds:2,13,759,1046
+rotate:90
+cheek
+bounds:1552,125,647,121
+rotate:90
+ear left
+bounds:1921,35,194,293
+rotate:90
+ear right
+bounds:2613,7,303,283
+rotate:90
+eye
+bounds:2255,2,272,272
+fish
+bounds:1675,150,622,244
+rotate:90
+leg left
+bounds:2940,430,342,448
+rotate:90
+leg right
+bounds:2940,2,360,426
+mouth
+bounds:2613,312,460,325
+offsets:1,0,461,325
+rotate:90
+tall
+bounds:1050,33,500,739
