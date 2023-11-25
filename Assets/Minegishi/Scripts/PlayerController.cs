@@ -189,15 +189,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("D‚ð—£‚·");
             if (speed > 0)
             {
-                if(playerstate == PlayerState.Human)
+                if (playerstate == PlayerState.Human)
                 {
-                    speed -= HumansDeceleration * Time.deltaTime;
+                    speed -= HumansSpeed * Time.deltaTime;
                 }
-                else if(playerstate == PlayerState.Circle)
+                else if (playerstate == PlayerState.Circle)
                 {
-                    speed -= CirclesDeceleration * Time.deltaTime;
+                    speed -= CirclesSpeed * Time.deltaTime;
                 }
-
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
             }
         }
@@ -286,6 +285,7 @@ public class PlayerController : MonoBehaviour
 
     private void Sound()
     {
+        Debug.Log(speed);
         if(soundSpan >= 0)
         {
             soundSpan -= Time.deltaTime;
