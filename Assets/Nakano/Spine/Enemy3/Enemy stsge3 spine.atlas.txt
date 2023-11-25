@@ -1,0 +1,29 @@
+Enemy stsge3 spine.png
+size:1444,1526
+filter:Linear,Linear
+pma:true
+scale:0.5
+body
+bounds:963,1121,479,403
+corner
+bounds:506,183,200,297
+offsets:0,1,200,298
+rotate:90
+eye
+bounds:2,64,706,270
+rotate:90
+head
+bounds:2,791,959,733
+leg leht
+bounds:869,391,562,379
+offsets:0,0,563,379
+leg right
+bounds:869,2,561,387
+scarf
+bounds:274,29,354,230
+rotate:90
+wing left
+bounds:963,772,462,347
+wing right
+bounds:274,385,593,404
+offsets:0,0,594,404

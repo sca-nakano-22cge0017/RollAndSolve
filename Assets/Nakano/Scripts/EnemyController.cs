@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 
 public class EnemyController : MonoBehaviour
 {
@@ -22,8 +23,15 @@ public class EnemyController : MonoBehaviour
     bool isMove;
     bool leftHit, rightHit;
 
+    SkeletonAnimation skeletonAnimation;
+    bool isWalk = false;
+
     void Start()
     {
+        skeletonAnimation = GetComponent<SkeletonAnimation>();
+        skeletonAnimation.AnimationState.SetAnimation(0, "blessing", true);
+        isWalk = false;
+
         player = GameObject.FindWithTag("Player");
         col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -59,11 +67,35 @@ public class EnemyController : MonoBehaviour
             direction = (playerPos - thisPos).normalized;
             if(isMove)
             {
+                if(!isWalk)
+                {
+                    skeletonAnimation.AnimationState.SetAnimation(0, "walk", true);
+                    isWalk = true;
+                }
+
                 transform.Translate(new Vector3(direction.x, 0, 0) * speed * Time.deltaTime);
+
+                if(direction.x > 0)
+                {
+                    this.transform.localScale = new Vector3(-0.05f, 0.05f, 1);
+                }
+                else if(direction.x <= 0)
+                {
+                    this.transform.localScale = new Vector3(0.05f, 0.05f, 1);
+                }
+            }
+
+            else
+            {
+                if (isWalk)
+                {
+                    skeletonAnimation.AnimationState.SetAnimation(0, "blessing", true);
+                    isWalk = false;
+                }
             }
         }
 
-        if(leftHit && direction.x < 0)
+        if (leftHit && direction.x < 0)
         {
             isMove = false;
         }
