@@ -83,10 +83,10 @@ public class EnemyController : MonoBehaviour
             }
 
             if (!isWalk)
-                {
-                    skeletonAnimation.AnimationState.SetAnimation(track, "walk", true);
-                    isWalk = true;
-                }
+            {
+                skeletonAnimation.AnimationState.SetAnimation(track, "walk", true);
+                isWalk = true;
+            }
         }
 
         else
@@ -122,6 +122,7 @@ public class EnemyController : MonoBehaviour
         else if (collision.gameObject.tag == "Ground")
         {
             rb.gravityScale = 0;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
@@ -131,6 +132,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             rb.gravityScale = 1;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
@@ -139,6 +141,7 @@ public class EnemyController : MonoBehaviour
         //落下中にプレイヤー→地面に触れたとき用
         if (other.gameObject.tag == "Ground")
         {
+            rb.gravityScale = 0;
             rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
     }
@@ -153,6 +156,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             rb.gravityScale = 1;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 }
