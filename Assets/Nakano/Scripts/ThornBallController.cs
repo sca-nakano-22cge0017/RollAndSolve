@@ -50,6 +50,7 @@ public class ThornBallController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             rb.gravityScale = 0;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
@@ -59,6 +60,7 @@ public class ThornBallController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             rb.gravityScale = 1;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
@@ -72,6 +74,7 @@ public class ThornBallController : MonoBehaviour
         //落下中にプレイヤー→地面に触れたとき用
         if (other.gameObject.tag == "Ground")
         {
+            rb.gravityScale = 0;
             rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         }
     }
@@ -86,6 +89,7 @@ public class ThornBallController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             rb.gravityScale = 1;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 }
