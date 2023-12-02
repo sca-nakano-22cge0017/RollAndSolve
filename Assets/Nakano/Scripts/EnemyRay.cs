@@ -7,6 +7,9 @@ public class EnemyRay : MonoBehaviour
     [SerializeField, Header("Ray‚Ì•ûŒü")] Vector2 direction;
     [SerializeField, Header("Ray‚Ì’·‚³")] float maxRange = 0.01f;
 
+    GameObject enemy;
+
+    Vector2 dir;
     Ray2D ray;
     RaycastHit2D hit;
 
@@ -14,22 +17,29 @@ public class EnemyRay : MonoBehaviour
 
     void Start()
     {
+        enemy = transform.parent.gameObject;
         isHit = false;
     }
 
     void Update()
     {
-        ray = new Ray2D(transform.position, direction); //Ray‚Ìì¬
-        hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, maxRange);
-        Debug.DrawRay(ray.origin, ray.direction * maxRange, Color.red); //Ray‚Ì•`‰æ
-
-        if(hit.collider)
+        if(enemy.transform.localScale.x == -0.05f)
         {
-            if(hit.collider.tag != "Enemy" && hit.collider.tag != "Player")
-            {
-                isHit = true;
-            }
+            dir = direction * -1;
         }
-        else { isHit = false; }
+        else { dir = direction; }
+
+        ray = new Ray2D(transform.position, dir); //Ray‚Ìì¬
+        hit = Physics2D.Raycast((Vector2)ray.origin, (Vector2)ray.direction, maxRange);
+        Debug.DrawRay(ray.origin, ray.direction * maxRange, Color.red);
+
+        if (hit.collider)
+        {
+            isHit = true;
+        }
+        else
+        {
+            isHit = false;
+        }
     }
 }

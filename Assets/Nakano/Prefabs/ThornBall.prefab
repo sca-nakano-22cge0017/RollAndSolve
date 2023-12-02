@@ -164,3 +164,4 @@ MonoBehaviour:
   speed: 2
   isReverse: 0
   radius: 0.001
+  stopTime: 0.5
