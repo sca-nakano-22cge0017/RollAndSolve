@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour
     bool RightDeceleration = false;
     bool LeftDeceleration  = false;
 
+    [Header("人型ブレーキ")]
+    [SerializeField] private float Brake;
+
     [Header("ジャンプ力")]
     [SerializeField] private float HumansJump = 400f; //人形態のときのジャンプ力
     [SerializeField] private float CirclesJump = 300f; //球体形態のときのジャンプ力
@@ -169,7 +172,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (speed <= -3)
                 {
-                    speed = -2;
+                    speed = -Brake;
                 }
                 speed += HumansSpeed * Time.deltaTime;
             }
@@ -214,7 +217,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (speed >= 3)
                 {
-                    speed = 2;
+                    speed = Brake;
                 }
                 speed -= HumansSpeed * Time.deltaTime;
             }

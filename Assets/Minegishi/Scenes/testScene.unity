@@ -1754,6 +1754,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3425787244791132050, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3425787244791132050, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
@@ -1765,6 +1769,10 @@ PrefabInstance:
       propertyPath: Move
       value: 
       objectReference: {fileID: 8300000, guid: ac93a6c9403fbaa4a9ec74cef0c81a73, type: 3}
+    - target: {fileID: 4209242109237010253, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
+      propertyPath: Brake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4209242109237010253, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
       propertyPath: Humans
       value: 
@@ -1779,7 +1787,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4209242109237010253, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
       propertyPath: HumansJump
-      value: 420
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209242109237010253, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
+      propertyPath: CirclesJump
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 4209242109237010253, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
       propertyPath: HumansAccelertion
