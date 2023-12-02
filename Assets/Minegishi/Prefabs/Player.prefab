@@ -199,7 +199,8 @@ MonoBehaviour:
   playerstate: 0
   HumansAccelertion: 3
   CirclesAccelertion: 8
-  MaxSpeed: 10
+  HumansMaxSpeed: 7
+  CirclesMaxSpeed: 10
   HumansDeceleration: 10
   CirclesDeceleration: 2
   Brake: 1

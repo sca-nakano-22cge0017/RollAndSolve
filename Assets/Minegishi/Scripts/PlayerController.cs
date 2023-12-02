@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour
     private float CirclesSpeedUp = 0.0f;
 
     [Header("Å‚‘¬“x")]
-    [SerializeField] private float MaxSpeed;
+    [SerializeField] private float HumansMaxSpeed;
+    [SerializeField] private float CirclesMaxSpeed;
 
     [Header("Œ¸‘¬“x")]
     [SerializeField] private float HumansDeceleration;
@@ -181,11 +182,25 @@ public class PlayerController : MonoBehaviour
                 speed += CirclesSpeed * Time.deltaTime;
             }
             transform.Translate(new Vector3(speed, 0,0) * Time.deltaTime) ;
-            if(speed >= MaxSpeed)
-            {
-               speed = MaxSpeed;
-            }
 
+            if(playerstate == PlayerState.Human)
+            {
+                if (speed >= HumansMaxSpeed)
+                {
+                    speed = HumansMaxSpeed;
+                }
+            }
+            if(playerstate == PlayerState.Circle)
+            {
+                if(speed > CirclesMaxSpeed)
+                {
+                    speed += CirclesDeceleration * Time.deltaTime;
+                }
+                if(speed == CirclesMaxSpeed)
+                {
+                    speed = CirclesMaxSpeed;
+                }
+            }
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
@@ -227,10 +242,25 @@ public class PlayerController : MonoBehaviour
             }
             transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
 
-            if(speed <= -MaxSpeed)
+            if(playerstate == PlayerState.Human)
             {
-                speed = -MaxSpeed;
+                if (speed <= -HumansMaxSpeed)
+                {
+                    speed = -HumansMaxSpeed;
+                }
             }
+            if (playerstate == PlayerState.Circle)
+            {
+                if (speed < CirclesMaxSpeed)
+                {
+                    speed -= CirclesDeceleration * Time.deltaTime;
+                }
+                if (speed == -CirclesMaxSpeed)
+                {
+                    speed = -CirclesMaxSpeed;
+                }
+            }
+
         }
         else if (Input.GetKeyUp(KeyCode.A))
         {
@@ -282,6 +312,10 @@ public class PlayerController : MonoBehaviour
                     speed -= CirclesSpeed * Time.deltaTime;
                 }
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
+            }
+            if(playerstate == PlayerState.Human)
+            {
+                speed = 0;
             }
         }
 
