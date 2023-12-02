@@ -10,6 +10,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Header("左へのRayの位置")] GameObject leftRay;
     [SerializeField, Header("右へのRayの位置")] GameObject rightRay;
 
+    [SerializeField, Header("飛んでいく方向 (ベクトル)")] Vector3 flyDir;
+    [SerializeField, Header("飛んでいく速度")] float flySpeed;
+    [SerializeField, Header("飛んでいくときの敵の角度")] float flyAngle;
+    bool isFly = false;
+
     GameObject player;
     Vector3 playerPos;
     Vector3 thisPos;
@@ -28,6 +33,8 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] int track;
 
+    PlayerController playerController;
+
     void Start()
     {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
@@ -45,7 +52,24 @@ public class EnemyController : MonoBehaviour
         direction = Vector3.right;
     }
 
-    void Update()
+    private void Update()
+    {
+        if (leftHit)
+        {
+            if((transform.localScale.x == 0.05f && direction.x < 0) || (transform.localScale.x == -0.05f && direction.x > 0))
+                isMove = false;
+        }
+        else { isMove = true; }
+
+        if (rightHit)
+        {
+            if ((transform.localScale.x == 0.05f && direction.x > 0) || (transform.localScale.x == -0.05f && direction.x < 0))
+                isMove = false;
+        }
+        else { isMove = true; }
+    }
+
+    void FixedUpdate()
     {
         playerPos = player.transform.position;
         thisPos = this.transform.position;
@@ -64,12 +88,11 @@ public class EnemyController : MonoBehaviour
             isChase = false;
         }
 
-        direction = (playerPos - thisPos).normalized;
-
         if (isChase)
         {
             if (isMove)
             {
+                direction = (playerPos - thisPos).normalized;
                 transform.Translate(new Vector3(direction.x, 0, 0) * speed * Time.deltaTime);
 
                 if(direction.x > 0)
@@ -98,24 +121,37 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        if (leftHit && direction.x < 0)
+        if(isFly)
         {
-            isMove = false;
-        }
-        else { isMove = true; }
+            flyDir = flyDir.normalized;
+            Transform myTrans = this.transform;
+            Vector3 pos = myTrans.position;
+            pos.x += flyDir.x * flySpeed * Time.deltaTime;
+            pos.y += flyDir.y * flySpeed * Time.deltaTime;
+            myTrans.position = pos;
 
-        if (rightHit && direction.x > 0)
-        {
-            isMove = false;
+            if(transform.position.y >= 10)
+            {
+                Destroy(this);
+            }
         }
-        else { isMove = true; }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            col.isTrigger = true;
+            if (playerController.playerstate == PlayerController.PlayerState.Circle && playerController.Speed >= 7.0f)
+            {
+                Destroy(rb);
+                Destroy(col);
+                isFly = true;
+                transform.Rotate(0, 0, flyAngle, Space.World);
+            }
+            else
+            {
+                col.isTrigger = true;
+            }
         }
 
         //接地中はIsTriggerがOnになっても落ちていかないように
@@ -153,7 +189,7 @@ public class EnemyController : MonoBehaviour
             col.isTrigger = false;
         }
 
-        if (collision.gameObject.tag == "Ground")
+        else if (collision.gameObject.tag == "Ground")
         {
             rb.gravityScale = 1;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
