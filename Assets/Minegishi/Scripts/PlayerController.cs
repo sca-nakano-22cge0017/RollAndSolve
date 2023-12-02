@@ -394,7 +394,19 @@ public class PlayerController : MonoBehaviour
 
         if(!invincible) //–³“Gó‘Ô‚¶‚á‚È‚¢‚Æ‚«
         {
-            if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Thorn")
+            if(collision.gameObject.tag == "Enemy")
+            {
+                //lŒ^‚Ì‚Æ‚«‚©A‘¬“x‚ª7Š„ˆÈ‰º‚Ì‚Æ‚«
+                if (speed <= CirclesMaxSpeed * 0.7 && playerstate != PlayerState.Circle)
+                {
+                    Debug.Log("“G‚ÆÚG");
+                    speed -= speed * 0.5f;
+                    invincible = true;
+                    HpController.Hp--;
+                }
+            }
+
+            if(collision.gameObject.tag == "Thorn")
             {
                 Debug.Log("“G‚ÆÚG");
                 speed -= speed * 0.5f;
