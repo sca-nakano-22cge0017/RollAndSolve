@@ -7,11 +7,14 @@ public class ThornBallController : MonoBehaviour
     [SerializeField, Header("移動速度")] float speed;
     [SerializeField, Header("初期移動方向反転"), Tooltip("falseで右へ、trueで左へ")] bool isReverse;
     [SerializeField, Header("オブジェクトの半径")] float radius;
+    [SerializeField, Header("壁にぶつかったとき止まる時間")] float stopTime;
 
     Vector3 direction;
 
     Collider2D col;
     Rigidbody2D rb;
+
+    bool isMove = true;
 
     void Start()
     {
@@ -29,9 +32,12 @@ public class ThornBallController : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        if(isMove)
+        {
+            transform.Translate(direction * speed * Time.deltaTime);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -39,6 +45,7 @@ public class ThornBallController : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             direction *= -1;
+            StartCoroutine(MoveStop());
         }
 
         if (collision.gameObject.tag == "Player")
@@ -69,6 +76,7 @@ public class ThornBallController : MonoBehaviour
         if (other.gameObject.tag == "Wall")
         {
             direction *= -1;
+            StartCoroutine(MoveStop());
         }
 
         //落下中にプレイヤー→地面に触れたとき用
@@ -91,5 +99,14 @@ public class ThornBallController : MonoBehaviour
             rb.gravityScale = 1;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
+    }
+
+    IEnumerator MoveStop()
+    {
+        isMove = false;
+
+        yield return new WaitForSeconds(stopTime);
+
+        isMove = true;
     }
 }
