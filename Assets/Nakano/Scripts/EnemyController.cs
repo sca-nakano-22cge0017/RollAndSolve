@@ -69,8 +69,6 @@ public class EnemyController : MonoBehaviour
                 isMove = false;
         }
         else { isMove = true; }
-
-        Debug.Log($"rightHit{rightHit},leftHit{leftHit}");
     }
 
     void FixedUpdate()
