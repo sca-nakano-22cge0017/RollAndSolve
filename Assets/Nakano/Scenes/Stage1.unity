@@ -932,6 +932,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4209242109237010253, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209242109237010253, guid: ae1fed57dd77de04c84c1bb21f43a54b, type: 3}
       propertyPath: HumansAccelertion
       value: 3
       objectReference: {fileID: 0}
@@ -2748,7 +2752,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2095190989810799112, guid: 05463dbe45d0d3d44898200b5f9658c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.9
+      value: -0.66
       objectReference: {fileID: 0}
     - target: {fileID: 2095190989810799112, guid: 05463dbe45d0d3d44898200b5f9658c3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3205,6 +3209,10 @@ PrefabInstance:
     - target: {fileID: 1906078903637902268, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: flyAngle
       value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1906078903637902268, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
+      propertyPath: flySpeed
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3145463664831723838, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_Mesh
@@ -8927,6 +8935,10 @@ PrefabInstance:
       propertyPath: flyAngle
       value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 1906078903637902268, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
+      propertyPath: flySpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3145463664831723838, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -10132,6 +10144,10 @@ PrefabInstance:
     - target: {fileID: 1906078903637902268, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: flyAngle
       value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1906078903637902268, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
+      propertyPath: flySpeed
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3145463664831723838, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_Mesh
