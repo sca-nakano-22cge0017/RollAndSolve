@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     Box box;
     HPController HpController;
+    Animator animator;
 
     public enum PlayerState { Human, Circle}
     public PlayerState playerstate;
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         this.HpController = FindObjectOfType<HPController>();
         rb = GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
@@ -152,7 +154,7 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
 
         //球体形態で最高速度の７割以上の時オブジェクトを破壊できる
-        if(speed <= CirclesMaxSpeed * 0.7 && playerstate != PlayerState.Circle)
+        if(speed >= CirclesMaxSpeed * 0.7 && playerstate == PlayerState.Circle)
         {
             objectBreak = true;
         }
