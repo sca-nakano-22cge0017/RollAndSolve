@@ -79,7 +79,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        box = GameObject.Find("Box").GetComponent<Box>();
         this.HpController = FindObjectOfType<HPController>();
         rb = GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
@@ -464,13 +463,18 @@ public class PlayerController : MonoBehaviour
         //êlå`ë‘ÇÃéûÇ…î†Ç…ê⁄êGÇµÇƒÇ¢ÇÈÇ∆Ç´î†ÇâüÇ∑
         if (playerstate == PlayerState.Human && collision.gameObject.tag == "Box")
         {
+            isGround = true;
             if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.F))
             {
+                var obj = collision.gameObject; 
+                box = obj.GetComponent<Box>();
                 box.BoxRightMove();
                 speed = 1.0f;
             }
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.F))
             {
+                var obj = collision.gameObject;
+                box = obj.GetComponent<Box>();
                 box.BoxLeftMove();
                 speed = -1.0f;
             }
