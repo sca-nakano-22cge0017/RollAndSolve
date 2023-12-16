@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Header("右へのRayの位置")] GameObject rightRay;
 
     [SerializeField, Header("飛んでいく方向 (ベクトル)")] Vector3 flyDir;
+    Vector3 dir;
     [SerializeField, Header("飛んでいく速度")] float flySpeed;
     [SerializeField, Header("飛んでいくときの敵の角度")] float flyAngle;
     bool isFly = false;
@@ -42,6 +43,7 @@ public class EnemyController : MonoBehaviour
         isWalk = false;
 
         player = GameObject.FindWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -67,6 +69,8 @@ public class EnemyController : MonoBehaviour
                 isMove = false;
         }
         else { isMove = true; }
+
+        Debug.Log($"rightHit{rightHit},leftHit{leftHit}");
     }
 
     void FixedUpdate()
@@ -123,16 +127,15 @@ public class EnemyController : MonoBehaviour
 
         if(isFly)
         {
-            flyDir = flyDir.normalized;
             Transform myTrans = this.transform;
             Vector3 pos = myTrans.position;
-            pos.x += flyDir.x * flySpeed * Time.deltaTime;
-            pos.y += flyDir.y * flySpeed * Time.deltaTime;
+            pos.x += dir.x * flySpeed * Time.deltaTime;
+            pos.y += dir.y * flySpeed * Time.deltaTime;
             myTrans.position = pos;
 
             if(transform.position.y >= 10)
             {
-                Destroy(this);
+                Destroy(this.gameObject);
             }
         }
     }
@@ -141,12 +144,22 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            if (playerController.playerstate == PlayerController.PlayerState.Circle && playerController.Speed >= 7.0f)
+            if (playerController.ObjectBreak)
             {
                 Destroy(rb);
                 Destroy(col);
                 isFly = true;
-                transform.Rotate(0, 0, flyAngle, Space.World);
+
+                if (playerController.Speed < 0)
+                {
+                    transform.Rotate(0, 0, -flyAngle, Space.World);
+                    dir = new Vector3(-flyDir.x, flyDir.y, flyDir.z).normalized;
+                }
+                if (playerController.Speed >= 0)
+                {
+                    transform.Rotate(0, 0, flyAngle, Space.World);
+                    dir = flyDir.normalized;
+                }
             }
             else
             {
