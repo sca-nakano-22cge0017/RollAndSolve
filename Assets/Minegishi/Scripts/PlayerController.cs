@@ -162,6 +162,8 @@ public class PlayerController : MonoBehaviour
         {
             objectBreak = false;
         }
+
+        animator.SetFloat("Speed", speed);
     }
 
     void Human()
