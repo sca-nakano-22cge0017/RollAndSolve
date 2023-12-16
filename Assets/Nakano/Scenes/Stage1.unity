@@ -2824,6 +2824,10 @@ PrefabInstance:
       propertyPath: playerstate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4108200839246922271, guid: 05463dbe45d0d3d44898200b5f9658c3, type: 3}
+      propertyPath: CirclesMaxSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5677434224793108037, guid: 05463dbe45d0d3d44898200b5f9658c3, type: 3}
       propertyPath: m_IsActive
       value: 0
