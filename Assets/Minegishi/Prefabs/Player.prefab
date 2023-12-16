@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerstate: 0
   HumansAccelertion: 3
-  CirclesAccelertion: 8
+  CirclesAccelertion: 5
   HumansMaxSpeed: 7
   CirclesMaxSpeed: 10
   HumansDeceleration: 10

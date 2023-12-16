@@ -14,11 +14,17 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     private float speed = 0;
-
     public float Speed
     {
         get { return speed; }
         set { speed = value; }
+    }
+
+    private bool objectBreak = false;
+    public bool ObjectBreak
+    {
+        get { return objectBreak;}
+        set { objectBreak = value;}
     }
 
     [Header("‰Á‘¬“x")]
@@ -89,8 +95,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(CirclesSpeed);
-
         if (!HpController.IsDown)
         {
             Run();
@@ -147,6 +151,16 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position = position;
+
+        //‹…‘ÌŒ`‘Ô‚ÅÅ‚‘¬“x‚Ì‚VŠ„ˆÈã‚ÌƒIƒuƒWƒFƒNƒg‚ğ”j‰ó‚Å‚«‚é
+        if(speed <= CirclesMaxSpeed * 0.7 && playerstate != PlayerState.Circle)
+        {
+            objectBreak = true;
+        }
+        else
+        {
+            objectBreak = false;
+        }
     }
 
     void Human()
@@ -397,7 +411,7 @@ public class PlayerController : MonoBehaviour
             if(collision.gameObject.tag == "Enemy")
             {
                 //lŒ^‚Ì‚Æ‚«‚©A‘¬“x‚ª7Š„ˆÈ‰º‚Ì‚Æ‚«
-                if (speed <= CirclesMaxSpeed * 0.7 && playerstate != PlayerState.Circle)
+                if (!objectBreak)
                 {
                     Debug.Log("“G‚ÆÚG");
                     speed -= speed * 0.5f;
@@ -415,15 +429,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(collision.gameObject.tag == "Box" && playerstate == PlayerState.Circle) //” ‚ğ”j‰ó
+        if(collision.gameObject.tag == "Box") //” ‚ğ”j‰ó
         {
-            if (Input.GetKey(KeyCode.D) && speed >= 7.0f)
+            if (Input.GetKey(KeyCode.D) && objectBreak)
             {
                 speed -= speed * 0.2f;
                 Debug.Log("” ‚ğ”j‰ó");
                 //Destroy(collision.gameObject);
             }
-            if (Input.GetKey(KeyCode.A) && speed <= -7.0f)
+            if (Input.GetKey(KeyCode.A) && objectBreak)
             {
                 speed -= speed * 0.2f;
                 Debug.Log("” ‚ğ”j‰ó");
