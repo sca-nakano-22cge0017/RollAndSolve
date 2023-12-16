@@ -69,6 +69,8 @@ public class EnemyController : MonoBehaviour
                 isMove = false;
         }
         else { isMove = true; }
+
+        Debug.Log($"rightHit{rightHit},leftHit{leftHit}");
     }
 
     void FixedUpdate()
@@ -142,7 +144,7 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            if (playerController.playerstate == PlayerController.PlayerState.Circle && playerController.Speed >= 7.0f)
+            if (playerController.ObjectBreak)
             {
                 Destroy(rb);
                 Destroy(col);

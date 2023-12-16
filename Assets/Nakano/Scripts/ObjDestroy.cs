@@ -19,7 +19,7 @@ public class ObjDestroy : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            if (playerController.playerstate == PlayerController.PlayerState.Circle && playerController.Speed >= 7.0f)
+            if (playerController.ObjectBreak)
             {
                 anim.SetTrigger("Break");
                 Destroy(col);
