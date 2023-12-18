@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5394183072090134228}
   - component: {fileID: 1569303451707474924}
   - component: {fileID: 3096282360256199387}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Enemy2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -145,6 +145,9 @@ MonoBehaviour:
   dis: 5
   leftRay: {fileID: 8124852386590913829}
   rightRay: {fileID: 7172536886967171990}
+  flyDir: {x: 0, y: 0, z: 0}
+  flySpeed: 0
+  flyAngle: 0
   track: 0
 --- !u!61 &1569303451707474924
 BoxCollider2D:

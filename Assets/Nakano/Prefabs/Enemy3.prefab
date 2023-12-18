@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 966809526304349280}
   - component: {fileID: 5649415650995248910}
   - component: {fileID: 1245933067019540816}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Enemy3
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -217,6 +217,9 @@ MonoBehaviour:
   dis: 5
   leftRay: {fileID: 652666703174610984}
   rightRay: {fileID: 6388872423720123494}
+  flyDir: {x: 0, y: 0, z: 0}
+  flySpeed: 0
+  flyAngle: 0
   track: 0
 --- !u!1 &652666703174610984
 GameObject:

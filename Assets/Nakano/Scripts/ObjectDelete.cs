@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class ObjectDelete : MonoBehaviour
 {
-    GameObject parent;
-    GameObject button;
+    [SerializeField] GameObject obj;
 
-    ButtonCheck check;
+    ButtonObject button;
 
     void Start()
     {
-        parent = transform.parent.gameObject;
-        button = parent.transform.Find("Button").gameObject;
-        check = button.GetComponent<ButtonCheck>();
+        button = this.GetComponent<ButtonObject>();
     }
 
     void Update()
     {
-        if(check.IsActive)
+        if(button.IsActive)
         {
-            this.gameObject.SetActive(false);
+            obj.gameObject.SetActive(false);
         }
+        else { obj.gameObject.SetActive(true); }
     }
 }

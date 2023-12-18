@@ -4,24 +4,21 @@ using UnityEngine;
 
 public class ObjectMake : MonoBehaviour
 {
-    GameObject parent;
-    GameObject button;
-    GameObject obj;
+    [SerializeField] GameObject obj;
 
-    ButtonCheck check;
+    ButtonObject button;
 
     void Start()
     {
-        parent = transform.parent.gameObject;
-        obj = parent.transform.Find("Objects").gameObject;
-        check = this.GetComponent<ButtonCheck>();
+        button = this.GetComponent<ButtonObject>();
     }
 
     void Update()
     {
-        if (check.IsActive)
+        if (button.IsActive)
         {
             obj.gameObject.SetActive(true);
         }
+        else { obj.gameObject.SetActive(false); }
     }
 }
