@@ -8,7 +8,7 @@ public class ElevetorDownChecker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box"))
         {
             elevetor.IsMin = true;
         }
@@ -16,7 +16,7 @@ public class ElevetorDownChecker : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box"))
         {
             elevetor.IsMin = false;
         }
