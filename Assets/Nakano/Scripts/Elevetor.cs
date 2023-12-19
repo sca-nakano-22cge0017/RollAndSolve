@@ -33,9 +33,9 @@ public class Elevetor : MonoBehaviour
     {
         if(button.IsActive)
         {
-            isMove = true;
+            Move();
         }
-        else { isMove = false; }
+        else { DefaultMove(); }
     }
 
     private void Move()
@@ -59,6 +59,19 @@ public class Elevetor : MonoBehaviour
                     obj.transform.Translate(Vector3.up * speed * Time.deltaTime);
                 break;
         }
+    }
+
+    /// <summary>
+    /// èâä˙à íuÇ…ñﬂÇÈ
+    /// </summary>
+    void DefaultMove()
+    {
+        if (obj.transform.position.y >= topPos)
+        {
+            isMax = true;
+        }
+
+        if(!isMax) obj.transform.Translate(Vector3.up * speed * Time.deltaTime);
     }
 
     IEnumerator StateChange(STATE s)
