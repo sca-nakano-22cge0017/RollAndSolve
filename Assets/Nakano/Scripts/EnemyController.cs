@@ -125,6 +125,7 @@ public class EnemyController : MonoBehaviour
 
         if(isFly)
         {
+            skeletonAnimation.AnimationState.SetAnimation(track, "damage", true);
             Transform myTrans = this.transform;
             Vector3 pos = myTrans.position;
             pos.x += dir.x * flySpeed * Time.deltaTime;

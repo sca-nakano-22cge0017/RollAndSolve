@@ -1,0 +1,27 @@
+Enemy stage2 spine.png
+size:3101,1046
+filter:Linear,Linear
+pma:true
+scale:0.5
+arm left
+bounds:2575,455,589,524
+rotate:90
+arm right
+bounds:2063,440,510,604
+body
+bounds:2,2,1042,1458
+rotate:90
+eye
+bounds:2083,62,557,182
+eye2
+bounds:2575,246,502,207
+offsets:407,1101,1447,2047
+hot eye musk
+bounds:1462,44,619,346
+mouth
+bounds:1752,395,309,649
+mouth in
+bounds:1462,392,288,652
+offsets:1,1,289,654
+nuclear
+bounds:2083,277,161,161
