@@ -10,7 +10,6 @@ public class Elevetor : MonoBehaviour
     [SerializeField, Header("àÍî‘è„ÇÃYç¿ïW")] float topPos;
 
     ButtonObject button;
-    bool isMove = false;
 
     bool isMax = false;
     bool isMin = false;
@@ -27,6 +26,7 @@ public class Elevetor : MonoBehaviour
     void Start()
     {
         button = this.GetComponent<ButtonObject>();
+        topPos = obj.transform.position.y;
     }
 
     void Update()

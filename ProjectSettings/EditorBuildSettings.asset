@@ -15,11 +15,11 @@ EditorBuildSettings:
     path: Assets/Nakano/Scenes/Stage1.unity
     guid: 2fd75870d9928b34d855ad9a74c92deb
   - enabled: 1
-    path: Assets/goto/Scenses/Stage2.unity
-    guid: 3861ac62ef92ef24b8552a2eaa06734d
+    path: Assets/Nakano/Scenes/Stage2.unity
+    guid: f3893276392f9bd42b7c9a377bd06fd8
   - enabled: 1
-    path: Assets/goto/Scenses/Stage3.unity
-    guid: 5af8f5585ea65a648a4792559d2e2eae
+    path: Assets/Nakano/Scenes/Stage3.unity
+    guid: 3a7839b1fe59dd04da82d1fe7ab11650
   - enabled: 1
     path: Assets/goto/Scenses/RuleScense.unity
     guid: 5a47f65642e8149438ceb170c1005578

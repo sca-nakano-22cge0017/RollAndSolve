@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8807691662204375700}
   m_Layer: 0
   m_Name: Thorn
-  m_TagString: Enemy
+  m_TagString: Thorn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

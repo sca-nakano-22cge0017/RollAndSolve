@@ -70,6 +70,10 @@ public class Clear : MonoBehaviour
     IEnumerator ToSelect()
     {
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene("StageSelect");
+        if(SceneManager.GetActiveScene().name == "Stage3")
+        {
+            SceneManager.LoadScene("ClearScene");
+        }
+        else SceneManager.LoadScene("StageSelect");
     }
 }
