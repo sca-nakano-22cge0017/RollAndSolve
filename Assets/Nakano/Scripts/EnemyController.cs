@@ -194,6 +194,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            rb.gravityScale = 0;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
