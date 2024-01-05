@@ -44,17 +44,51 @@ public class ButtonObject : MonoBehaviour
 
         if (isPush && !isActive)
         {
-            transform.Translate(Vector3.down * 10 * Time.deltaTime);
+            transform.Translate(Vector3.down * 5 * Time.deltaTime);
         }
 
         if (!isPush)
         {
             rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+
+            if(buttonType == ButtonObject.BUTTON.blue)
+            {
+                if (transform.position.y <= defaultPosition.y)
+                {
+                    transform.position = defaultPosition;
+                    rb.velocity = Vector3.zero;
+                }
+            }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Player") && !isActive)
+        {
+            var p = collision.gameObject.GetComponent<PlayerController>();
+            
+            if (p.playerstate == PlayerController.PlayerState.Human)
+            {
+                isPush = true;
+                rb.isKinematic = false;
+                rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+            }
+            else
+            {
+                isPush = false;
+                rb.isKinematic = true;
+                rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Box"))
+        {
+            isPush = true;
+            rb.isKinematic = false;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+        }
+
         if (collision.gameObject.name == "Button_Base")
         {
             isActive = true;
@@ -64,7 +98,7 @@ public class ButtonObject : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.name == "Button_Base")
         {
@@ -72,8 +106,16 @@ public class ButtonObject : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
+        if (buttonType == ButtonObject.BUTTON.blue)
+        {
+            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Box"))
+            {
+                isPush = false;
+            }
+        }
+
         if (collision.gameObject.name == "Button_Base")
         {
             isActive = false;
