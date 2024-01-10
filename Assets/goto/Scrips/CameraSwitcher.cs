@@ -94,7 +94,7 @@ public class CameraSwitcher : MonoBehaviour
             if (playerController.Speed <= 6.9f)
             {
                 vcam1.Priority = 0;
-                vcam2.Priority = 2;
+                vcam2.Priority = 1;
                 vcam3.Priority = 0;
                 vcam4.Priority = 0;
                 vcam5.Priority = 0;
