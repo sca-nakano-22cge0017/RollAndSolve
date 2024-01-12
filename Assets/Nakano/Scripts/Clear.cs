@@ -66,7 +66,7 @@ public class Clear : MonoBehaviour
             StartCoroutine(ToSelect());
         }
 
-        //Debug—p
+        //Debug—p íœ•K{
         if(Input.GetKey(KeyCode.C)) { StartCoroutine(ToSelect()); }
     }
 
