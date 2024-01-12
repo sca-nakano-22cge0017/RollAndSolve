@@ -12,14 +12,14 @@ public class ActivateButton : MonoBehaviour
 
 	public void ActivateOrNotActivate(bool flag)
 	{
-		for (var i = 0; i < transform.childCount; i++)
-		{
-			transform.GetChild(i).GetComponent<Button>().interactable = flag;
-		}
-		if (flag)
-		{
-			EventSystem.current.SetSelectedGameObject(firstSelect);
-		}
-	}
+        for (var i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).GetComponent<Button>().interactable = flag;
+        }
+        if (flag)
+        {
+            EventSystem.current.SetSelectedGameObject(firstSelect);
+        }
+    }
 }
 

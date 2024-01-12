@@ -18,7 +18,6 @@ public class ActivateUIObj : MonoBehaviour
 
     void Update()
 	{
-
 		//　スペースキーを押したら画面UIのオン・オフ
 		if (Input.GetKeyDown("space"))
 		{

@@ -65,15 +65,45 @@ public class Clear : MonoBehaviour
             effectRight.enabled = false;
             StartCoroutine(ToSelect());
         }
+
+        //Debug用
+        if(Input.GetKey(KeyCode.C)) { StartCoroutine(ToSelect()); }
     }
 
     IEnumerator ToSelect()
     {
         yield return new WaitForSeconds(2);
-        if(SceneManager.GetActiveScene().name == "Stage3")
+
+        switch (SceneManager.GetActiveScene().name)
         {
-            SceneManager.LoadScene("ClearScene");
+            case "Stage1":
+                DataSave(1);
+                SceneManager.LoadScene("StageSelect");
+                break;
+
+            case "Stage2":
+                DataSave(2);
+                SceneManager.LoadScene("StageSelect");
+                break;
+
+            case "Stage3":
+                DataSave(3);
+                SceneManager.LoadScene("ClearScene");
+                break;
         }
-        else SceneManager.LoadScene("StageSelect");
+    }
+
+    void DataSave(int num)
+    {
+        //初クリアかどうかを保存
+        if (PlayerPrefs.GetInt("Clear" + num.ToString(), 0) == 0)
+        {
+            PlayerPrefs.SetInt("FirstClear" + num.ToString(), 1);
+        }
+
+        //各ステージクリアしたかどうかを保存 boolが入れられないのでintで代用
+        PlayerPrefs.SetInt("Clear" + num.ToString(), 1);
+
+        PlayerPrefs.Save();
     }
 }
