@@ -18,6 +18,12 @@ public class TitleBackButton : MonoBehaviour
     }
     public void OnClick()
     {
+        StartCoroutine(Wait());
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.3f);
         SceneManager.LoadScene("Title");
     }
 }

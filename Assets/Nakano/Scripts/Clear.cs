@@ -73,6 +73,7 @@ public class Clear : MonoBehaviour
     IEnumerator ToSelect()
     {
         yield return new WaitForSeconds(2);
+        PlayerPrefs.SetInt("PlayingStage", 0);
 
         switch (SceneManager.GetActiveScene().name)
         {

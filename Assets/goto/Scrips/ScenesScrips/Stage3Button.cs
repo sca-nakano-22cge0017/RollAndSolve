@@ -24,6 +24,10 @@ public class Stage3Button : MonoBehaviour
         {
             chain.SetTrigger("CantPlay");
         }
-        else SceneManager.LoadScene("Stage3");
+        else
+        {
+            SceneManager.LoadScene("Stage3");
+            PlayerPrefs.SetInt("PlayingStage", 3);
+        }
     }
 }
