@@ -28,10 +28,12 @@ public class StageSelectButton : MonoBehaviour
     
     public void GetButtonDown()
     {
-
-        SceneManager.LoadScene("StageSelect");
-        
+        StartCoroutine(Wait());
     }
 
-   
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.3f);
+        SceneManager.LoadScene("StageSelect");
+    }
 }
