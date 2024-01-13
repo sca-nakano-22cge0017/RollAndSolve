@@ -30,6 +30,11 @@ public class ItemCatch : MonoBehaviour
                 hpController.HpLimit++;
             }
 
+            if (this.gameObject.tag == "SecretCoin")
+            {
+                
+            }
+
             Destroy(this.gameObject);
         }
     }
