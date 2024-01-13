@@ -25,6 +25,10 @@ public class Stage2Button : MonoBehaviour
         {
             chain.SetTrigger("CantPlay");
         }
-        else SceneManager.LoadScene("Stage2");
+        else
+        {
+            SceneManager.LoadScene("Stage2");
+            PlayerPrefs.SetInt("PlayingStage", 2);
+        }
     }
 }

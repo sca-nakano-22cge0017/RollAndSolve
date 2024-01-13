@@ -24,5 +24,6 @@ public class Stage1Button : MonoBehaviour
     {
         Time.timeScale =1;
         SceneManager.LoadScene("Stage1");
+        PlayerPrefs.SetInt("PlayingStage", 1);
     }
 }
