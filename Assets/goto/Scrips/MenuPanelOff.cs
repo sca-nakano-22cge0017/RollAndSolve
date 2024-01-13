@@ -26,7 +26,14 @@ public class MenuPanelOff : MonoBehaviour
         var isActivee = Panel.activeInHierarchy; // Panelがアクティブか取得
         Panel1.SetActive(!isActivee);
         //EventSystem.current.SetSelectedGameObject(null);
-        StartButton.Select();
-       
+      
+        if (isActive == false)
+        {
+            StartButton.Select();
+            Time.timeScale = 1;
+        }
+      
+      
+
     }
 }
