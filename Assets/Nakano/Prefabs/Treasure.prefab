@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d021d71f9cf00843a087a2d7a49cf15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  window: {fileID: 0}
+  window: {fileID: 6308480341444044365}
   medal: {fileID: 6467752619929630908, guid: 8a8a55e9c4021314bafa98a241528b09, type: 3}
 --- !u!1 &6308480341444044365
 GameObject:

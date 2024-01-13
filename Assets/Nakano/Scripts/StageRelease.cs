@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class StageRelease : MonoBehaviour
 {
     [SerializeField] Animator[] release;
+    [SerializeField] Animator[] bg;
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class StageRelease : MonoBehaviour
                 for (int j = i; j > 0; j--)
                 {
                     release[j - 1].SetTrigger("Released");
+                    bg[j - 1].SetTrigger("Released");
                 }
             }
 
@@ -32,6 +34,7 @@ public class StageRelease : MonoBehaviour
                 if(i < 3)
                 {
                     release[i - 1].SetTrigger("Release"); //‰ð•ú‰‰oÄ¶
+                    bg[i - 1].SetTrigger("Release");
                 }
                 
                 PlayerPrefs.SetInt("FirstClear" + i.ToString(), 0);
