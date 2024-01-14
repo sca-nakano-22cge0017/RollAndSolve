@@ -7,7 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     Box box;
     HPController HpController;
-    Animator animator;
+    Animator anim;
+    [SerializeField] GameObject[] playerForms;
+    [SerializeField] Animator[] playerAnims;
+    [SerializeField] MeshRenderer[] playerMeshs;
 
     public enum PlayerState { Human, Circle}
     public PlayerState playerstate;
@@ -61,10 +64,10 @@ public class PlayerController : MonoBehaviour
 
     bool isGround = false;
 
-    [Header("プレイヤーの画像")]
-    [SerializeField] Sprite Humans;
-    [SerializeField] Sprite Circles;
-    SpriteRenderer sr;
+    //[Header("プレイヤーの画像")]
+    //[SerializeField] Sprite Humans;
+    //[SerializeField] Sprite Circles;
+    //SpriteRenderer sr;
 
     [Header("サウンド")]
     [SerializeField] AudioClip Move;
@@ -80,10 +83,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        animator = GetComponent<Animator>();
         this.HpController = FindObjectOfType<HPController>();
         rb = GetComponent<Rigidbody2D>();
-        sr = gameObject.GetComponent<SpriteRenderer>();
+        //sr = gameObject.GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         playerstate = PlayerState.Circle;
         HumansSpeed = HumansAccelertion; //速度初期化
@@ -91,6 +93,13 @@ public class PlayerController : MonoBehaviour
 
         HumansSpeedUp = HumansAccelertion * 1.2f; //スピードアップした時の速度
         CirclesSpeedUp = CirclesAccelertion * 1.2f; //スピードアップした時の速度
+
+        //Spine
+        anim = playerAnims[0];
+        //現在の形態以外はMeshRendererをオフにして非表示にする
+        playerMeshs[0].enabled = true; //カプセル
+        playerMeshs[1].enabled = false; //右向き人型
+        playerMeshs[2].enabled = false; //左向き人型
     }
 
 
@@ -101,6 +110,7 @@ public class PlayerController : MonoBehaviour
             Run();
             Sound();
         }
+        else anim.SetTrigger("Dead");
         
         if (speedUp)
         {
@@ -110,19 +120,31 @@ public class PlayerController : MonoBehaviour
         switch (playerstate)
         {
             case PlayerState.Human:
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.W))
                 {
+                    anim.SetTrigger("Change");
+                    //※形態変化時ワンクッション挟む 現在アニメーション再生途中で形態変わるので
+                    anim = playerAnims[0];
+                    playerMeshs[0].enabled = true;
+                    playerMeshs[1].enabled = false;
+                    playerMeshs[2].enabled = false;
+
                     playerstate = PlayerState.Circle;
-                    sr.sprite = Circles;
+                    //sr.sprite = Circles;
                     Debug.Log("球体です");
                 }
                     Human();
                 break;
             case PlayerState.Circle:
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.W))
                 {
+                    anim = playerAnims[1];
+                    playerMeshs[1].enabled = true;
+                    playerMeshs[0].enabled = false;
+                    playerMeshs[2].enabled = false;
+
                     playerstate = PlayerState.Human;
-                    sr.sprite = Humans;
+                    //sr.sprite = Humans;
                     Debug.Log("人です");
                 }
                 Circle();
@@ -163,7 +185,7 @@ public class PlayerController : MonoBehaviour
             objectBreak = false;
         }
 
-        animator.SetFloat("Speed", speed);
+        anim.SetFloat("Speed", speed);
     }
 
     void Human()
@@ -197,6 +219,8 @@ public class PlayerController : MonoBehaviour
             else if(playerstate == PlayerState.Circle)
             {
                 speed += CirclesSpeed * Time.deltaTime;
+
+                playerForms[0].GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
             }
             transform.Translate(new Vector3(speed, 0,0) * Time.deltaTime) ;
 
@@ -256,6 +280,8 @@ public class PlayerController : MonoBehaviour
             else if (playerstate == PlayerState.Circle)
             {
                 speed -= CirclesSpeed * Time.deltaTime;
+
+                playerForms[0].GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
             }
             transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
 
@@ -306,7 +332,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
-            if(speed < 0)
+            if (speed < 0)
             {
                 if (playerstate == PlayerState.Human)
                 {
@@ -336,9 +362,44 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //Spine
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            if(playerstate == PlayerState.Human)
+            {
+                anim = playerAnims[2]; //左向き
+                playerMeshs[2].enabled = true;
+                playerMeshs[0].enabled = false;
+                playerMeshs[1].enabled = false;
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            if (playerstate == PlayerState.Human)
+            {
+                anim = playerAnims[1]; //右向き
+                playerMeshs[1].enabled = true;
+                playerMeshs[0].enabled = false;
+                playerMeshs[2].enabled = false;
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        {
+            if ((!Input.GetKey(KeyCode.F) && playerstate == PlayerState.Human) || playerstate == PlayerState.Circle)
+            {
+                anim.SetBool("Dash", true);
+            }
+        }
+        if (speed <= 1f && speed >= -1f && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        {
+            anim.SetBool("Dash", false);
+        }
+
         //ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
+            anim.SetBool("Jump", true);
             this.rb.AddForce(transform.up * jumpForce);
             audioSource.PlayOneShot(Jump);
             Debug.Log(jumpForce);
@@ -407,6 +468,7 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Ground")
         {
             isGround = true;
+            anim.SetBool("Jump", false);
         }
 
         if(!invincible) //無敵状態じゃないとき
@@ -417,6 +479,14 @@ public class PlayerController : MonoBehaviour
                 if (!objectBreak)
                 {
                     Debug.Log("敵と接触");
+
+                    anim.SetTrigger("Damage");
+                    //カプセル状態解除
+                    if(playerstate == PlayerState.Circle)
+                    {
+                        playerstate = PlayerState.Human;
+                    }
+
                     speed -= speed * 0.5f;
                     invincible = true;
                     HpController.Hp--;
@@ -426,6 +496,14 @@ public class PlayerController : MonoBehaviour
             if(collision.gameObject.tag == "Thorn")
             {
                 Debug.Log("敵と接触");
+
+                anim.SetTrigger("Damage");
+                //カプセル状態解除
+                if (playerstate == PlayerState.Circle)
+                {
+                    playerstate = PlayerState.Human;
+                }
+
                 speed -= speed * 0.5f;
                 invincible = true;
                 HpController.Hp--;
@@ -468,20 +546,32 @@ public class PlayerController : MonoBehaviour
         if (playerstate == PlayerState.Human && collision.gameObject.tag == "Box")
         {
             isGround = true;
+            Debug.Log("衝突");
+
             if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.F))
             {
+                if(!anim.GetCurrentAnimatorStateInfo(0).IsName("push") && !anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
+                    anim.SetBool("Push", true);
+
                 var obj = collision.gameObject; 
                 box = obj.GetComponent<Box>();
                 box.BoxRightMove();
                 speed = 1.0f;
             }
+
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.F))
             {
+                Debug.Log("test");
+                if (!anim.GetCurrentAnimatorStateInfo(0).IsName("push") && !anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
+                    anim.SetBool("Push", true);
+
                 var obj = collision.gameObject;
                 box = obj.GetComponent<Box>();
                 box.BoxLeftMove();
                 speed = -1.0f;
             }
+
+            if(Input.GetKeyUp(KeyCode.F) || !Input.GetKey(KeyCode.F)) anim.SetBool("Push", false);
         }
     }
 
@@ -491,6 +581,11 @@ public class PlayerController : MonoBehaviour
         {
             isGround = false;
         }
+
+        if(collision.gameObject.tag == "Box")
+        {
+            anim.SetBool("Push", false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -499,6 +594,13 @@ public class PlayerController : MonoBehaviour
         {
             if (collision.gameObject.tag == "Thorn")
             {
+                anim.SetTrigger("Damage");
+                //カプセル状態解除
+                if (playerstate == PlayerState.Circle)
+                {
+                    playerstate = PlayerState.Human;
+                }
+
                 speed -= speed * 0.5f;
                 invincible = true;
                 HpController.Hp--;

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    Animator animator;
+    Animator anim;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        
+
     }
 }

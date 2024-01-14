@@ -29,10 +29,6 @@ public class ObjDestroy : MonoBehaviour
                 audioSource.PlayOneShot(se);
                 Destroy(col);
             }
-
-            //アニメーション確認用
-            //anim.SetTrigger("Break");
-            //Destroy(col);
         }
     }
 
