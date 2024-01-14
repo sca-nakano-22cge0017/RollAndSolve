@@ -13,6 +13,7 @@ public class HPController : MonoBehaviour
     int hpLimit;
     int lateHpLimit;
     [SerializeField, Header("初期HP")] int defaultHp;
+    [SerializeField, Header("ゲームオーバーに遷移するまでの時間")] float gameoverTime;
 
     //プレイヤーからもらう
     bool isDamage = false;
@@ -109,10 +110,9 @@ public class HPController : MonoBehaviour
             isDown = true;
         }
 
-        //とりあえずのゲームオーバー画面への遷移
         if(isDown)
         {
-            SceneManager.LoadScene("GameOverScense"); //元のシーン名にスペルミス
+            StartCoroutine(ToGameOverScene());
         }
     }
 
@@ -122,5 +122,11 @@ public class HPController : MonoBehaviour
         {
             image[i].enabled = isDisp;
         }
+    }
+
+    IEnumerator ToGameOverScene()
+    {
+        yield return new WaitForSeconds(gameoverTime);
+        SceneManager.LoadScene("GameOverScense");
     }
 }
