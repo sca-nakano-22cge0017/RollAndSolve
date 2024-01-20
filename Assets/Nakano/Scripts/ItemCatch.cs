@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ItemCatch : MonoBehaviour
 {
     HPController hpController;
+    SecretCoin secretCoin;
 
     void Start()
     {
         hpController = GameObject.FindObjectOfType<HPController>();
+        secretCoin = GameObject.FindObjectOfType<SecretCoin>();
     }
 
     void Update()
@@ -32,7 +35,7 @@ public class ItemCatch : MonoBehaviour
 
             if (this.gameObject.tag == "SecretCoin")
             {
-                
+                secretCoin.CoinGet(this.gameObject.name);
             }
 
             Destroy(this.gameObject);

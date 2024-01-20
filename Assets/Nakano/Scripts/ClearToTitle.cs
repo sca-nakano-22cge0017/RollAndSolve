@@ -10,6 +10,11 @@ public class ClearToTitle : MonoBehaviour
     IEnumerator SceneChange()
     {
         yield return new WaitForSeconds(sec);
-        SceneManager.LoadScene("Title");
+
+        if (PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
+        {
+            SceneManager.LoadScene("BonusScene");
+        }
+        else SceneManager.LoadScene("Title");
     }
 }

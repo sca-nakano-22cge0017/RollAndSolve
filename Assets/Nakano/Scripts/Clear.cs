@@ -66,12 +66,20 @@ public class Clear : MonoBehaviour
         {
             case "Stage1":
                 DataSave(1);
-                SceneManager.LoadScene("StageSelect");
+                if(PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
+                {
+                    SceneManager.LoadScene("BonusScene");
+                }
+                else SceneManager.LoadScene("StageSelect");
                 break;
 
             case "Stage2":
                 DataSave(2);
-                SceneManager.LoadScene("StageSelect");
+                if (PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
+                {
+                    SceneManager.LoadScene("BonusScene");
+                }
+                else SceneManager.LoadScene("StageSelect");
                 break;
 
             case "Stage3":
