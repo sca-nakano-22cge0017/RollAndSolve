@@ -219,7 +219,7 @@ MonoBehaviour:
   leftRay: {fileID: 652666703174610984}
   rightRay: {fileID: 6388872423720123494}
   flyDir: {x: 10, y: 5, z: 0}
-  flySpeed: 5
+  flySpeed: 30
   flyAngle: -30
   track: 0
 --- !u!114 &679323721483181822
