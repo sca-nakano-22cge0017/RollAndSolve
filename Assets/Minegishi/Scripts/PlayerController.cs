@@ -122,30 +122,16 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Human:
                 if (Input.GetKeyDown(KeyCode.W))
                 {
-                    anim.SetTrigger("Change");
-                    //※形態変化時ワンクッション挟む 現在アニメーション再生途中で形態変わるので
-                    anim = playerAnims[0];
-                    playerMeshs[0].enabled = true;
-                    playerMeshs[1].enabled = false;
-                    playerMeshs[2].enabled = false;
+                    anim.SetBool("Change", true);
 
-                    playerstate = PlayerState.Circle;
-                    //sr.sprite = Circles;
-                    Debug.Log("球体です");
+                    StartCoroutine(ToBall());
                 }
                     Human();
                 break;
             case PlayerState.Circle:
                 if (Input.GetKeyDown(KeyCode.W))
                 {
-                    anim = playerAnims[1];
-                    playerMeshs[1].enabled = true;
-                    playerMeshs[0].enabled = false;
-                    playerMeshs[2].enabled = false;
-
-                    playerstate = PlayerState.Human;
-                    //sr.sprite = Humans;
-                    Debug.Log("人です");
+                    StartCoroutine(ToHuman());
                 }
                 Circle();
                 break;
@@ -485,6 +471,9 @@ public class PlayerController : MonoBehaviour
                     if(playerstate == PlayerState.Circle)
                     {
                         playerstate = PlayerState.Human;
+                        playerMeshs[1].enabled = true;
+                        playerMeshs[0].enabled = false;
+                        playerMeshs[2].enabled = false;
                     }
 
                     speed -= speed * 0.5f;
@@ -502,6 +491,9 @@ public class PlayerController : MonoBehaviour
                 if (playerstate == PlayerState.Circle)
                 {
                     playerstate = PlayerState.Human;
+                    playerMeshs[1].enabled = true;
+                    playerMeshs[0].enabled = false;
+                    playerMeshs[2].enabled = false;
                 }
 
                 speed -= speed * 0.5f;
@@ -606,5 +598,36 @@ public class PlayerController : MonoBehaviour
                 HpController.Hp--;
             }
         }
+    }
+
+    IEnumerator ToBall()
+    {
+        yield return new WaitForSeconds(1f);
+
+        anim = playerAnims[0];
+        playerMeshs[0].enabled = true;
+        playerMeshs[1].enabled = false;
+        playerMeshs[2].enabled = false;
+
+        playerstate = PlayerState.Circle;
+        //sr.sprite = Circles;
+        Debug.Log("球体です");
+    }
+
+    IEnumerator ToHuman()
+    {
+        yield return new WaitForEndOfFrame();
+
+        anim = playerAnims[1];
+        playerMeshs[1].enabled = true;
+        playerMeshs[0].enabled = false;
+        playerMeshs[2].enabled = false;
+
+        anim.SetBool("Change", false);
+        
+
+        playerstate = PlayerState.Human;
+        //sr.sprite = Humans;
+        Debug.Log("人です");
     }
 }
