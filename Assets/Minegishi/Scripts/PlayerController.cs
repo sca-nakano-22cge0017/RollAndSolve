@@ -584,7 +584,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!invincible)
         {
-            if (collision.gameObject.tag == "Thorn")
+            if (collision.gameObject.tag == "Thorn" ||
+                collision.gameObject.tag == "Poison")
             {
                 anim.SetTrigger("Damage");
                 //ƒJƒvƒZƒ‹ó‘Ô‰ğœ
