@@ -49596,7 +49596,7 @@ GameObject:
   - component: {fileID: 1212941460}
   - component: {fileID: 1212941464}
   m_Layer: 0
-  m_Name: Camerahani
+  m_Name: CameraMove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56228,7 +56228,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileSpriteIndex: 4294967295
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -56251,8 +56251,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 064ac9608fd33ac40beb9c28341a9b8d, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 1
     m_Data:
@@ -56882,7 +56882,7 @@ Transform:
   m_GameObject: {fileID: 1409715384}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4695606, y: 1.8795707, z: -10}
+  m_LocalPosition: {x: -0.24575233, y: 1.8795707, z: -10}
   m_LocalScale: {x: -0.01, y: -0.01, z: -0.01}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -73710,7 +73710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa93f5f0e17b52a40a1435c59548bdde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearText: {fileID: 474661141}
+  clearText: {fileID: 0}
   effectLeft: {fileID: 648040205}
   effectRight: {fileID: 1811789247}
 --- !u!4 &1771869897
@@ -88858,7 +88858,7 @@ PrefabInstance:
       objectReference: {fileID: 521470930}
     - target: {fileID: 958139759703802967, guid: 7b44810eb2c25d944a733a247916c71a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.34491253
+      value: 0.13816929
       objectReference: {fileID: 0}
     - target: {fileID: 1084820383416909700, guid: 7b44810eb2c25d944a733a247916c71a, type: 3}
       propertyPath: m_Follow
@@ -88866,11 +88866,11 @@ PrefabInstance:
       objectReference: {fileID: 196914543}
     - target: {fileID: 1271892406253451229, guid: 7b44810eb2c25d944a733a247916c71a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.8482475
+      value: 5.072056
       objectReference: {fileID: 0}
     - target: {fileID: 1381285678404300140, guid: 7b44810eb2c25d944a733a247916c71a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0033917427
+      value: 0.53644276
       objectReference: {fileID: 0}
     - target: {fileID: 1550136653088388113, guid: 7b44810eb2c25d944a733a247916c71a, type: 3}
       propertyPath: m_Follow
@@ -88910,11 +88910,11 @@ PrefabInstance:
       objectReference: {fileID: 1212941460}
     - target: {fileID: 8375718937601892705, guid: 7b44810eb2c25d944a733a247916c71a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.6415405
+      value: -7.9613714
       objectReference: {fileID: 0}
     - target: {fileID: 8814998469874131096, guid: 7b44810eb2c25d944a733a247916c71a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3149128
+      value: -0.831831
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
