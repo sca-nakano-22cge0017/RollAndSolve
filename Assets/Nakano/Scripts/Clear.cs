@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Clear : MonoBehaviour
 {
-    [SerializeField] Text clearText;
+    [SerializeField] Image clearText;
     Animator textAnim;
 
     [SerializeField] Image effectLeft;
@@ -18,18 +18,11 @@ public class Clear : MonoBehaviour
     TreasureController treasureController;
 
     bool textAnimEnd = false;
-    bool effectEnd = false;
 
     public bool TextAnimEnd
     {
         get { return textAnimEnd; }
         set { textAnimEnd = value; }
-    }
-
-    public bool EffectEnd
-    {
-        get { return effectEnd; }
-        set { effectEnd = value; }
     }
 
     void Start()
@@ -57,12 +50,6 @@ public class Clear : MonoBehaviour
             effectRight.enabled = true;
             effectLeftAnim.SetTrigger("Start");
             effectRightAnim.SetTrigger("Start");
-        }
-
-        if(effectEnd)
-        {
-            effectLeft.enabled = false;
-            effectRight.enabled = false;
             StartCoroutine(ToSelect());
         }
 
@@ -72,7 +59,7 @@ public class Clear : MonoBehaviour
 
     IEnumerator ToSelect()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2f);
         PlayerPrefs.SetInt("PlayingStage", 0);
 
         switch (SceneManager.GetActiveScene().name)
