@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(speed);
         if (!HpController.IsDown)
         {
             Run();
@@ -223,7 +224,7 @@ public class PlayerController : MonoBehaviour
                 {
                     speed += CirclesDeceleration * Time.deltaTime;
                 }
-                if(speed == CirclesMaxSpeed)
+                if(speed >= CirclesMaxSpeed)
                 {
                     speed = CirclesMaxSpeed;
                 }
@@ -284,7 +285,7 @@ public class PlayerController : MonoBehaviour
                 {
                     speed -= CirclesDeceleration * Time.deltaTime;
                 }
-                if (speed == -CirclesMaxSpeed)
+                if (speed <= -CirclesMaxSpeed)
                 {
                     speed = -CirclesMaxSpeed;
                 }
@@ -357,6 +358,7 @@ public class PlayerController : MonoBehaviour
                 playerMeshs[2].enabled = true;
                 playerMeshs[0].enabled = false;
                 playerMeshs[1].enabled = false;
+                anim.SetBool("Change", false);
             }
         }
         if(Input.GetKeyDown(KeyCode.D))
@@ -367,6 +369,7 @@ public class PlayerController : MonoBehaviour
                 playerMeshs[1].enabled = true;
                 playerMeshs[0].enabled = false;
                 playerMeshs[2].enabled = false;
+                anim.SetBool("Change", false);
             }
         }
 
@@ -451,12 +454,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Ground")
-        {
-            isGround = true;
-            anim.SetBool("Jump", false);
-        }
-
         if(!invincible) //–³“Gó‘Ô‚¶‚á‚È‚¢‚Æ‚«
         {
             if(collision.gameObject.tag == "Enemy")
@@ -528,6 +525,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGround = true;
+            anim.SetBool("Jump", false);
+        }
+
         if (collision.gameObject.tag == "Wall" ||
             collision.gameObject.tag == "Box")
         {
@@ -569,7 +572,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground" ||
+            collision.gameObject.tag == "Box")
         {
             isGround = false;
         }
