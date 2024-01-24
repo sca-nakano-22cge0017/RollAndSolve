@@ -9,15 +9,16 @@ public class ObjDestroy : MonoBehaviour
     Collider2D col;
     [SerializeField] AudioClip se;
     AudioSource audioSource;
-    [SerializeField, Header("çƒê∂ê¨Ç∑ÇÈÇ©Ç«Ç§Ç©")] bool isRecreate;
-    Transform tr;
+    Vector3 tr;
+    BoxesRecreate boxesRecreate;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
         playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        tr = GetComponent<Transform>();
+        tr = GetComponent<Transform>().position;
+        boxesRecreate = GameObject.FindObjectOfType<BoxesRecreate>();
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -28,14 +29,14 @@ public class ObjDestroy : MonoBehaviour
         {
             if (playerController.ObjectBreak)
             {
+                if(this.gameObject.tag == "Box")
+                {
+                    boxesRecreate.Recreate(tr);
+                }
+                
                 anim.SetTrigger("Break");
                 audioSource.PlayOneShot(se);
                 Destroy(col);
-
-                if(isRecreate)
-                {
-
-                }
             }
         }
     }
@@ -43,11 +44,5 @@ public class ObjDestroy : MonoBehaviour
     public void ThisDestroy()
     {
         Destroy(this.gameObject);
-    }
-
-    IEnumerator Recreate()
-    {
-        yield return new WaitForSeconds(2.0f);
-        
     }
 }

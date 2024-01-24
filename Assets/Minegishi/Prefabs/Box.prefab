@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.44, y: -3.2059448, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
+  m_LocalScale: {x: 0.03166667, y: 0.03166667, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5363788294038586170}
@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   se: {fileID: 8300000, guid: 8a45de8d70ada0a4b9aa34636be12830, type: 3}
+  boxesRecreate: {fileID: 0}
 --- !u!95 &2334162641464641945
 Animator:
   serializedVersion: 5
@@ -421,6 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   se: {fileID: 0}
+  boxesRecreate: {fileID: 0}
 --- !u!114 &9121059273869404684
 MonoBehaviour:
   m_ObjectHideFlags: 0
