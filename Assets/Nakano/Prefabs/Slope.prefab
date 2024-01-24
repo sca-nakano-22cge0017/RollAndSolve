@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 40687186675143542}
   m_Layer: 0
   m_Name: Slope
-  m_TagString: Ground
+  m_TagString: Slope
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

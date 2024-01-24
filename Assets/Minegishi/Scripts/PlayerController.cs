@@ -188,8 +188,8 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-        //Debug.Log(speed);
-        if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.A)))
+        Quaternion rotation = Quaternion.Euler(0, 0, 30);
+        if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.A))) //D‚ð‰Ÿ‚·
         {
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour
 
                 playerForms[0].GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
             }
-            transform.Translate(new Vector3(speed, 0,0) * Time.deltaTime) ;
+            transform.Translate(Quaternion.Euler(0, 0, 30) * new Vector3(speed, 0,0) * Time.deltaTime);
 
             if(playerstate == PlayerState.Human)
             {
@@ -246,6 +246,7 @@ public class PlayerController : MonoBehaviour
                 {
                     speed -= CirclesDeceleration * Time.deltaTime;
                 }
+
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
             }
         }
@@ -309,10 +310,6 @@ public class PlayerController : MonoBehaviour
                     speed += CirclesDeceleration * Time.deltaTime;
                 }
                 transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
-                if (speed >= 0.0f)
-                {
-                    //speed = 0.0f;
-                }
             }
         }
 
@@ -525,7 +522,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground" ||
+            collision.gameObject.tag == "Slope")
         {
             isGround = true;
             anim.SetBool("Jump", false);
@@ -573,6 +571,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground" ||
+            collision.gameObject.tag == "Slope" ||
             collision.gameObject.tag == "Box")
         {
             isGround = false;
