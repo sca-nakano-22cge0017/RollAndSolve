@@ -105,7 +105,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(speed);
         if (!HpController.IsDown)
         {
             Run();
@@ -438,6 +437,7 @@ public class PlayerController : MonoBehaviour
 
     private void Invincible() //ñ≥ìGèÛë‘
     {
+        Debug.Log("Damage");
         interval -= Time.deltaTime;
         
         if(interval <= 0)
@@ -584,7 +584,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (!invincible)
         {
