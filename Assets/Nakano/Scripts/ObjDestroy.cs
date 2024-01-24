@@ -9,12 +9,15 @@ public class ObjDestroy : MonoBehaviour
     Collider2D col;
     [SerializeField] AudioClip se;
     AudioSource audioSource;
+    [SerializeField, Header("çƒê∂ê¨Ç∑ÇÈÇ©Ç«Ç§Ç©")] bool isRecreate;
+    Transform tr;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
         playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        tr = GetComponent<Transform>();
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -28,6 +31,11 @@ public class ObjDestroy : MonoBehaviour
                 anim.SetTrigger("Break");
                 audioSource.PlayOneShot(se);
                 Destroy(col);
+
+                if(isRecreate)
+                {
+
+                }
             }
         }
     }
@@ -35,5 +43,11 @@ public class ObjDestroy : MonoBehaviour
     public void ThisDestroy()
     {
         Destroy(this.gameObject);
+    }
+
+    IEnumerator Recreate()
+    {
+        yield return new WaitForSeconds(2.0f);
+        
     }
 }
