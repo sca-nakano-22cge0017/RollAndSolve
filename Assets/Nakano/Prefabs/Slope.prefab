@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4420538044668190158}
   - component: {fileID: 759097480490869743}
   - component: {fileID: 40687186675143542}
+  - component: {fileID: 7231630969737907370}
   m_Layer: 0
   m_Name: Slope
   m_TagString: Slope
@@ -135,3 +136,17 @@ PolygonCollider2D:
       - {x: 0.50000894, y: -0.49959433}
       - {x: -0.4963392, y: 0.50003487}
   m_UseDelaunayMesh: 0
+--- !u!114 &7231630969737907370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4768893703195708624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 623c3309738e2404ea1220af85983c68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  num: 0
+  size: {x: 0, y: 0}
