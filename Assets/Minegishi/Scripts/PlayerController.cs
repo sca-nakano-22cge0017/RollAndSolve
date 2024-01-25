@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     Box box;
     HPController HpController;
     Animator anim;
+    Slope slope;
     [SerializeField] GameObject[] playerForms;
     [SerializeField] Animator[] playerAnims;
     [SerializeField] MeshRenderer[] playerMeshs;
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public PlayerState playerstate;
 
     private Rigidbody2D rb;
+
+    float angle = 0.0f;
 
     private float speed = 0;
     public float Speed
@@ -188,7 +191,6 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
-        Quaternion rotation = Quaternion.Euler(0, 0, 30);
         if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.A))) //Dを押す
         {
             RightDeceleration = false;
@@ -208,7 +210,7 @@ public class PlayerController : MonoBehaviour
 
                 playerForms[0].GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
             }
-            transform.Translate(Quaternion.Euler(0, 0, 30) * new Vector3(speed, 0,0) * Time.deltaTime);
+            transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0,0) * Time.deltaTime);
 
             if(playerstate == PlayerState.Human)
             {
@@ -247,11 +249,11 @@ public class PlayerController : MonoBehaviour
                     speed -= CirclesDeceleration * Time.deltaTime;
                 }
 
-                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
+                transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
             }
         }
 
-        if (Input.GetKey(KeyCode.A) && !(Input.GetKey(KeyCode.D)))
+        if (Input.GetKey(KeyCode.A) && !(Input.GetKey(KeyCode.D))) //Aを押す
         {
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -535,6 +537,12 @@ public class PlayerController : MonoBehaviour
             speed = 0.0f; //壁に当たったら速度をリセット
         }
 
+        //坂に当たったら坂を上るための角度を取得
+        if(collision.gameObject.tag == "Slope")
+        {
+            angle = slope.Angle;
+        }
+
         //人形態の時に箱に接触しているとき箱を押す
         if (playerstate == PlayerState.Human && collision.gameObject.tag == "Box")
         {
@@ -575,6 +583,11 @@ public class PlayerController : MonoBehaviour
             collision.gameObject.tag == "Box")
         {
             isGround = false;
+        }
+
+        if(collision.gameObject.tag == "Slope")
+        {
+            angle = 0;
         }
 
         if(collision.gameObject.tag == "Box")
