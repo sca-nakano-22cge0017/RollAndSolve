@@ -9,19 +9,14 @@ public class Slope : MonoBehaviour
     float angle;
 
     /// <summary>
-    /// 度数で返す
+    /// 度数法で返す 
+    /// var slope = collision.gameObject.GetComponent<Slope>();
+    /// angle = slope.Angle; 
+    /// rb.gravtyScale = 0;
     /// </summary>
     public float Angle
     {
         get { return angle; }
-    }
-
-    /// <summary>
-    /// 右向きか左向きかの変数 1なら右向き -1なら左向き
-    /// </summary>
-    public int Num
-    {
-        get { return num; }
     }
 
     private void Awake()
@@ -32,5 +27,6 @@ public class Slope : MonoBehaviour
 
         angle = Mathf.Atan2(size.y, size.x);
         angle = Mathf.Rad2Deg * angle;
+        if(num == -1) angle += 180.0f;
     }
 }
