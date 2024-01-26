@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     Box box;
     HPController HpController;
     Animator anim;
-    Slope slope;
+    //Slope slope;
     [SerializeField] GameObject[] playerForms;
     [SerializeField] Animator[] playerAnims;
     [SerializeField] MeshRenderer[] playerMeshs;
@@ -540,7 +540,9 @@ public class PlayerController : MonoBehaviour
         //â‚É“–‚½‚Á‚½‚çâ‚ğã‚é‚½‚ß‚ÌŠp“x‚ğæ“¾
         if(collision.gameObject.tag == "Slope")
         {
+            var slope = collision.gameObject.GetComponent<Slope>();
             angle = slope.Angle;
+            rb.gravityScale = 0;
         }
 
         //lŒ`‘Ô‚Ì‚É” ‚ÉÚG‚µ‚Ä‚¢‚é‚Æ‚«” ‚ğ‰Ÿ‚·
@@ -587,6 +589,7 @@ public class PlayerController : MonoBehaviour
 
         if(collision.gameObject.tag == "Slope")
         {
+            rb.gravityScale = 2;
             angle = 0;
         }
 
