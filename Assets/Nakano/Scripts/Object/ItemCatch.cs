@@ -38,6 +38,12 @@ public class ItemCatch : MonoBehaviour
                 secretCoin.CoinGet(this.gameObject.name);
             }
 
+            if(this.gameObject.name == "BigBonusCoin")
+            {
+                BonusClear bonusClear = GameObject.FindObjectOfType<BonusClear>();
+                bonusClear.Clear();
+            }
+
             Destroy(this.gameObject);
         }
     }
