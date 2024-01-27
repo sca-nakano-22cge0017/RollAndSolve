@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
     [Header("ƒTƒEƒ“ƒh")]
     [SerializeField] AudioClip Move;
     [SerializeField] AudioClip Jump;
+    [SerializeField] AudioClip Box;
     AudioSource audioSource;
     float soundSpan = 0.0f;
     
@@ -560,6 +561,7 @@ public class PlayerController : MonoBehaviour
                 box = obj.GetComponent<Box>();
                 box.BoxRightMove();
                 speed = 1.0f;
+                audioSource.PlayOneShot(Box);
             }
 
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.F))
@@ -572,6 +574,7 @@ public class PlayerController : MonoBehaviour
                 box = obj.GetComponent<Box>();
                 box.BoxLeftMove();
                 speed = -1.0f;
+                audioSource.PlayOneShot(Box);
             }
 
             if(Input.GetKeyUp(KeyCode.F) || !Input.GetKey(KeyCode.F)) anim.SetBool("Push", false);
