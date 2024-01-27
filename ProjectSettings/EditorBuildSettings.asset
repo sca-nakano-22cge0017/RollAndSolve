@@ -32,5 +32,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Nakano/Scenes/ClearScene.unity
     guid: fea6a10e01cd9fd4bb4b2cc255439ce6
+  - enabled: 1
+    path: Assets/Nakano/Scenes/BonusStage.unity
+    guid: 51dabd35cf3c3bf4ca5703e451bee0bb
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d9f1414ddf90e774392c70b13a5fe279, type: 2}

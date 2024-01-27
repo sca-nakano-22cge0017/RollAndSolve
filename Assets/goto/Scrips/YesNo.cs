@@ -11,20 +11,19 @@ public class YesNo : MonoBehaviour
 
     [SerializeField]
     Button StartButton;
-
     
     public void OnClick()
     {
         var isActive = Panel.activeInHierarchy; // Panelがアクティブか取得
         Panel.SetActive(!isActive);
 
-        var isActivee = Panel.activeInHierarchy; // Panelがアクティブか取得
+        var isActivee = Panel1.activeInHierarchy; // Panelがアクティブか取得
         Panel1.SetActive(!isActivee);
         //EventSystem.current.SetSelectedGameObject(null);
-       
+
+        StartButton.Select();
         if (isActive == false)
         {
-            StartButton.Select();
             Time.timeScale = 1;
         }
         else

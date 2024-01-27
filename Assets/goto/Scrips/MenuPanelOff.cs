@@ -18,22 +18,18 @@ public class MenuPanelOff : MonoBehaviour
   
     public void OnClick()
     {
-
-       
         var isActive = Panel.activeInHierarchy; // Panelがアクティブか取得
         Panel.SetActive(!isActive);
 
         var isActivee = Panel.activeInHierarchy; // Panelがアクティブか取得
         Panel1.SetActive(!isActivee);
         //EventSystem.current.SetSelectedGameObject(null);
-      
+
+        StartButton.Select();
         if (isActive == false)
         {
-            StartButton.Select();
+            Debug.Log("非表示");
             Time.timeScale = 1;
         }
-      
-      
-
     }
 }

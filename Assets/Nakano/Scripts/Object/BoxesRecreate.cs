@@ -24,7 +24,7 @@ public class BoxesRecreate : MonoBehaviour
 
     IEnumerator recreate(Vector3 tr)
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(5.0f);
         Instantiate(prefab, tr, Quaternion.identity, parent.transform);
     }
 }

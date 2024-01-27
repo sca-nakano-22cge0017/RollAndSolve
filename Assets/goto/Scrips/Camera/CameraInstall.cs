@@ -39,11 +39,11 @@ public class CameraInstall : MonoBehaviour
         {
             // 他のvirtualCameraよりも高い優先度にすることで切り替わる
             virtualCamera.Priority = 100;
-            virtualCamera.Priority1 = 0;
-            virtualCamera.Priority2 = 0;
-            virtualCamera.Priority3 = 0;
-            virtualCamera.Priority4 = 0;
-            virtualCamera.Priority5 = 0;
+            virtualCamera1.Priority = 0;
+            virtualCamera2.Priority = 0;
+            virtualCamera3.Priority = 0;
+            virtualCamera4.Priority = 0;
+            virtualCamera5.Priority = 0;
             Debug.Log("入ってる");
         }
     }
@@ -53,11 +53,11 @@ public class CameraInstall : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             // 元のpriorityに戻す
-            virtualCamera.Priority1 = 1;
-            virtualCamera.Priority2 = 0;
-            virtualCamera.Priority3 = 0;
-            virtualCamera.Priority4 = 0;
-            virtualCamera.Priority5 = 0;
+            virtualCamera1.Priority = 1;
+            virtualCamera2.Priority = 0;
+            virtualCamera3.Priority = 0;
+            virtualCamera4.Priority = 0;
+            virtualCamera5.Priority = 0;
             virtualCamera.Priority = 0;
             Debug.Log("スタートから出た");
         }

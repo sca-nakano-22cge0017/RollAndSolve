@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.U
+using UnityEngine.UI;
 
 public class StartClearPanel : MonoBehaviour
 {
@@ -27,7 +27,7 @@ public class StartClearPanel : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D) & Panel.SetActive(true))
+        if (Input.GetKeyDown(KeyCode.D) && Panel.activeSelf)
         {
           
             Panel.SetActive(false);

@@ -54,7 +54,7 @@ public class Clear : MonoBehaviour
         }
 
         //Debug—p íœ•K{
-        if(Input.GetKey(KeyCode.C)) { StartCoroutine(ToSelect()); }
+        //if(Input.GetKey(KeyCode.C)) { StartCoroutine(ToSelect()); }
     }
 
     IEnumerator ToSelect()
@@ -68,7 +68,7 @@ public class Clear : MonoBehaviour
                 DataSave(1);
                 if(PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
                 {
-                    SceneManager.LoadScene("BonusScene");
+                    SceneManager.LoadScene("BonusStage");
                 }
                 else SceneManager.LoadScene("StageSelect");
                 break;
@@ -77,7 +77,7 @@ public class Clear : MonoBehaviour
                 DataSave(2);
                 if (PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
                 {
-                    SceneManager.LoadScene("BonusScene");
+                    SceneManager.LoadScene("BonusStage");
                 }
                 else SceneManager.LoadScene("StageSelect");
                 break;

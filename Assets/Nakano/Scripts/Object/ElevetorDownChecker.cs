@@ -6,7 +6,7 @@ public class ElevetorDownChecker : MonoBehaviour
 {
     [SerializeField] Elevetor elevetor;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box"))
         {
@@ -14,7 +14,7 @@ public class ElevetorDownChecker : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box"))
         {
