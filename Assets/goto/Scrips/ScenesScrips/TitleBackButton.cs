@@ -23,7 +23,8 @@ public class TitleBackButton : MonoBehaviour
 
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
+        Time.timeScale = 1;
         SceneManager.LoadScene("Title");
     }
 }

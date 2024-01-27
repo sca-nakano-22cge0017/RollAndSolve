@@ -20,6 +20,7 @@ public class Stage3Button : MonoBehaviour
     }
     public void OnClick()
     {
+        Time.timeScale = 1;
         if (PlayerPrefs.GetInt("Clear2", 0) == 0)
         {
             chain.SetTrigger("CantPlay");

@@ -9,7 +9,7 @@ public class BonusClear : MonoBehaviour
 
     void Start()
     {
-        
+        PlayerPrefs.SetInt("SecretCoin", 0);
     }
 
     void Update()

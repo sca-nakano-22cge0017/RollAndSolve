@@ -10,7 +10,10 @@ public class StageRelease : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
         FirstClearCheck();
+
+        Debug.Log("Secret" + PlayerPrefs.GetInt("SecretCoin", 0));
     }
 
     void FirstClearCheck()

@@ -13,7 +13,7 @@ public class ClearToTitle : MonoBehaviour
 
         if (PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
         {
-            SceneManager.LoadScene("BonusScene");
+            SceneManager.LoadScene("BonusStage");
         }
         else SceneManager.LoadScene("Title");
     }

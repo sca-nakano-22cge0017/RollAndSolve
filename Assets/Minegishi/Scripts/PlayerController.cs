@@ -446,7 +446,7 @@ public class PlayerController : MonoBehaviour
                 alpha = 0;
             }else
                 alpha = 255;
-            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
+            //GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
             interval = 0.15f;
         }
     }
