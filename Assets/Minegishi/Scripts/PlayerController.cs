@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip Box;
     AudioSource audioSource;
     float soundSpan = 0.0f;
+    bool run = false;
     
 
     bool invincible = false; //無敵状態
@@ -112,7 +113,8 @@ public class PlayerController : MonoBehaviour
         if (!HpController.IsDown)
         {
             Run();
-            Sound();
+            PlayerJump();
+            MoveSound();
         }
         else anim.SetTrigger("Dead");
         
@@ -192,6 +194,11 @@ public class PlayerController : MonoBehaviour
 
     void Run()
     {
+        if(speed >= 1.0f || speed <= -1.0f)
+        {
+            run = true;
+        }
+
         if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.A))) //Dを押す
         {
             RightDeceleration = false;
@@ -383,7 +390,10 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("Dash", false);
         }
+    }
 
+    private void PlayerJump()
+    {
         //ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
@@ -394,7 +404,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Sound()
+    private void MoveSound()
     {
         if(soundSpan >= 0)
         {
@@ -405,14 +415,18 @@ public class PlayerController : MonoBehaviour
         if (playerstate == PlayerState.Circle && speed != 0 && soundSpan <= 0)
         {
             audioSource.PlayOneShot(Move);
-            soundSpan = 2.1f;
+            soundSpan = 0.68f;
         }
 
-        if(speed <= 0.5f  && speed >= -0.5f) //スピードが-0.5～0.5になったらストップ
+        if (run)
         {
-            audioSource.Stop();
-            soundSpan = 0.0f;
+            if (speed <= 0.8f && speed >= -0.8f) //スピードが-0.5～0.5になったらストップ
+            {
+                audioSource.Stop();
+                soundSpan = 0.0f;
+            }
         }
+
     }
 
     private void SpeedUp()

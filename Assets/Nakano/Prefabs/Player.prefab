@@ -79,7 +79,7 @@ MonoBehaviour:
   Brake: 1
   HumansJump: 650
   CirclesJump: 400
-  Move: {fileID: 8300000, guid: ac93a6c9403fbaa4a9ec74cef0c81a73, type: 3}
+  Move: {fileID: 8300000, guid: aa177784a1604b040be8811bcd8b8527, type: 3}
   Jump: {fileID: 8300000, guid: f6cfcd26ee03a664a817f9fe503ad400, type: 3}
   Box: {fileID: 8300000, guid: 93463d9b65c5f2d44ab4b890040f884e, type: 3}
 --- !u!70 &1168129430082255620
