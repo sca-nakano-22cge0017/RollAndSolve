@@ -99,11 +99,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96eb6a8d60ec50c439c745aa07765019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerForms: []
+  playerAnims: []
+  playerMeshs: []
+  playerstate: 0
   HumansAccelertion: 2
   CirclesAccelertion: 3
-  deceleration: 6
+  HumansMaxSpeed: 0
+  CirclesMaxSpeed: 0
+  HumansDeceleration: 0
+  CirclesDeceleration: 0
+  Brake: 0
   HumansJump: 400
   CirclesJump: 300
+  Move: {fileID: 0}
+  Jump: {fileID: 0}
 --- !u!70 &7460657729612316069
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
