@@ -13,13 +13,7 @@ public class CameraInstall : MonoBehaviour
   
     [SerializeField]
     private CinemachineVirtualCamera virtualCamera2;
-    [SerializeField]
-    private CinemachineVirtualCamera virtualCamera3;
-    [SerializeField]
-    private CinemachineVirtualCamera virtualCamera4;
-    [SerializeField]
-    private CinemachineVirtualCamera virtualCamera5;
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +26,7 @@ public class CameraInstall : MonoBehaviour
     {
        
     }
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         // 当たった相手に"Player"タグが付いていた場合
         if (other.gameObject.tag == "Player")
@@ -41,24 +35,21 @@ public class CameraInstall : MonoBehaviour
             virtualCamera.Priority = 100;
             virtualCamera1.Priority = 0;
             virtualCamera2.Priority = 0;
-            virtualCamera3.Priority = 0;
-            virtualCamera4.Priority = 0;
-            virtualCamera5.Priority = 0;
+          
             Debug.Log("入ってる");
         }
     }
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         // 当たった相手に"Player"タグが付いていた場合
         if (other.gameObject.tag == "Player")
         {
-            // 元のpriorityに戻す
-            virtualCamera1.Priority = 1;
-            virtualCamera2.Priority = 0;
-            virtualCamera3.Priority = 0;
-            virtualCamera4.Priority = 0;
-            virtualCamera5.Priority = 0;
+            // 元のpriorityに戻す]
             virtualCamera.Priority = 0;
+            virtualCamera1.Priority = 100;
+            virtualCamera2.Priority = 0;
+           
+         
             Debug.Log("スタートから出た");
         }
     
