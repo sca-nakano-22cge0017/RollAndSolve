@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ステージクリア演出の1つ
+/// 宝箱から出てきたメダルの動きを制御
+/// </summary>
 public class CoinMove : MonoBehaviour
 {
     [SerializeField, Header("メダル上昇スピード")] float medalSpeed;
@@ -29,6 +33,7 @@ public class CoinMove : MonoBehaviour
         playerPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
         medalPos = transform.position;
 
+        //上昇
         if (transform.localPosition.y < 1.0f)
         {
             transform.Translate(Vector3.up * medalSpeed * Time.deltaTime);
@@ -37,11 +42,13 @@ public class CoinMove : MonoBehaviour
 
         if(isMove)
         {
+            //縮小
             if (transform.localScale.x > 0)
             {
                 transform.localScale -= new Vector3(redSpeed, redSpeed, 0) * Time.deltaTime;
             }
 
+            //プレイヤーの位置へ移動
             if (Vector3.Distance(medalPos, playerPos) >= 0)
             {
                 Vector3 dis = (playerPos - medalPos).normalized;

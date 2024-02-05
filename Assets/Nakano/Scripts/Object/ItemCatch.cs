@@ -7,11 +7,13 @@ public class ItemCatch : MonoBehaviour
 {
     HPController hpController;
     SecretCoin secretCoin;
+    SEController seController;
 
     void Start()
     {
         hpController = GameObject.FindObjectOfType<HPController>();
         secretCoin = GameObject.FindObjectOfType<SecretCoin>();
+        seController = GameObject.FindObjectOfType<SEController>();
     }
 
     void Update()
@@ -21,9 +23,10 @@ public class ItemCatch : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
-            if(this.gameObject.tag == "HealHeart" && hpController.Hp < hpController.HpLimit)
+            seController.ItemCatch();
+            if (this.gameObject.tag == "HealHeart" && hpController.Hp < hpController.HpLimit)
             {
                 hpController.Hp++;
             }

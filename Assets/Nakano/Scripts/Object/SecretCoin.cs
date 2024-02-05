@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// 隠しアイテム(SecretCoin)の取得
+/// </summary>
 public class SecretCoin : MonoBehaviour
 {
     [SerializeField] SpriteRenderer[] coin;
@@ -18,6 +21,7 @@ public class SecretCoin : MonoBehaviour
         
     }
 
+    //SecretCoinを獲得した時の処理
     public void CoinGet(string name)
     {
         //初獲得
@@ -31,6 +35,7 @@ public class SecretCoin : MonoBehaviour
         }
     }
 
+    //マップ上のSecretCoinが獲得済みか確認する
     void CoinCheck()
     {
         for(int i = 1; i <= coin.Length; i++)

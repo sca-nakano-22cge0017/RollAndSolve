@@ -7,10 +7,9 @@ public class ObjDestroy : MonoBehaviour
     Animator anim;
     PlayerController playerController;
     Collider2D col;
-    [SerializeField] AudioClip se;
-    AudioSource audioSource;
     Vector3 tr;
     BoxesRecreate boxesRecreate;
+    SEController seController;
 
     void Start()
     {
@@ -20,7 +19,7 @@ public class ObjDestroy : MonoBehaviour
         tr = GetComponent<Transform>().position;
         boxesRecreate = GameObject.FindObjectOfType<BoxesRecreate>();
 
-        audioSource = GetComponent<AudioSource>();
+        seController = GameObject.FindObjectOfType<SEController>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -32,10 +31,15 @@ public class ObjDestroy : MonoBehaviour
                 if(this.gameObject.tag == "Box")
                 {
                     boxesRecreate.Recreate(tr);
+                    seController.BoxDestroy();
+                }
+
+                if(this.gameObject.name == "Board")
+                {
+                    seController.BoardDestroy();
                 }
                 
                 anim.SetTrigger("Break");
-                audioSource.PlayOneShot(se);
                 Destroy(col);
             }
         }
