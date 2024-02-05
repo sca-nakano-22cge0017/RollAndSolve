@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1311304538119416239}
   - component: {fileID: 6779054992515263141}
   - component: {fileID: 3096852246477221810}
-  - component: {fileID: 4531007380515307493}
   - component: {fileID: 3208376512039723769}
   m_Layer: 0
   m_Name: ThornBall
@@ -150,22 +149,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &4531007380515307493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7407261899382976128}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6ea769cf9dcd6346b44672c79510901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  isReverse: 0
-  radius: 0.001
-  stopTime: 0.5
 --- !u!114 &3208376512039723769
 MonoBehaviour:
   m_ObjectHideFlags: 0

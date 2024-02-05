@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// クリア時演出・シーン遷移
+/// </summary>
 public class Clear : MonoBehaviour
 {
     [SerializeField] Image clearText;
@@ -19,9 +22,9 @@ public class Clear : MonoBehaviour
 
     bool textAnimEnd = false;
 
+    //「ステージクリア」の文字の演出が終了したかどうかを貰う
     public bool TextAnimEnd
     {
-        get { return textAnimEnd; }
         set { textAnimEnd = value; }
     }
 
@@ -31,25 +34,30 @@ public class Clear : MonoBehaviour
         textAnim = clearText.GetComponent<Animator>();
         effectLeftAnim = effectLeft.GetComponent<Animator>();
         effectRightAnim = effectRight.GetComponent<Animator>();
-        effectRightAnim = effectRight.GetComponent<Animator>();
         clearText.enabled = false;
     }
 
     void Update()
     {
+        //宝箱からクリア判定を貰う
         isClear = treasureController.IsClear;
+
+        //クリアしたら
         if(isClear)
         {
             clearText.enabled = true;
             textAnim.SetTrigger("TextMove");
         }
 
+        //「ステージクリア」の文字の演出が終わったら
         if(textAnimEnd)
         {
+            //星がキラキラ光る演出を再生
             effectLeft.enabled = true;
             effectRight.enabled = true;
             effectLeftAnim.SetTrigger("Start");
             effectRightAnim.SetTrigger("Start");
+
             StartCoroutine(ToSelect());
         }
 
@@ -57,6 +65,7 @@ public class Clear : MonoBehaviour
         //if(Input.GetKey(KeyCode.C)) { StartCoroutine(ToSelect()); }
     }
 
+    //ステージに応じたシーン遷移・ステージクリアについての情報保存
     IEnumerator ToSelect()
     {
         yield return new WaitForSeconds(2f);
@@ -66,20 +75,10 @@ public class Clear : MonoBehaviour
         {
             case "Stage1":
                 DataSave(1);
-                if(PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
-                {
-                    SceneManager.LoadScene("BonusStage");
-                }
-                else SceneManager.LoadScene("StageSelect");
                 break;
 
             case "Stage2":
                 DataSave(2);
-                if (PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
-                {
-                    SceneManager.LoadScene("BonusStage");
-                }
-                else SceneManager.LoadScene("StageSelect");
                 break;
 
             case "Stage3":
@@ -89,6 +88,10 @@ public class Clear : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ステージクリアについての情報保存
+    /// </summary>
+    /// <param name="num">ステージの番号</param>
     void DataSave(int num)
     {
         //初クリアかどうかを保存
@@ -101,5 +104,16 @@ public class Clear : MonoBehaviour
         PlayerPrefs.SetInt("Clear" + num.ToString(), 1);
 
         PlayerPrefs.Save();
+
+        //ステージ１、２のとき、隠しコインが9枚揃っていたらボーナスステージへ飛ぶ
+        //そうじゃなければステージ選択画面へ
+        if(num < 3)
+        {
+            if (PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
+            {
+                SceneManager.LoadScene("BonusStage");
+            }
+            else SceneManager.LoadScene("StageSelect");
+        }
     }
 }
