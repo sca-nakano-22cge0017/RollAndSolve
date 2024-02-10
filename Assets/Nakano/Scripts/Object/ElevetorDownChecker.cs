@@ -8,17 +8,17 @@ public class ElevetorDownChecker : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box"))
-        {
-            elevetor.IsMin = true;
-        }
+        elevetor.IsMin = true;
+        //if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box"))
+        //{
+        //}
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box"))
-        {
-            elevetor.IsMin = false;
-        }
+        elevetor.IsMin = false;
+        //if (collision.gameObject.name == "Concrete" || collision.gameObject.CompareTag("Box"))
+        //{
+        //}
     }
 }
