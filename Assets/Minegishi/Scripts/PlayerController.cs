@@ -86,6 +86,8 @@ public class PlayerController : MonoBehaviour
     int alpha = 255;
     float interval = 0.15f;
 
+    bool isPushing = false;
+
     void Start()
     {
         this.HpController = FindObjectOfType<HPController>();
@@ -113,6 +115,7 @@ public class PlayerController : MonoBehaviour
         if (!HpController.IsDown)
         {
             Run();
+            Push();
             PlayerJump();
             MoveSound();
         }
@@ -392,6 +395,45 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 木箱を押すアニメーションの再生・停止、木箱の移動
+    /// </summary>
+    void Push()
+    {
+        if (isPushing)
+        {
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("push") && !anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
+                anim.SetBool("Push", true);
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                box.BoxRightMove();
+            }
+
+            if(Input.GetKey(KeyCode.A))
+            {
+                box.BoxLeftMove();
+            }
+
+            //木箱のSE
+            if (soundSpan >= 0)
+            {
+                soundSpan -= Time.deltaTime;
+            }
+
+            if (soundSpan <= 0.0f)
+            {
+                audioSource.PlayOneShot(Box);
+                soundSpan = 1.752f;
+            }
+        }
+
+        else
+        {
+            anim.SetBool("Push", false);
+        }
+    }
+
     private void PlayerJump()
     {
         //ジャンプ
@@ -546,8 +588,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Jump", false);
         }
 
-        if (collision.gameObject.tag == "Wall" ||
-            collision.gameObject.tag == "Box")
+        if (collision.gameObject.tag == "Wall")
         {
             speed = 0.0f; //壁に当たったら速度をリセット
         }
@@ -560,38 +601,55 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = 0;
         }
 
-        //人形態の時に箱に接触しているとき箱を押す
-        if (playerstate == PlayerState.Human && collision.gameObject.tag == "Box")
+        if (collision.gameObject.tag == "Box")
         {
-            isGround = true;
-            Debug.Log("衝突");
-
-            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.F))
+            foreach(ContactPoint2D contact in collision.contacts)
             {
-                if(!anim.GetCurrentAnimatorStateInfo(0).IsName("push") && !anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
-                    anim.SetBool("Push", true);
+                var hitPoint = contact.point;
+                var sub = hitPoint.y - transform.position.y;
 
-                var obj = collision.gameObject; 
-                box = obj.GetComponent<Box>();
-                box.BoxRightMove();
-                speed = 1.0f;
-                audioSource.PlayOneShot(Box);
+                //左右に木箱があったら
+                if (sub <= 0.7f && sub >= -0.7f)
+                {
+                    //左右方向でぶつかったら止まる
+                    speed = 0.0f;
+
+                    //人形態の時に箱に接触しているとき箱を押す
+                    if (playerstate == PlayerState.Human)
+                    {
+                        //箱を押す
+                        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.F))
+                        {
+                            isPushing = true;
+                            var obj = collision.gameObject;
+                            box = obj.GetComponent<Box>();
+                            speed = 1.0f;
+                            //audioSource.PlayOneShot(Box);
+                        }
+
+                        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.F))
+                        {
+                            isPushing = true;
+                            var obj = collision.gameObject;
+                            box = obj.GetComponent<Box>();
+                            speed = -1.0f;
+                            //audioSource.PlayOneShot(Box);
+                        }
+
+                        if (Input.GetKeyUp(KeyCode.F) || !Input.GetKey(KeyCode.F))
+                        {
+                            isPushing = false;
+                        }
+                    }
+                }
+                if(sub < -0.7f)
+                {
+                    isGround = true;
+                    anim.SetBool("Jump", false);
+                }
             }
 
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.F))
-            {
-                Debug.Log("test");
-                if (!anim.GetCurrentAnimatorStateInfo(0).IsName("push") && !anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
-                    anim.SetBool("Push", true);
-
-                var obj = collision.gameObject;
-                box = obj.GetComponent<Box>();
-                box.BoxLeftMove();
-                speed = -1.0f;
-                audioSource.PlayOneShot(Box);
-            }
-
-            if(Input.GetKeyUp(KeyCode.F) || !Input.GetKey(KeyCode.F)) anim.SetBool("Push", false);
+            //Debug.Log("衝突");
         }
     }
 
