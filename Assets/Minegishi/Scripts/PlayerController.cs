@@ -383,8 +383,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
+            if(!anim.GetCurrentAnimatorStateInfo(0).IsName("dash"))
             anim.SetBool("Dash", true);
         }
         if (speed <= 5f && speed >= -5f && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
