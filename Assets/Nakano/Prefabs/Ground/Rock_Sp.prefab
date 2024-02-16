@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 956710042283938381}
   - component: {fileID: 8780135031773144904}
   m_Layer: 0
-  m_Name: Concrete_Sp
+  m_Name: Rock_Sp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

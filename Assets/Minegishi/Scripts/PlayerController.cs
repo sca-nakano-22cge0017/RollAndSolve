@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     public enum PlayerState { Human, Circle}
     public PlayerState playerstate;
 
+    //ポーズ状態
+    bool isPause = false;
+    public bool IsPause { get { return isPause;} set { isPause = value;} }
+
     private Rigidbody2D rb;
 
     float angle = 0.0f;
@@ -81,12 +85,14 @@ public class PlayerController : MonoBehaviour
     float interval = 0.15f;
 
     bool isPushing = false; //木箱を押している最中ならtrue
+    [SerializeField, Header("木箱を押すときの長押し必要時間")] float pushTime = 0.2f;
+    float pTime = 0;
+    bool isPushCount = false;
 
     void Start()
     {
         this.HpController = FindObjectOfType<HPController>();
         rb = GetComponent<Rigidbody2D>();
-        //sr = gameObject.GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         playerstate = PlayerState.Circle;
         HumansSpeed = HumansAccelertion; //速度初期化
@@ -106,7 +112,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!HpController.IsDown)
+        //Hpが0じゃないとき　ポーズ状態じゃないとき
+        if (!HpController.IsDown && !isPause)
         {
             Run();
             Push();
@@ -352,12 +359,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //Spine
+        //Spine キーが押された瞬間アニメーション・表示イラストを切り替える
         if(Input.GetKeyDown(KeyCode.A))
         {
             if(playerstate == PlayerState.Human)
             {
-                anim = playerAnims[2]; //左向き
+                anim = playerAnims[2]; //左向きのアニメーション
                 playerMeshs[2].enabled = true;
                 playerMeshs[0].enabled = false;
                 playerMeshs[1].enabled = false;
@@ -368,7 +375,7 @@ public class PlayerController : MonoBehaviour
         {
             if (playerstate == PlayerState.Human)
             {
-                anim = playerAnims[1]; //右向き
+                anim = playerAnims[1]; //右向きのアニメーション
                 playerMeshs[1].enabled = true;
                 playerMeshs[0].enabled = false;
                 playerMeshs[2].enabled = false;
@@ -378,10 +385,7 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
-            if ((!Input.GetKey(KeyCode.F) && playerstate == PlayerState.Human) || playerstate == PlayerState.Circle)
-            {
-                anim.SetBool("Dash", true);
-            }
+            anim.SetBool("Dash", true);
         }
         if (speed <= 5f && speed >= -5f && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
@@ -423,10 +427,49 @@ public class PlayerController : MonoBehaviour
                 soundSpan = 1.752f;
             }
         }
-
         else
         {
             anim.SetBool("Push", false);
+        }
+
+        if(isPushCount)
+        {
+            pTime += Time.deltaTime;
+
+            if (pTime >= pushTime) isPushing = true;
+            else isPushing = false;
+        }
+        else pTime = 0;
+
+        //キーから手が離れているとき またはAとDを両方押しているとき木箱を押せない
+        if ((!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) ||
+            (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)))
+        {
+            isPushCount = false;
+            isPushing = false;
+            box = null;
+            anim.SetBool("Push",false);
+        }
+
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        {
+            if (playerstate == PlayerState.Human)
+            {
+                anim = playerAnims[2]; //左向きのアニメーション
+                playerMeshs[2].enabled = true;
+                playerMeshs[0].enabled = false;
+                playerMeshs[1].enabled = false;
+            }
+        }
+        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+        {
+            if (playerstate == PlayerState.Human)
+            {
+                anim = playerAnims[1]; //右向きのアニメーション
+                playerMeshs[1].enabled = true;
+                playerMeshs[0].enabled = false;
+                playerMeshs[2].enabled = false;
+            }
         }
     }
 
@@ -622,6 +665,7 @@ public class PlayerController : MonoBehaviour
         {
             foreach(ContactPoint2D contact in collision.contacts)
             {
+                //衝突位置を取得
                 var hitPoint = contact.point;
                 var sub = hitPoint.y - transform.position.y;
 
@@ -634,28 +678,24 @@ public class PlayerController : MonoBehaviour
                     //人形態の時に箱に接触しているとき
                     if (playerstate == PlayerState.Human)
                     {
-                        //D F 同時押しで右へ箱を押す
-                        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.F))
+                        //D長押しで右に木箱を押す
+                        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
                         {
-                            isPushing = true;
+                            isPushCount = true;
+
                             var obj = collision.gameObject;
                             box = obj.GetComponent<Box>();
                             speed = 1.0f;
                         }
 
-                        //A F 同時押しで左へ箱を押す
-                        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.F))
+                        //A長押しで左に木箱を押す
+                        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
                         {
-                            isPushing = true;
+                            isPushCount = true;
+
                             var obj = collision.gameObject;
                             box = obj.GetComponent<Box>();
                             speed = -1.0f;
-                        }
-
-                        //Fキーから手を離した瞬間/離れているとき
-                        if (Input.GetKeyUp(KeyCode.F) || !Input.GetKey(KeyCode.F))
-                        {
-                            isPushing = false;
                         }
                     }
                 }
@@ -688,6 +728,7 @@ public class PlayerController : MonoBehaviour
             }
 
             isPushing = false;
+            isPushCount = false;
             anim.SetBool("Push", false);
         }
 
