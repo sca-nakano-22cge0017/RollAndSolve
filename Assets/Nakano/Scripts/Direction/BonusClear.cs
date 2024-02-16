@@ -11,8 +11,6 @@ public class BonusClear : MonoBehaviour
     [SerializeField] Animator[] start;
     [SerializeField] Animator thank;
 
-    [SerializeField] GameObject fade;
-
     PlayerController playerController;
 
     void Start()
@@ -56,18 +54,13 @@ public class BonusClear : MonoBehaviour
 
         thank.SetBool("Clear", true);
         playerController.IsPause = true;
-
         StartCoroutine(SceneChange());
     }
 
     IEnumerator SceneChange()
     {
-        yield return new WaitForSeconds(2);
-
-        //円形フェードアウト
-        fade.SetActive(true);
-
-        yield return new WaitForSeconds(2);
+        //ToDo 円形フェードアウト
+        yield return new WaitForSeconds(5);
         SceneManager.LoadScene("Title");
     }
 }
