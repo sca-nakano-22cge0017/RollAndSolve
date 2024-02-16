@@ -11,13 +11,17 @@ public class BonusClear : MonoBehaviour
     [SerializeField] Animator[] start;
     [SerializeField] Animator thank;
 
+    PlayerController playerController;
+
     void Start()
     {
+        playerController = GameObject.FindObjectOfType<PlayerController>();
+        playerController.IsPause = true;
+
         //隠しアイテム取得数を初期化
         PlayerPrefs.SetInt("SecretCoin", 0);
 
         Time.timeScale = 0;
-        //PlayerのStateに操作を受け付けないモードを作って、それに変更する方が良いかも
         StartCoroutine(BonusStart());
     }
 
@@ -38,6 +42,10 @@ public class BonusClear : MonoBehaviour
 
         start[0].SetBool("Start", true);
         start[1].SetBool("Start", true);
+
+        yield return new WaitForSeconds(1.54f);
+
+        playerController.IsPause = false;
     }
 
     public void Clear()
@@ -45,6 +53,7 @@ public class BonusClear : MonoBehaviour
         Time.timeScale = 0;
 
         thank.SetBool("Clear", true);
+        playerController.IsPause = true;
         StartCoroutine(SceneChange());
     }
 

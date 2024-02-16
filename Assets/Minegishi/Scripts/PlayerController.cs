@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     public enum PlayerState { Human, Circle}
     public PlayerState playerstate;
 
+    //ポーズ状態
+    bool isPause = false;
+    public bool IsPause { get { return isPause;} set { isPause = value;} }
+
     private Rigidbody2D rb;
 
     float angle = 0.0f;
@@ -66,12 +70,7 @@ public class PlayerController : MonoBehaviour
     float speedUpCount = 7.0f; //スピードアップのアイテムを取った時の上昇する時間
 
     bool isGround = false;
-
-    //[Header("プレイヤーの画像")]
-    //[SerializeField] Sprite Humans;
-    //[SerializeField] Sprite Circles;
-    //SpriteRenderer sr;
-
+    
     [Header("サウンド")]
     [SerializeField] AudioClip Move;
     [SerializeField] AudioClip Jump;
@@ -80,19 +79,20 @@ public class PlayerController : MonoBehaviour
     float soundSpan = 0.0f;
     bool run = false;
     
-
     bool invincible = false; //無敵状態
     float invincibleTime = 3.0f; //無敵時間
     int alpha = 255;
     float interval = 0.15f;
 
-    bool isPushing = false;
+    bool isPushing = false; //木箱を押している最中ならtrue
+    [SerializeField, Header("木箱を押すときの長押し必要時間")] float pushTime = 0.2f;
+    float pTime = 0;
+    bool isPushCount = false;
 
     void Start()
     {
         this.HpController = FindObjectOfType<HPController>();
         rb = GetComponent<Rigidbody2D>();
-        //sr = gameObject.GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         playerstate = PlayerState.Circle;
         HumansSpeed = HumansAccelertion; //速度初期化
@@ -112,7 +112,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!HpController.IsDown)
+        //Hpが0じゃないとき　ポーズ状態じゃないとき
+        if (!HpController.IsDown && !isPause)
         {
             Run();
             Push();
@@ -248,7 +249,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (RightDeceleration)
         {
-            Debug.Log("Dを離す");
+            //Debug.Log("Dを離す");
             if (speed > 0)
             {
                 if (playerstate == PlayerState.Human)
@@ -311,7 +312,7 @@ public class PlayerController : MonoBehaviour
         }
         if (LeftDeceleration)
         {
-            Debug.Log("Aを離す");
+            //Debug.Log("Aを離す");
             if (speed < 0)
             {
                 if (playerstate == PlayerState.Human)
@@ -358,12 +359,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //Spine
+        //Spine キーが押された瞬間アニメーション・表示イラストを切り替える
         if(Input.GetKeyDown(KeyCode.A))
         {
             if(playerstate == PlayerState.Human)
             {
-                anim = playerAnims[2]; //左向き
+                anim = playerAnims[2]; //左向きのアニメーション
                 playerMeshs[2].enabled = true;
                 playerMeshs[0].enabled = false;
                 playerMeshs[1].enabled = false;
@@ -374,7 +375,7 @@ public class PlayerController : MonoBehaviour
         {
             if (playerstate == PlayerState.Human)
             {
-                anim = playerAnims[1]; //右向き
+                anim = playerAnims[1]; //右向きのアニメーション
                 playerMeshs[1].enabled = true;
                 playerMeshs[0].enabled = false;
                 playerMeshs[2].enabled = false;
@@ -384,12 +385,9 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
         {
-            if ((!Input.GetKey(KeyCode.F) && playerstate == PlayerState.Human) || playerstate == PlayerState.Circle)
-            {
-                anim.SetBool("Dash", true);
-            }
+            anim.SetBool("Dash", true);
         }
-        if (speed <= 1f && speed >= -1f && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        if (speed <= 5f && speed >= -5f && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
             anim.SetBool("Dash", false);
         }
@@ -402,20 +400,22 @@ public class PlayerController : MonoBehaviour
     {
         if (isPushing)
         {
+            //押しているor押し始めのアニメーションが再生中でなければ
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("push") && !anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
-                anim.SetBool("Push", true);
+                anim.SetBool("Push", true); //押し始めのアニメーションに遷移
 
-            if (Input.GetKey(KeyCode.D))
+            //木箱移動
+            if (Input.GetKey(KeyCode.D) && box != null)
             {
                 box.BoxRightMove();
             }
 
-            if(Input.GetKey(KeyCode.A))
+            if(Input.GetKey(KeyCode.A) && box != null)
             {
                 box.BoxLeftMove();
             }
 
-            //木箱のSE
+            //木箱引きずりのSE
             if (soundSpan >= 0)
             {
                 soundSpan -= Time.deltaTime;
@@ -427,10 +427,49 @@ public class PlayerController : MonoBehaviour
                 soundSpan = 1.752f;
             }
         }
-
         else
         {
             anim.SetBool("Push", false);
+        }
+
+        if(isPushCount)
+        {
+            pTime += Time.deltaTime;
+
+            if (pTime >= pushTime) isPushing = true;
+            else isPushing = false;
+        }
+        else pTime = 0;
+
+        //キーから手が離れているとき またはAとDを両方押しているとき木箱を押せない
+        if ((!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) ||
+            (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)))
+        {
+            isPushCount = false;
+            isPushing = false;
+            box = null;
+            anim.SetBool("Push",false);
+        }
+
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        {
+            if (playerstate == PlayerState.Human)
+            {
+                anim = playerAnims[2]; //左向きのアニメーション
+                playerMeshs[2].enabled = true;
+                playerMeshs[0].enabled = false;
+                playerMeshs[1].enabled = false;
+            }
+        }
+        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+        {
+            if (playerstate == PlayerState.Human)
+            {
+                anim = playerAnims[1]; //右向きのアニメーション
+                playerMeshs[1].enabled = true;
+                playerMeshs[0].enabled = false;
+                playerMeshs[2].enabled = false;
+            }
         }
     }
 
@@ -442,7 +481,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Jump", true);
             this.rb.AddForce(transform.up * jumpForce);
             audioSource.PlayOneShot(Jump);
-            Debug.Log(jumpForce);
+            //Debug.Log(jumpForce);
         }
     }
 
@@ -555,19 +594,41 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(collision.gameObject.tag == "Box") //箱を破壊
+        //着地アニメーション
+        if (collision.gameObject.tag == "Ground" ||
+            collision.gameObject.tag == "Slope")
         {
+            isGround = true;
+            anim.SetBool("Jump", false);
+        }
+
+        if (collision.gameObject.tag == "Box")
+        {
+            //箱を破壊
             if (Input.GetKey(KeyCode.D) && objectBreak)
             {
                 speed -= speed * 0.2f;
-                Debug.Log("箱を破壊");
+                //Debug.Log("箱を破壊");
                 //Destroy(collision.gameObject);
             }
             if (Input.GetKey(KeyCode.A) && objectBreak)
             {
                 speed -= speed * 0.2f;
-                Debug.Log("箱を破壊");
+                //Debug.Log("箱を破壊");
                 //Destroy(collision.gameObject);
+            }
+
+            //着地アニメーション 木箱の上での着地判定
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                var hitPoint = contact.point;
+                var sub = hitPoint.y - transform.position.y;
+
+                if (sub < -0.7f)
+                {
+                    isGround = true;
+                    anim.SetBool("Jump", false);
+                }
             }
         }
 
@@ -585,7 +646,6 @@ public class PlayerController : MonoBehaviour
             collision.gameObject.tag == "Slope")
         {
             isGround = true;
-            anim.SetBool("Jump", false);
         }
 
         if (collision.gameObject.tag == "Wall")
@@ -605,6 +665,7 @@ public class PlayerController : MonoBehaviour
         {
             foreach(ContactPoint2D contact in collision.contacts)
             {
+                //衝突位置を取得
                 var hitPoint = contact.point;
                 var sub = hitPoint.y - transform.position.y;
 
@@ -614,38 +675,29 @@ public class PlayerController : MonoBehaviour
                     //左右方向でぶつかったら止まる
                     speed = 0.0f;
 
-                    //人形態の時に箱に接触しているとき箱を押す
+                    //人形態の時に箱に接触しているとき
                     if (playerstate == PlayerState.Human)
                     {
-                        //箱を押す
-                        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.F))
+                        //D長押しで右に木箱を押す
+                        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
                         {
-                            isPushing = true;
+                            isPushCount = true;
+
                             var obj = collision.gameObject;
                             box = obj.GetComponent<Box>();
                             speed = 1.0f;
-                            //audioSource.PlayOneShot(Box);
                         }
 
-                        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.F))
+                        //A長押しで左に木箱を押す
+                        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
                         {
-                            isPushing = true;
+                            isPushCount = true;
+
                             var obj = collision.gameObject;
                             box = obj.GetComponent<Box>();
                             speed = -1.0f;
-                            //audioSource.PlayOneShot(Box);
-                        }
-
-                        if (Input.GetKeyUp(KeyCode.F) || !Input.GetKey(KeyCode.F))
-                        {
-                            isPushing = false;
                         }
                     }
-                }
-                if(sub < -0.7f)
-                {
-                    isGround = true;
-                    anim.SetBool("Jump", false);
                 }
             }
 
@@ -656,21 +708,34 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground" ||
-            collision.gameObject.tag == "Slope" ||
-            collision.gameObject.tag == "Box")
+            collision.gameObject.tag == "Slope")
         {
             isGround = false;
+        }
+
+        if(collision.gameObject.tag == "Box")
+        {
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                var hitPoint = contact.point;
+                var sub = hitPoint.y - transform.position.y;
+
+                //左右に木箱があったら
+                if (sub < -0.7f)
+                {
+                    isGround = false;
+                }
+            }
+
+            isPushing = false;
+            isPushCount = false;
+            anim.SetBool("Push", false);
         }
 
         if(collision.gameObject.tag == "Slope")
         {
             rb.gravityScale = 2;
             angle = 0;
-        }
-
-        if(collision.gameObject.tag == "Box")
-        {
-            anim.SetBool("Push", false);
         }
     }
 

@@ -11,6 +11,8 @@ public class ObjDestroy : MonoBehaviour
     BoxesRecreate boxesRecreate;
     SEController seController;
 
+    [SerializeField, Header("”j‰óŒã•œŠˆ‚·‚é‚©‚Ç‚¤‚©")] bool isRecreate = true;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -20,6 +22,8 @@ public class ObjDestroy : MonoBehaviour
         boxesRecreate = GameObject.FindObjectOfType<BoxesRecreate>();
 
         seController = GameObject.FindObjectOfType<SEController>();
+
+        if (this.gameObject.name == "Board") { isRecreate = false; }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -30,7 +34,7 @@ public class ObjDestroy : MonoBehaviour
             {
                 if(this.gameObject.tag == "Box")
                 {
-                    boxesRecreate.Recreate(tr);
+                    if (isRecreate) { boxesRecreate.Recreate(tr); } //–Ø” •œŠˆ
                     seController.BoxDestroy();
                 }
 

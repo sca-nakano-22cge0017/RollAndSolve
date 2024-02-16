@@ -11,10 +11,12 @@ public class OpenMenuPanel : MonoBehaviour
     [SerializeField]
     Button StartButton;
 
+    PlayerController playerController;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerController = GameObject.FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
@@ -28,6 +30,7 @@ public class OpenMenuPanel : MonoBehaviour
             {
                 StartButton.Select();
                 Time.timeScale = 0;
+                playerController.IsPause = true;
             }
             else
             {
