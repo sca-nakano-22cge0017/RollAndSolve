@@ -46,7 +46,7 @@ public class BonusClear : MonoBehaviour
         start[0].SetBool("Start", true);
         start[1].SetBool("Start", true);
 
-        yield return new WaitForSeconds(1.54f);
+        yield return new WaitForSeconds(1f);
 
         playerController.IsPause = false;
     }

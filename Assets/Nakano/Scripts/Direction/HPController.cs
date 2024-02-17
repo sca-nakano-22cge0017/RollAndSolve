@@ -21,11 +21,18 @@ public class HPController : MonoBehaviour
     bool isLimitBreak = false;
 
     bool isDown = false;
+    bool isFall = false;
 
     public bool IsDown
     {
         get { return isDown; }
         set { isDown = value; }
+    }
+
+    public bool IsFall
+    {
+        get { return isFall; }
+        set { isFall = value; }
     }
 
     public int Hp
@@ -114,6 +121,11 @@ public class HPController : MonoBehaviour
         {
             StartCoroutine(ToGameOverScene());
         }
+
+        if(isFall)
+        {
+            SceneManager.LoadScene("GameOverScense");
+        }
     }
 
     void Display(Image[] image, int num, bool isDisp)
@@ -126,7 +138,9 @@ public class HPController : MonoBehaviour
 
     IEnumerator ToGameOverScene()
     {
+        //倒れるアニメーションを再生するための待ち時間
         yield return new WaitForSeconds(gameoverTime);
+
         SceneManager.LoadScene("GameOverScense");
     }
 }

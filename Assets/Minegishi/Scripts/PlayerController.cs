@@ -164,11 +164,6 @@ public class PlayerController : MonoBehaviour
 
         Vector2 position = transform.position;
 
-        if(position.y < -5.5) //穴に落ちたら
-        {
-            HpController.IsDown = true;
-        }
-
         transform.position = position;
 
         //球体形態で最高速度の７割以上の時オブジェクトを破壊できる
@@ -535,7 +530,6 @@ public class PlayerController : MonoBehaviour
 
     private void Invincible() //無敵状態
     {
-        Debug.Log("Damage");
         interval -= Time.deltaTime;
         
         if(interval <= 0)
@@ -545,7 +539,6 @@ public class PlayerController : MonoBehaviour
                 alpha = 0;
             }else
                 alpha = 255;
-            //GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
             interval = 0.15f;
         }
     }
@@ -739,6 +732,15 @@ public class PlayerController : MonoBehaviour
         {
             rb.gravityScale = 2;
             angle = 0;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //穴に落ちた
+        if (collision.gameObject.tag == "Hole")
+        {
+            HpController.IsFall = true;
         }
     }
 
