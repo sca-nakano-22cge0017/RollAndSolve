@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class TreasureController : MonoBehaviour
 {
     Animator anim;
-    [SerializeField, Header("獲得確認ウィンドウ")] GameObject window;
 
     [SerializeField, Header("メダル")] GameObject medal;
 
     bool isOpen; //宝箱が開けるか
     bool isClear; //クリア判定
+
+    PlayerController playerController;
 
     /// <summary>
     /// クリア判定
@@ -25,8 +26,8 @@ public class TreasureController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        playerController = GameObject.FindObjectOfType<PlayerController>();
 
-        window.SetActive(false);
         isOpen = false;
         isClear = false;
     }
@@ -34,14 +35,15 @@ public class TreasureController : MonoBehaviour
     void Update()
     {
         //宝箱に触れて、Pキーを押したらクリア
-        if (Input.GetKeyDown(KeyCode.P) && isOpen)
+        if (/*Input.GetKeyDown(KeyCode.P) && */isOpen)
         {
             anim.SetTrigger("Open");
 
             //メダル獲得演出
             Instantiate(medal, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 0.1f, 0), Quaternion.identity);
             isClear = true;
-            window.SetActive(false);
+            isOpen = false;
+            playerController.IsPause = true;
         }
     }
 
@@ -50,7 +52,6 @@ public class TreasureController : MonoBehaviour
         //プレイヤーが当たったら指示ウィンドウを表示し、宝箱を開くことができるかどうかのフラグをtrueにする
         if(collision.gameObject.tag == "Player")
         {
-            window.SetActive(true);
             isOpen = true;
         }
         
@@ -68,7 +69,6 @@ public class TreasureController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            window.SetActive(false);
             isOpen = false;
         }
     }
