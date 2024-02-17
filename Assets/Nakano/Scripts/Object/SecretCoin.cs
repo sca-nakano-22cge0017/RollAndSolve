@@ -47,7 +47,7 @@ public class SecretCoin : MonoBehaviour
             //älìæçœÇ›Ç»ÇÁ
             if (num == 1)
             {
-                coin[i - 1].color = new Color(0.9f, 0.9f, 0.9f, 0.7f); //îºìßñæÇ…
+                coin[i - 1].color = new Color(0.9f, 0.9f, 0.9f, 0.4f); //îºìßñæÇ…
             }
             else if(num == 0) coin[i - 1].color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             else
