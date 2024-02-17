@@ -12,7 +12,7 @@ public class ButtonObject : MonoBehaviour
 
     bool isPush = false;
 
-    bool isActive = false;
+    [SerializeField, Header("Debug—p")] bool isActive = false;
 
     public bool IsPush
     {
