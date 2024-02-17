@@ -110,7 +110,6 @@ public class PlayerController : MonoBehaviour
         playerMeshs[2].enabled = false; //左向き人型
     }
 
-
     void Update()
     {
         //Hpが0じゃないとき　ポーズ状態じゃないとき
@@ -355,41 +354,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //Spine キーが押された瞬間アニメーション・表示イラストを切り替える
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            if(playerstate == PlayerState.Human)
-            {
-                anim = playerAnims[2]; //左向きのアニメーション
-                playerMeshs[2].enabled = true;
-                playerMeshs[0].enabled = false;
-                playerMeshs[1].enabled = false;
-                anim.SetBool("Change", false);
-            }
-        }
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            if (playerstate == PlayerState.Human)
-            {
-                anim = playerAnims[1]; //右向きのアニメーション
-                playerMeshs[1].enabled = true;
-                playerMeshs[0].enabled = false;
-                playerMeshs[2].enabled = false;
-                anim.SetBool("Change", false);
-            }
-        }
-
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            if(!anim.GetCurrentAnimatorStateInfo(0).IsName("dash"))
-            {
-                anim.SetBool("Dash", true);
-            }
-        }
-        if (speed <= 5f && speed >= -5f && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
-        {
-            anim.SetBool("Dash", false);
-        }
+        Spine();
     }
 
     /// <summary>
@@ -469,6 +434,63 @@ public class PlayerController : MonoBehaviour
                 playerMeshs[0].enabled = false;
                 playerMeshs[2].enabled = false;
             }
+        }
+    }
+
+    void Spine()
+    {
+        //プレイヤー位置調整
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("push") || anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
+        {
+            playerForms[1].transform.localPosition = new Vector3(0, -3, 0);
+            playerForms[2].transform.localPosition = new Vector3(0, -3, 0);
+        }
+        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("dash") || anim.GetCurrentAnimatorStateInfo(0).IsName("dash_motion"))
+        {
+            playerForms[1].transform.localPosition = new Vector3(0, -2, 0);
+            playerForms[2].transform.localPosition = new Vector3(0, -2, 0);
+        }
+        else
+        {
+            playerForms[1].transform.localPosition = new Vector3(0, -1, 0);
+            playerForms[2].transform.localPosition = new Vector3(0, -1, 0);
+        }
+
+
+        //Spine キーが押された瞬間アニメーション・表示イラストを切り替える
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (playerstate == PlayerState.Human)
+            {
+                anim = playerAnims[2]; //左向きのアニメーション
+                playerMeshs[2].enabled = true;
+                playerMeshs[0].enabled = false;
+                playerMeshs[1].enabled = false;
+                anim.SetBool("Change", false);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (playerstate == PlayerState.Human)
+            {
+                anim = playerAnims[1]; //右向きのアニメーション
+                playerMeshs[1].enabled = true;
+                playerMeshs[0].enabled = false;
+                playerMeshs[2].enabled = false;
+                anim.SetBool("Change", false);
+            }
+        }
+
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("dash"))
+            {
+                anim.SetBool("Dash", true);
+            }
+        }
+        if (speed <= 5f && speed >= -5f && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        {
+            anim.SetBool("Dash", false);
         }
     }
 
