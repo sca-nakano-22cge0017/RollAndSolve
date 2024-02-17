@@ -8,17 +8,26 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class ClearToTitle : MonoBehaviour
 {
-    [SerializeField, Header("タイトルに遷移するまでの時間(秒)")] float sec = 3; 
+    bool canChange = false;
 
-    IEnumerator SceneChange()
+    private void Update()
     {
-        yield return new WaitForSeconds(sec);
-
-        //隠しアイテムが9枚揃っていたらボーナスステージへ
-        if (PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
+        if(canChange)
         {
-            SceneManager.LoadScene("BonusStage");
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                //隠しアイテムが9枚揃っていたらボーナスステージへ
+                if (PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
+                {
+                    SceneManager.LoadScene("BonusStage");
+                }
+                else SceneManager.LoadScene("Title");
+            }
         }
-        else SceneManager.LoadScene("Title");
+    }
+
+    public void Change()
+    {
+        canChange = true;
     }
 }
