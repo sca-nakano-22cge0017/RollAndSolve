@@ -175,8 +175,6 @@ public class PlayerController : MonoBehaviour
         {
             objectBreak = false;
         }
-
-        anim.SetFloat("Speed", speed);
     }
 
     void Human()
@@ -393,7 +391,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            anim.SetBool("Push", false);
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("push") || anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
+                anim.SetBool("Push", false);
         }
 
         if(isPushCount)
@@ -481,6 +480,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //走りモーション
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("dash"))
@@ -492,6 +492,9 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("Dash", false);
         }
+
+        //速度に合わせて走りモーションの速度を上昇
+        anim.SetFloat("Speed", Mathf.Abs(speed) * 0.1f + 1);
     }
 
     private void PlayerJump()

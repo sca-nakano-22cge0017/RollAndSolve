@@ -12,6 +12,7 @@ public class ObjDestroy : MonoBehaviour
     SEController seController;
 
     [SerializeField, Header("”j‰óŒã•œŠˆ‚·‚é‚©‚Ç‚¤‚©")] bool isRecreate = true;
+    bool rec = false;
 
     void Start()
     {
@@ -26,15 +27,24 @@ public class ObjDestroy : MonoBehaviour
         if (this.gameObject.name == "Board") { isRecreate = false; }
     }
 
+    private void Update()
+    {
+        if(rec)
+        {
+            rec = false;
+            boxesRecreate.Recreate(tr);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Hole")
         {
             if (this.gameObject.tag == "Box")
             {
-                if (isRecreate) { boxesRecreate.Recreate(tr); } //–Ø” •œŠˆ
+                if (isRecreate) { rec = true; } //–Ø” •œŠˆ
 
-                Destroy(this.gameObject);
+                StartCoroutine(BoxFall());
             }
         }
     }
@@ -47,7 +57,7 @@ public class ObjDestroy : MonoBehaviour
             {
                 if(this.gameObject.tag == "Box")
                 {
-                    if (isRecreate) { boxesRecreate.Recreate(tr); } //–Ø” •œŠˆ
+                    if (isRecreate) { rec = true; } //–Ø” •œŠˆ
                     seController.BoxDestroy();
                 }
 
@@ -64,6 +74,12 @@ public class ObjDestroy : MonoBehaviour
 
     public void ThisDestroy()
     {
+        Destroy(this.gameObject);
+    }
+
+    IEnumerator BoxFall()
+    {
+        yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
     }
 }
