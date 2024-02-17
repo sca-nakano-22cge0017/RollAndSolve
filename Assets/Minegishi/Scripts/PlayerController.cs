@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
 
     bool speedUp = false;
     float speedUpCount = 7.0f; //スピードアップのアイテムを取った時の上昇する時間
+    [SerializeField, Header("スピードアップ倍率")] float speedUpNum = 1.2f; 
 
     bool isGround = false;
     
@@ -98,8 +99,8 @@ public class PlayerController : MonoBehaviour
         HumansSpeed = HumansAccelertion; //速度初期化
         CirclesSpeed = CirclesAccelertion; //速度初期化
 
-        HumansSpeedUp = HumansAccelertion * 1.2f; //スピードアップした時の速度
-        CirclesSpeedUp = CirclesAccelertion * 1.2f; //スピードアップした時の速度
+        HumansSpeedUp = HumansAccelertion * speedUpNum; //スピードアップした時の速度
+        CirclesSpeedUp = CirclesAccelertion * speedUpNum; //スピードアップした時の速度
 
         //Spine
         anim = playerAnims[0];
@@ -120,7 +121,7 @@ public class PlayerController : MonoBehaviour
             PlayerJump();
             MoveSound();
         }
-        else anim.SetTrigger("Dead");
+        else if(HpController.IsDown) anim.SetTrigger("Dead");
         
         if (speedUp)
         {
@@ -627,13 +628,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-        if (collision.gameObject.tag == "SpeedUP") //スピードアップ
-        {
-            Destroy(collision.gameObject);
-            speedUpCount = 7.0f;
-            speedUp = true;
-        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -741,6 +735,13 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Hole")
         {
             HpController.IsFall = true;
+        }
+
+        if (collision.gameObject.tag == "SpeedUP") //スピードアップ
+        {
+            //Destroy(collision.gameObject);
+            speedUpCount = 7.0f;
+            speedUp = true;
         }
     }
 
