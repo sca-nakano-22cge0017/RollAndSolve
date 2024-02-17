@@ -14,6 +14,11 @@ public class BonusClear : MonoBehaviour
 
     PlayerController playerController;
 
+    [SerializeField] BonusCamera bonusCamera;
+    [SerializeField] Camera cam;
+
+    bool isMove = false;
+
     void Start()
     {
         playerController = GameObject.FindObjectOfType<PlayerController>();
@@ -34,6 +39,14 @@ public class BonusClear : MonoBehaviour
         if (start[0].GetCurrentAnimatorStateInfo(0).IsName("BonusStart"))
         {
             Time.timeScale = 1;
+        }
+
+        if(isMove)
+        {
+            if(playerController.gameObject.transform.position.x <= 232.5)
+            {
+                playerController.gameObject.transform.Translate(new Vector3(10, 0, 0) * Time.deltaTime);
+            }
         }
     }
 
@@ -57,6 +70,8 @@ public class BonusClear : MonoBehaviour
 
         thank.SetBool("Clear", true);
         playerController.IsPause = true;
+        isMove = true;
+        bonusCamera.IsClear = true;
         StartCoroutine(SceneChange());
     }
 
