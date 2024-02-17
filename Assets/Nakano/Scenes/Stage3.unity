@@ -2475,9 +2475,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1386117283188664644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: m_Name
       value: Slope3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7429937834017401340, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: num
@@ -3587,9 +3595,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1386117283188664644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: m_Name
       value: Slope3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7429937834017401340, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: num
@@ -4459,9 +4475,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1386117283188664644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: m_Name
       value: Slope3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7429937834017401340, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: num
@@ -11990,9 +12014,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1386117283188664644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: m_Name
       value: Slope3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7429937834017401340, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: num
@@ -21535,9 +21567,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1386117283188664644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: m_Name
       value: Slope3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7429937834017401340, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: num
@@ -21781,9 +21821,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1386117283188664644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: m_Name
       value: Slope3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7429937834017401340, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: num
@@ -31906,9 +31954,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1386117283188664644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: m_Name
       value: Slope3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7429937834017401340, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: num
@@ -34337,9 +34393,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1386117283188664644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: m_Name
       value: Slope3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874324805774682644, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7429937834017401340, guid: 981e339f3fdd7c743bafe4222d3e5136, type: 3}
       propertyPath: num

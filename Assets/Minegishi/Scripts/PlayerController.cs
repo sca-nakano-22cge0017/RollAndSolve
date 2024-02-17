@@ -277,8 +277,8 @@ public class PlayerController : MonoBehaviour
 
                 playerForms[0].GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
             }
-            transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
-
+            transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
+            
             if(playerstate == PlayerState.Human)
             {
                 if (speed <= -HumansMaxSpeed)
@@ -316,7 +316,7 @@ public class PlayerController : MonoBehaviour
                 {
                     speed += CirclesDeceleration * Time.deltaTime;
                 }
-                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
+                transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
             }
         }
 
@@ -350,6 +350,11 @@ public class PlayerController : MonoBehaviour
             {
                 speed = 0;
             }
+        }
+
+        if(!isGround)
+        {
+            angle = 0;
         }
 
         Spine();
@@ -624,6 +629,11 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Jump", false);
         }
 
+        if(collision.gameObject.tag == "Ground")
+        {
+            angle = 0;
+        }
+
         if (collision.gameObject.tag == "Box")
         {
             //” ‚ð”j‰ó
@@ -669,7 +679,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //â‚É“–‚½‚Á‚½‚çâ‚ðã‚é‚½‚ß‚ÌŠp“x‚ðŽæ“¾
-        if(collision.gameObject.tag == "Slope")
+        if (collision.gameObject.tag == "Slope")
         {
             var slope = collision.gameObject.GetComponent<Slope>();
             angle = slope.Angle;
@@ -750,7 +760,7 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Slope")
         {
             rb.gravityScale = 2;
-            angle = 0;
+            //angle = 0;
         }
     }
 

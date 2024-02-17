@@ -25,8 +25,7 @@ public class Slope : MonoBehaviour
         if(size.y <= 0) size.y = 1;
         if(num != 1 && num != -1) num = 1;
 
-        angle = Mathf.Atan2(size.y, size.x);
-        angle = Mathf.Rad2Deg * angle;
-        if(num == -1) angle += 180.0f;
+        angle = Mathf.Atan2(size.y, size.x) * Mathf.Rad2Deg;
+        if(num == -1) angle = (180.0f - angle) + 180.0f;
     }
 }
