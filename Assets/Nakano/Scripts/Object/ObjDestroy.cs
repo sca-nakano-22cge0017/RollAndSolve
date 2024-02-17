@@ -26,6 +26,19 @@ public class ObjDestroy : MonoBehaviour
         if (this.gameObject.name == "Board") { isRecreate = false; }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Hole")
+        {
+            if (this.gameObject.tag == "Box")
+            {
+                if (isRecreate) { boxesRecreate.Recreate(tr); } //–Ø” •œŠˆ
+
+                Destroy(this.gameObject);
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
