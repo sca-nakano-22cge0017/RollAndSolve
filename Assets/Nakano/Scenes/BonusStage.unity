@@ -13828,7 +13828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e865170d870ef943b15144d38479775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemCatch: {fileID: 8300000, guid: 502179fcd8b6ebe4a89c9a3727e8f011, type: 3}
+  itemCatch: {fileID: 8300000, guid: 35ba5dc4f6ffb1a41860551d82cd952c, type: 3}
   boxDestroy: {fileID: 8300000, guid: 8a45de8d70ada0a4b9aa34636be12830, type: 3}
   boardDestroy: {fileID: 8300000, guid: 7da59a6bd83602c428f5aa086a1e344c, type: 3}
 --- !u!82 &1229836674
