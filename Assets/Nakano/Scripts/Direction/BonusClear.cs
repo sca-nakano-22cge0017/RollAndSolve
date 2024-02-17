@@ -10,6 +10,7 @@ public class BonusClear : MonoBehaviour
 {
     [SerializeField] Animator[] start;
     [SerializeField] Animator thank;
+    [SerializeField] GameObject fade;
 
     PlayerController playerController;
 
@@ -17,6 +18,8 @@ public class BonusClear : MonoBehaviour
     {
         playerController = GameObject.FindObjectOfType<PlayerController>();
         playerController.IsPause = true;
+
+        fade.SetActive(false);
 
         //隠しアイテム取得数を初期化
         PlayerPrefs.SetInt("SecretCoin", 0);
@@ -59,8 +62,9 @@ public class BonusClear : MonoBehaviour
 
     IEnumerator SceneChange()
     {
-        //ToDo 円形フェードアウト
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
+        fade.SetActive(true);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene("Title");
     }
 }
