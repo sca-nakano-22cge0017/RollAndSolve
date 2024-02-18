@@ -37,6 +37,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
+        skeletonAnimation.AnimationState.SetAnimation(0, "blessing", true);
         isWalk = false;
 
         player = GameObject.FindWithTag("Player");
@@ -106,6 +107,7 @@ public class EnemyController : MonoBehaviour
 
             if (!isWalk)
             {
+                skeletonAnimation.AnimationState.SetAnimation(0, "walk", true);
                 isWalk = true;
             }
         }
@@ -114,12 +116,14 @@ public class EnemyController : MonoBehaviour
         {
             if (isWalk)
             {
+                skeletonAnimation.AnimationState.SetAnimation(0, "blessing", true);
                 isWalk = false;
             }
         }
 
         if(isFly)
         {
+            skeletonAnimation.AnimationState.SetAnimation(0, "damage", true);
             Transform myTrans = this.transform;
             Vector3 pos = myTrans.position;
             pos.x += dir.x * flySpeed * Time.deltaTime;
