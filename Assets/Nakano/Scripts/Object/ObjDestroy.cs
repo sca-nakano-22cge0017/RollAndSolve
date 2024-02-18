@@ -59,6 +59,12 @@ public class ObjDestroy : MonoBehaviour
                 {
                     if (isRecreate) { rec = true; } //木箱復活
                     seController.BoxDestroy();
+
+                    //子オブジェクト削除
+                    foreach (Transform n in gameObject.transform)
+                    {
+                        Destroy(n.gameObject);
+                    }
                 }
 
                 if(this.gameObject.name == "Board")

@@ -23,6 +23,11 @@ public class HPController : MonoBehaviour
     bool isDown = false;
     bool isFall = false;
 
+    public bool IsDamage
+    {
+        set { isDamage = value; }
+    }
+
     public bool IsDown
     {
         get { return isDown; }
@@ -35,10 +40,14 @@ public class HPController : MonoBehaviour
         set { isFall = value; }
     }
 
+    public bool IsHeal
+    {
+        set { isHeal = value; }
+    }
+
     public int Hp
     {
         get { return hp;}
-        set { hp = value; }
     }
 
     public int HpLimit
@@ -63,7 +72,7 @@ public class HPController : MonoBehaviour
 
     void Update()
     {
-        //‘Œ¸ˆ—
+        //ƒ_ƒ[ƒW
         if (isDamage)
         {
             isDamage = false;
@@ -74,6 +83,7 @@ public class HPController : MonoBehaviour
             }
         }
 
+        //‰ñ•œ
         if (isHeal)
         {
             isHeal = false;
@@ -84,6 +94,7 @@ public class HPController : MonoBehaviour
             }
         }
 
+        //ãŒÀ‰ğ•ú
         if (isLimitBreak)
         {
             isLimitBreak = false;
