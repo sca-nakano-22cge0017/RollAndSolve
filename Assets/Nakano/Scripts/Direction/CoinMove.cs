@@ -12,6 +12,8 @@ public class CoinMove : MonoBehaviour
     [SerializeField, Header("メダル縮小速度")] float redSpeed;
     [SerializeField, Header("プレイヤーに近付く速度")] float speed;
 
+    float move = 0;
+
     GameObject player;
     Vector3 playerPos;
     Vector3 medalPos;
@@ -34,11 +36,12 @@ public class CoinMove : MonoBehaviour
         medalPos = transform.position;
 
         //上昇
-        if (transform.localPosition.y < 1.0f)
+        if (move < 1.0f)
         {
+            move += medalSpeed * Time.deltaTime;
             transform.Translate(Vector3.up * medalSpeed * Time.deltaTime);
         }
-        if(transform.localPosition.y >= 1.0f) { isMove = true; }
+        if(move >= 1.0f) { isMove = true; }
 
         if(isMove)
         {
