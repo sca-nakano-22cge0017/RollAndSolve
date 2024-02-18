@@ -32,14 +32,11 @@ public class EnemyController : MonoBehaviour
     SkeletonAnimation skeletonAnimation;
     bool isWalk = false;
 
-    [SerializeField] int track;
-
     PlayerController playerController;
 
     void Start()
     {
         skeletonAnimation = GetComponent<SkeletonAnimation>();
-        skeletonAnimation.AnimationState.SetAnimation(track, "blessing", true);
         isWalk = false;
 
         player = GameObject.FindWithTag("Player");
@@ -109,7 +106,6 @@ public class EnemyController : MonoBehaviour
 
             if (!isWalk)
             {
-                skeletonAnimation.AnimationState.SetAnimation(track, "walk", true);
                 isWalk = true;
             }
         }
@@ -118,14 +114,12 @@ public class EnemyController : MonoBehaviour
         {
             if (isWalk)
             {
-                skeletonAnimation.AnimationState.SetAnimation(track, "blessing", true);
                 isWalk = false;
             }
         }
 
         if(isFly)
         {
-            skeletonAnimation.AnimationState.SetAnimation(track, "damage", true);
             Transform myTrans = this.transform;
             Vector3 pos = myTrans.position;
             pos.x += dir.x * flySpeed * Time.deltaTime;

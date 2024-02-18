@@ -28,7 +28,7 @@ public class ItemCatch : MonoBehaviour
             seController.ItemCatch();
             if (this.gameObject.tag == "HealHeart" && hpController.Hp < hpController.HpLimit)
             {
-                hpController.Hp++;
+                hpController.IsHeal = true;
             }
 
             if(this.gameObject.tag == "EmptyHeart")

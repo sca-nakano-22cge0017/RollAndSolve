@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     Box box;
     HPController HpController;
     Animator anim;
-    //Slope slope;
     [SerializeField] GameObject[] playerForms;
     [SerializeField] Animator[] playerAnims;
     [SerializeField] MeshRenderer[] playerMeshs;
@@ -158,7 +157,6 @@ public class PlayerController : MonoBehaviour
             {
                 invincibleTime = 3.0f;
                 invincible = false;
-                GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 255);
             }
         }
 
@@ -167,7 +165,7 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
 
         //球体形態で最高速度の７割以上の時オブジェクトを破壊できる
-        if(speed >= CirclesMaxSpeed * 0.7 && playerstate == PlayerState.Circle)
+        if(Mathf.Abs(speed) >= CirclesMaxSpeed * 0.7 && playerstate == PlayerState.Circle)
         {
             objectBreak = true;
         }
@@ -597,7 +595,8 @@ public class PlayerController : MonoBehaviour
 
                     speed -= speed * 0.5f;
                     invincible = true;
-                    HpController.Hp--;
+                    //HpController.Hp--;
+                    HpController.IsDamage = true;
                 }
             }
 
@@ -617,7 +616,8 @@ public class PlayerController : MonoBehaviour
 
                 speed -= speed * 0.5f;
                 invincible = true;
-                HpController.Hp--;
+                //HpController.Hp--;
+                HpController.IsDamage = true;
             }
         }
 
@@ -796,7 +796,8 @@ public class PlayerController : MonoBehaviour
 
                 speed -= speed * 0.5f;
                 invincible = true;
-                HpController.Hp--;
+                //HpController.Hp--;
+                HpController.IsDamage = true;
             }
         }
     }
