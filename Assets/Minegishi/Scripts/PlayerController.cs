@@ -669,7 +669,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //着地アニメーション
-        if (collision.gameObject.tag == "Ground" ||
+            if (collision.gameObject.tag == "Ground" ||
             collision.gameObject.tag == "Slope")
         {
             isGround = true;

@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 966809526304349280}
   - component: {fileID: 5649415650995248910}
   - component: {fileID: 1245933067019540816}
-  - component: {fileID: 679323721483181822}
   - component: {fileID: 2488801891835894295}
   m_Layer: 2
   m_Name: Enemy3
@@ -222,66 +221,6 @@ MonoBehaviour:
   flyDir: {x: 10, y: 5, z: 0}
   flySpeed: 30
   flyAngle: -30
---- !u!114 &679323721483181822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 431667568231957892}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd438dd108a0f284aa931a2da434f1d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ImpulseDefinition:
-    m_ImpulseChannel: 1
-    m_ImpulseShape: 2
-    m_CustomImpulseShape:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_ImpulseDuration: 0.2
-    m_ImpulseType: 1
-    m_DissipationRate: 0.25
-    m_RawSignal: {fileID: 0}
-    m_AmplitudeGain: 1
-    m_FrequencyGain: 1
-    m_RepeatMode: 0
-    m_Randomize: 1
-    m_TimeEnvelope:
-      m_AttackShape:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      m_DecayShape:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      m_AttackTime: 0
-      m_SustainTime: 0.2
-      m_DecayTime: 0.7
-      m_ScaleWithImpact: 1
-      m_HoldForever: 0
-    m_ImpactRadius: 100
-    m_DirectionMode: 0
-    m_DissipationMode: 2
-    m_DissipationDistance: 15
-    m_PropagationSpeed: 475.72
-  m_DefaultVelocity: {x: 0, y: -1, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_IgnoreTag: Player
-  m_UseImpactDirection: 1
-  m_ScaleImpactWithMass: 0
-  m_ScaleImpactWithSpeed: 0
 --- !u!114 &2488801891835894295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +273,7 @@ MonoBehaviour:
     m_DissipationMode: 2
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
-  m_DefaultVelocity: {x: 0, y: -1, z: 0}
+  m_DefaultVelocity: {x: -0.5, y: -0.3, z: 0}
 --- !u!1 &652666703174610984
 GameObject:
   m_ObjectHideFlags: 0

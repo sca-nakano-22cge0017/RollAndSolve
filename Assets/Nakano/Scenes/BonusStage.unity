@@ -4570,6 +4570,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -417252085094281218, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
+      propertyPath: m_DefaultVelocity.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -417252085094281218, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
+      propertyPath: m_ImpulseDefinition.m_ImpulseType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -417252085094281218, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
+      propertyPath: m_ImpulseDefinition.m_ImpulseShape
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3145463664831723838, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_Mesh
       value: 
