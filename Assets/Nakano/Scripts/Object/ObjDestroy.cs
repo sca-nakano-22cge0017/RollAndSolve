@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class ObjDestroy : MonoBehaviour
 {
@@ -14,8 +15,11 @@ public class ObjDestroy : MonoBehaviour
     [SerializeField, Header("”j‰óŒã•œŠˆ‚·‚é‚©‚Ç‚¤‚©")] bool isRecreate = true;
     bool rec = false;
 
+    CinemachineImpulseSource impulse;
+
     void Start()
     {
+        impulse = GetComponent<CinemachineImpulseSource>();
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
         playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
@@ -55,6 +59,8 @@ public class ObjDestroy : MonoBehaviour
         {
             if (playerController.ObjectBreak)
             {
+                impulse.GenerateImpulse();
+
                 if(this.gameObject.tag == "Box")
                 {
                     if (isRecreate) { rec = true; } //–Ø” •œŠˆ

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
+using Cinemachine;
 
 public class EnemyController : MonoBehaviour
 {
@@ -34,8 +35,12 @@ public class EnemyController : MonoBehaviour
 
     PlayerController playerController;
 
+    CinemachineImpulseSource impulse;
+
     void Start()
     {
+        impulse = GetComponent<CinemachineImpulseSource>();
+
         skeletonAnimation = GetComponent<SkeletonAnimation>();
         skeletonAnimation.AnimationState.SetAnimation(0, "blessing", true);
         isWalk = false;
@@ -143,6 +148,8 @@ public class EnemyController : MonoBehaviour
         {
             if (playerController.ObjectBreak)
             {
+                impulse.GenerateImpulse();
+
                 Destroy(rb);
                 Destroy(col);
                 isFly = true;

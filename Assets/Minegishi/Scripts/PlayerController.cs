@@ -37,6 +37,9 @@ public class PlayerController : MonoBehaviour
         set { objectBreak = value;}
     }
 
+    bool isRight = false;
+    bool isLeft = false;
+
     [Header("加速度")]
     [SerializeField] private float HumansAccelertion; //人形態の時の加速度
     [SerializeField] private float CirclesAccelertion; //球体形態の時の加速度
@@ -89,6 +92,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Header("木箱を押すときの長押し必要時間")] float pushTime = 0.2f;
     float pTime = 0;
     bool isPushCount = false;
+
+    [SerializeField, Header("変身エフェクト")] ParticleSystem changeEffect;
 
     void Start()
     {
@@ -182,6 +187,8 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     anim.SetBool("Change", true);
+                    anim.SetBool("Dash", false);
+                    anim.SetBool("Push", false);
 
                     StartCoroutine(ToBall());
                 }
@@ -207,7 +214,17 @@ public class PlayerController : MonoBehaviour
             run = true;
         }
 
-        if (Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.A))) //Dを押す
+        // 右方向へ移動
+        // 押した瞬間に移動方向上書き
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            isRight = true;
+            isLeft = false;
+            if(speed < 0)
+                speed = 0;
+        }
+
+        if (Input.GetKey(KeyCode.D) && isRight) //Dを押す
         {
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -219,39 +236,45 @@ public class PlayerController : MonoBehaviour
                     speed = -Brake;
                 }
                 speed += HumansSpeed * Time.deltaTime;
-            }
-            else if(playerstate == PlayerState.Circle)
-            {
-                speed += CirclesSpeed * Time.deltaTime;
 
-                playerForms[0].GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-            }
-            transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0,0) * Time.deltaTime);
-
-            if(playerstate == PlayerState.Human)
-            {
+                //速度上限
                 if (speed >= HumansMaxSpeed)
                 {
                     speed = HumansMaxSpeed;
                 }
             }
-            if(playerstate == PlayerState.Circle)
+            else if(playerstate == PlayerState.Circle)
             {
-                if(speed > CirclesMaxSpeed)
+                speed += CirclesSpeed * Time.deltaTime;
+
+                //速度上限
+                if (speed > CirclesMaxSpeed)
                 {
                     speed += CirclesDeceleration * Time.deltaTime;
                 }
-                if(speed >= CirclesMaxSpeed)
+                if (speed >= CirclesMaxSpeed)
                 {
                     speed = CirclesMaxSpeed;
                 }
+
+                playerForms[0].GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
             }
+            transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0,0) * Time.deltaTime);
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
+            //減速
             RightDeceleration = true;
+
+            isRight = false;
+            isLeft = true;
+
+            //方向転換
+            if (Input.GetKey(KeyCode.A) && speed > 0) speed = 0;
         }
-        else if (RightDeceleration)
+
+        // 右方向減速
+        if (RightDeceleration)
         {
             //Debug.Log("Dを離す");
             if (speed > 0)
@@ -269,7 +292,17 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.A) && !(Input.GetKey(KeyCode.D))) //Aを押す
+        // 左方向へ移動 
+        // 押した瞬間に移動方向上書き
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            isLeft = true;
+            isRight = false;
+            if(speed > 0)
+                speed = 0;
+        }
+
+        if (Input.GetKey(KeyCode.A) && isLeft) //Aを押す
         {
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -281,24 +314,18 @@ public class PlayerController : MonoBehaviour
                     speed = Brake;
                 }
                 speed -= HumansSpeed * Time.deltaTime;
-            }
-            else if (playerstate == PlayerState.Circle)
-            {
-                speed -= CirclesSpeed * Time.deltaTime;
 
-                playerForms[0].GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
-            }
-            transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
-            
-            if(playerstate == PlayerState.Human)
-            {
+                //速度上限
                 if (speed <= -HumansMaxSpeed)
                 {
                     speed = -HumansMaxSpeed;
                 }
             }
-            if (playerstate == PlayerState.Circle)
+            else if (playerstate == PlayerState.Circle)
             {
+                speed -= CirclesSpeed * Time.deltaTime;
+
+                //速度上限
                 if (speed < CirclesMaxSpeed)
                 {
                     speed -= CirclesDeceleration * Time.deltaTime;
@@ -307,13 +334,22 @@ public class PlayerController : MonoBehaviour
                 {
                     speed = -CirclesMaxSpeed;
                 }
-            }
 
+                playerForms[0].GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
+            }
+            transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
         }
-        else if (Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.A))
         {
             LeftDeceleration = true;
+            isRight = true;
+            isLeft = false;
+
+            //方向転換
+            if (Input.GetKey(KeyCode.D) && speed < 0) speed = 0;
         }
+
+        // 左方向減速
         if (LeftDeceleration)
         {
             //Debug.Log("Aを離す");
@@ -333,34 +369,36 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
-            if (speed < 0)
-            {
-                if (playerstate == PlayerState.Human)
-                {
-                    speed += HumansSpeed * Time.deltaTime;
-                }
-                else if (playerstate == PlayerState.Circle)
-                {
-                    speed += CirclesSpeed * Time.deltaTime;
-                }
-                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
-            }
-            if(speed > 0)
-            {
-                if (playerstate == PlayerState.Human)
-                {
-                    speed -= HumansSpeed * Time.deltaTime;
-                }
-                else if (playerstate == PlayerState.Circle)
-                {
-                    speed -= CirclesSpeed * Time.deltaTime;
-                }
-                transform.Translate(new Vector3(speed, 0, 0) * Time.deltaTime);
-            }
-            if(playerstate == PlayerState.Human)
-            {
-                speed = 0;
-            }
+            ////左方向に移動していたら
+            //if (speed < 0)
+            //{
+            //    //逆方向に速度追加
+            //    if (playerstate == PlayerState.Human)
+            //    {
+            //        speed += HumansSpeed * Time.deltaTime;
+            //    }
+            //    else if (playerstate == PlayerState.Circle)
+            //    {
+            //        speed += CirclesSpeed * Time.deltaTime;
+            //    }
+            //    transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
+            //}
+            //if(speed > 0)
+            //{
+            //    if (playerstate == PlayerState.Human)
+            //    {
+            //        speed -= HumansSpeed * Time.deltaTime;
+            //    }
+            //    else if (playerstate == PlayerState.Circle)
+            //    {
+            //        speed -= CirclesSpeed * Time.deltaTime;
+            //    }
+            //    transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
+            //}
+            //if(playerstate == PlayerState.Human)
+            //{
+            //    speed = 0;
+            //}
         }
 
         if(!isGround)
@@ -480,27 +518,28 @@ public class PlayerController : MonoBehaviour
         {
             if (playerstate == PlayerState.Human)
             {
+                playerAnims[1].SetBool("Change", false);
+                playerAnims[1].SetBool("Jump", false);
+                playerAnims[1].SetBool("Dash", false);
+
                 anim = playerAnims[2]; //左向きのアニメーション
                 playerMeshs[2].enabled = true;
                 playerMeshs[0].enabled = false;
                 playerMeshs[1].enabled = false;
-
-                anim.SetBool("Change", false);
-                anim.SetBool("Jump", false);
-
             }
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             if (playerstate == PlayerState.Human)
             {
+                playerAnims[2].SetBool("Change", false);
+                playerAnims[2].SetBool("Jump", false);
+                playerAnims[2].SetBool("Dash", false);
+
                 anim = playerAnims[1]; //右向きのアニメーション
                 playerMeshs[1].enabled = true;
                 playerMeshs[0].enabled = false;
                 playerMeshs[2].enabled = false;
-
-                anim.SetBool("Change", false);
-                anim.SetBool("Jump", false);
             }
         }
 
@@ -609,7 +648,7 @@ public class PlayerController : MonoBehaviour
     {
         if(!invincible) //無敵状態じゃないとき
         {
-            //衝突相手が敵かつ人型かつ速度７割未満　または衝突相手がトゲのとき、ダメージ処理
+            //衝突相手が敵かつ人型かつ速度７割未満のとき、ダメージ処理
             if((collision.gameObject.tag == "Enemy" && !objectBreak) || collision.gameObject.tag == "Thorn")
             {
                 anim.SetTrigger("Damage");
@@ -772,6 +811,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!invincible) //無敵状態じゃないとき
+        {
+            //衝突相手がトゲのとき、ダメージ処理
+            if (collision.gameObject.tag == "Thorn")
+            {
+                anim.SetTrigger("Damage");
+
+                //カプセル状態解除
+                if (playerstate == PlayerState.Circle)
+                {
+                    playerstate = PlayerState.Human;
+                    playerMeshs[1].enabled = true;
+                    playerMeshs[0].enabled = false;
+                    playerMeshs[2].enabled = false;
+                }
+
+                speed -= speed * 0.5f;
+                invincible = true;
+                HpController.IsDamage = true;
+            }
+        }
+
         //穴に落ちた
         if (collision.gameObject.tag == "Hole")
         {
@@ -808,15 +869,24 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ToBall()
     {
+        //操作不可
         isPause = true;
 
-        yield return new WaitForSeconds(1f);
+        //アニメーション再生中待機
+        yield return new WaitForSeconds(1.0f);
 
+        //球体->人型になったとき、変形モーションの再生から始まらないように
+        playerAnims[1].SetBool("Change", false);
+        playerAnims[2].SetBool("Change", false);
+
+        //操作するアニメーションを変更する
         anim = playerAnims[0];
+
         playerMeshs[0].enabled = true;
         playerMeshs[1].enabled = false;
         playerMeshs[2].enabled = false;
 
+        //操作可
         isPause = false;
 
         playerstate = PlayerState.Circle;
@@ -826,17 +896,23 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ToHuman()
     {
+        //操作不可
         isPause = true;
 
-        yield return new WaitForEndOfFrame();
+        //エフェクト再生
+        changeEffect.Play();
 
+        //エフェクト再生中待機
+        yield return new WaitForSeconds(0.7f);
+
+        //操作するアニメーションを変更する
         anim = playerAnims[1];
+
         playerMeshs[1].enabled = true;
         playerMeshs[0].enabled = false;
         playerMeshs[2].enabled = false;
 
-        anim.SetBool("Change", false);
-
+        //操作可
         isPause = false;
 
         playerstate = PlayerState.Human;
