@@ -14,10 +14,10 @@ public class BonusClear : MonoBehaviour
 
     PlayerController playerController;
 
-    [SerializeField] BonusCamera bonusCamera;
-    [SerializeField] Camera cam;
+    [SerializeField] float stopPos;
 
     bool isMove = false;
+    bool isStart = false;
 
     void Start()
     {
@@ -36,14 +36,16 @@ public class BonusClear : MonoBehaviour
     void Update()
     {
         //BonusStageアニメーション終了後、プレイヤーを動かせるようにする
-        if (start[0].GetCurrentAnimatorStateInfo(0).IsName("BonusStart"))
+        if (start[0].GetCurrentAnimatorStateInfo(0).IsName("BonusStart") && !isStart)
         {
             Time.timeScale = 1;
+            playerController.IsPause = false;
+            isStart = true;
         }
 
         if(isMove)
         {
-            if(playerController.gameObject.transform.position.x <= 232.5)
+            if(playerController.gameObject.transform.position.x <= stopPos)
             {
                 playerController.gameObject.transform.Translate(new Vector3(10, 0, 0) * Time.deltaTime);
             }
@@ -58,28 +60,22 @@ public class BonusClear : MonoBehaviour
 
         start[0].SetBool("Start", true);
         start[1].SetBool("Start", true);
-
-        yield return new WaitForSeconds(1f);
-
-        playerController.IsPause = false;
     }
 
     public void Clear()
     {
-        Time.timeScale = 0;
-
-        thank.SetBool("Clear", true);
         playerController.IsPause = true;
-        isMove = true;
-        bonusCamera.IsClear = true;
+        
+        thank.SetBool("Clear", true);
         StartCoroutine(SceneChange());
     }
 
     IEnumerator SceneChange()
     {
+        isMove = true;
         yield return new WaitForSeconds(2);
         fade.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2.5f);
         SceneManager.LoadScene("Title");
     }
 }
