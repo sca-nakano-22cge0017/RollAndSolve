@@ -870,7 +870,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator ToBall()
     {
         //操作不可
-        isPause = true;
+        //isPause = true;
 
         //アニメーション再生中待機
         yield return new WaitForSeconds(1.0f);
@@ -887,7 +887,7 @@ public class PlayerController : MonoBehaviour
         playerMeshs[2].enabled = false;
 
         //操作可
-        isPause = false;
+        //isPause = false;
 
         playerstate = PlayerState.Circle;
         //sr.sprite = Circles;
@@ -897,7 +897,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator ToHuman()
     {
         //操作不可
-        isPause = true;
+        //isPause = true;
 
         //エフェクト再生
         changeEffect.Play();
@@ -913,7 +913,7 @@ public class PlayerController : MonoBehaviour
         playerMeshs[2].enabled = false;
 
         //操作可
-        isPause = false;
+        //isPause = false;
 
         playerstate = PlayerState.Human;
         //sr.sprite = Humans;

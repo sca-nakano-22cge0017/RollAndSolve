@@ -631,7 +631,7 @@ Transform:
   m_GameObject: {fileID: 54159534}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.3999996, y: -1, z: -10}
+  m_LocalPosition: {x: 204, y: -1.2453799, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2192,7 +2192,7 @@ Transform:
   m_GameObject: {fileID: 199020776}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.3999996, y: -1, z: -10}
+  m_LocalPosition: {x: 204, y: -1, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6338,7 +6338,7 @@ MonoBehaviour:
   - {fileID: 1425910686}
   thank: {fileID: 273728096}
   fade: {fileID: 1876335209}
-  stopPos: 238.5
+  stopPos: 237
 --- !u!1001 &515259045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9355,7 +9355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5543352907489749662, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.4
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 5543352907489749662, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12482,7 +12482,7 @@ MonoBehaviour:
   ShoulderOffset: {x: 4, y: 0, z: 0}
   VerticalArmLength: 0.4
   CameraSide: 1
-  CameraDistance: 10
+  CameraDistance: 12
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0
