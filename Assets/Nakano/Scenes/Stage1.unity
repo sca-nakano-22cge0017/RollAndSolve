@@ -23946,7 +23946,7 @@ PrefabInstance:
     - target: {fileID: 7680632907006680057, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
       propertyPath: changeEffect
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3905461445499036936}
     - target: {fileID: 8206477095275619603, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
@@ -23957,6 +23957,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
+--- !u!198 &3905461445499036936 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8751959466442229397, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
+  m_PrefabInstance: {fileID: 3905461445499036935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7850735230138301916
 PrefabInstance:
   m_ObjectHideFlags: 0
