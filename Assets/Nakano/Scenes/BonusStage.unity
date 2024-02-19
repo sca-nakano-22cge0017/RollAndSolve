@@ -4572,7 +4572,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -417252085094281218, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_DefaultVelocity.x
-      value: -0.5
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -417252085094281218, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
+      propertyPath: m_DefaultVelocity.y
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: -417252085094281218, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_ImpulseDefinition.m_ImpulseType
