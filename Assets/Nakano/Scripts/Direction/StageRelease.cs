@@ -3,17 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+class SecretCoins
+{
+    public Image[] coin;
+}
+
 public class StageRelease : MonoBehaviour
 {
     [SerializeField] Animator[] release;
     [SerializeField] Animator[] bg;
+
+    [SerializeField] SecretCoins[] stage;
+    [SerializeField] Sprite[] coinImages;
 
     private void Awake()
     {
         Time.timeScale = 1;
         FirstClearCheck();
 
-        Debug.Log("Secret" + PlayerPrefs.GetInt("SecretCoin", 0));
+        for (int i = 0; i < 3; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                var num = PlayerPrefs.GetInt("SecretCoin:Stage" + (i + 1).ToString() + "-SecretCoin" + (j + 1).ToString(), 0);
+                stage[i].coin[j].sprite = coinImages[num];
+            }
+        }
     }
 
     void FirstClearCheck()

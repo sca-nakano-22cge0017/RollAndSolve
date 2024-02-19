@@ -4392,7 +4392,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 0
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 722853425}
@@ -37055,6 +37055,10 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 722853425}
+    - target: {fileID: 656622379539542670, guid: 7b44810eb2c25d944a733a247916c71a, type: 3}
+      propertyPath: m_Priority
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 656622379539542670, guid: 7b44810eb2c25d944a733a247916c71a, type: 3}
       propertyPath: m_Lens.NearClipPlane
       value: 0.1
