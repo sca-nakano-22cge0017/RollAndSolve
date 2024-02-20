@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
     bool isPushCount = false;
 
     [SerializeField, Header("変身エフェクト")] ParticleSystem changeEffect;
+    [SerializeField, Header("風エフェクト")] ParticleSystem windEffect;
 
     void Start()
     {
@@ -160,10 +161,12 @@ public class PlayerController : MonoBehaviour
         if(Mathf.Abs(speed) >= CirclesMaxSpeed * 0.7 && playerstate == PlayerState.Circle)
         {
             objectBreak = true;
+            windEffect.Play();
         }
         else
         {
             objectBreak = false;
+            windEffect.Stop();
         }
 
         //カウントダウン中にADキーが押され、そのままゲームが開始すると最初動かないのでそれの解決
