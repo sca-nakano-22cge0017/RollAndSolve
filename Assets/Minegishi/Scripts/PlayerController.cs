@@ -15,9 +15,13 @@ public class PlayerController : MonoBehaviour
     public enum PlayerState { Human, Circle}
     public PlayerState playerstate;
 
-    //ポーズ状態
+    //ポーズ状態のときtrue
     bool isPause = false;
     public bool IsPause { get { return isPause;} set { isPause = value;} }
+
+    //カウントダウン終了のフラグ
+    bool countEnd = false;
+    public bool CountEnd { set { countEnd = value; } }
 
     private Rigidbody2D rb;
 
@@ -161,6 +165,22 @@ public class PlayerController : MonoBehaviour
         {
             objectBreak = false;
         }
+
+        //カウントダウン中にADキーが押され、そのままゲームが開始すると最初動かないのでそれの解決
+        if (!countEnd)
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                isRight = true;
+                isLeft = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                isRight = false;
+                isLeft = true;
+            }
+        }
     }
 
     //人型
@@ -225,7 +245,8 @@ public class PlayerController : MonoBehaviour
                 speed = 0;
         }
 
-        if (Input.GetKey(KeyCode.D) && isRight) //Dを押す
+        //Dキー入力かつ移動方向が右
+        if (Input.GetKey(KeyCode.D) && isRight)
         {
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -303,7 +324,7 @@ public class PlayerController : MonoBehaviour
                 speed = 0;
         }
 
-        if (Input.GetKey(KeyCode.A) && isLeft) //Aを押す
+        if (Input.GetKey(KeyCode.A) && isLeft)
         {
             RightDeceleration = false;
             LeftDeceleration = false;
