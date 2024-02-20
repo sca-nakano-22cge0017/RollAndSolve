@@ -9921,6 +9921,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 47.8
       objectReference: {fileID: 0}
+    - target: {fileID: 4704352801806445809, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5202046226244902098, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -25016,7 +25020,7 @@ GameObject:
   - component: {fileID: 1445377858}
   - component: {fileID: 1445377857}
   m_Layer: 0
-  m_Name: Box/Items/Slopes
+  m_Name: Box/Items
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

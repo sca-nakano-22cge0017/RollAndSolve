@@ -23,6 +23,8 @@ public class HPController : MonoBehaviour
     bool isDown = false;
     bool isFall = false;
 
+    PlayerController player;
+
     public bool IsDamage
     {
         set { isDamage = value; }
@@ -68,6 +70,8 @@ public class HPController : MonoBehaviour
 
         Display(heart, heart.Length, false);
         Display(heart, hp, true);
+
+        player = GameObject.FindObjectOfType<PlayerController>();
     }
 
     void Update()
