@@ -126,8 +126,9 @@ public class PlayerController : MonoBehaviour
             PlayerJump();
             MoveSound();
         }
-        else if(HpController.IsDown) anim.SetTrigger("Dead");
-        
+
+        if(HpController.IsDown) anim.SetBool("Dead", true);
+
         if (speedUp)
         {
             SpeedUp();
@@ -259,7 +260,7 @@ public class PlayerController : MonoBehaviour
 
                 playerForms[0].GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
             }
-            transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0,0) * Time.deltaTime);
+            //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0,0) * Time.deltaTime);
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
@@ -288,7 +289,7 @@ public class PlayerController : MonoBehaviour
                     speed -= CirclesDeceleration * Time.deltaTime;
                 }
 
-                transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
+                //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
             }
         }
 
@@ -337,7 +338,7 @@ public class PlayerController : MonoBehaviour
 
                 playerForms[0].GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
             }
-            transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
+            //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
         }
         if (Input.GetKeyUp(KeyCode.A))
         {
@@ -363,7 +364,7 @@ public class PlayerController : MonoBehaviour
                 {
                     speed += CirclesDeceleration * Time.deltaTime;
                 }
-                transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
+                //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
             }
         }
 
@@ -401,12 +402,26 @@ public class PlayerController : MonoBehaviour
             //}
         }
 
-        if(!isGround)
-        {
-            angle = 0;
-        }
+        transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
 
         Spine();
+
+        RayDraw();
+    }
+
+    /// <summary>
+    /// Debug用
+    /// </summary>
+    void RayDraw()
+    {
+        //進行方向にRayを飛ばす
+        Ray ray = new Ray(this.transform.position, Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0));
+
+        //Rayの長さ
+        float maxDistance = 10;
+
+        //Rayを画面に表示
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.green, 2, false);
     }
 
     /// <summary>
@@ -649,14 +664,13 @@ public class PlayerController : MonoBehaviour
         if(!invincible) //無敵状態じゃないとき
         {
             //衝突相手が敵かつ人型かつ速度７割未満のとき、ダメージ処理
-            if((collision.gameObject.tag == "Enemy" && !objectBreak) || collision.gameObject.tag == "Thorn")
+            if(collision.gameObject.tag == "Enemy" && !objectBreak)
             {
-                anim.SetTrigger("Damage");
-
                 //カプセル状態解除
                 if (playerstate == PlayerState.Circle)
                 {
                     playerstate = PlayerState.Human;
+                    anim = playerAnims[1];
                     playerMeshs[1].enabled = true;
                     playerMeshs[0].enabled = false;
                     playerMeshs[2].enabled = false;
@@ -665,18 +679,20 @@ public class PlayerController : MonoBehaviour
                 speed -= speed * 0.5f;
                 invincible = true;
                 HpController.IsDamage = true;
+
+                anim.SetTrigger("Damage");
             }
         }
 
         //着地アニメーション
-            if (collision.gameObject.tag == "Ground" ||
+        if (collision.gameObject.tag == "Ground" ||
             collision.gameObject.tag == "Slope")
         {
             isGround = true;
             anim.SetBool("Jump", false);
         }
 
-        if(collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
             angle = 0;
         }
@@ -709,6 +725,14 @@ public class PlayerController : MonoBehaviour
                     anim.SetBool("Jump", false);
                 }
             }
+        }
+
+        if (collision.gameObject.tag == "Slope")
+        {
+            var slope = collision.gameObject.GetComponent<Slope>();
+            angle = slope.Angle;
+            rb.gravityScale = 0;
+            rb.velocity = Vector2.zero;
         }
     }
 
@@ -802,10 +826,10 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Push", false);
         }
 
-        if(collision.gameObject.tag == "Slope")
+        if (collision.gameObject.tag == "Slope")
         {
             rb.gravityScale = 2;
-            //angle = 0;
+            angle = 0;
         }
     }
 
@@ -869,9 +893,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ToBall()
     {
-        //操作不可
-        //isPause = true;
-
         //アニメーション再生中待機
         yield return new WaitForSeconds(1.0f);
 
@@ -886,9 +907,6 @@ public class PlayerController : MonoBehaviour
         playerMeshs[1].enabled = false;
         playerMeshs[2].enabled = false;
 
-        //操作可
-        //isPause = false;
-
         playerstate = PlayerState.Circle;
         //sr.sprite = Circles;
         Debug.Log("球体です");
@@ -896,9 +914,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ToHuman()
     {
-        //操作不可
-        //isPause = true;
-
         //エフェクト再生
         changeEffect.Play();
 
@@ -911,9 +926,6 @@ public class PlayerController : MonoBehaviour
         playerMeshs[1].enabled = true;
         playerMeshs[0].enabled = false;
         playerMeshs[2].enabled = false;
-
-        //操作可
-        //isPause = false;
 
         playerstate = PlayerState.Human;
         //sr.sprite = Humans;
