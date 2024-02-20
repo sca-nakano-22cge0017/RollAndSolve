@@ -153,10 +153,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Vector2 position = transform.position;
-
-        transform.position = position;
-
         //球体形態で最高速度の７割以上の時オブジェクトを破壊できる
         if(Mathf.Abs(speed) >= CirclesMaxSpeed * 0.7 && playerstate == PlayerState.Circle)
         {
@@ -168,6 +164,8 @@ public class PlayerController : MonoBehaviour
             objectBreak = false;
             windEffect.Stop();
         }
+
+        if(isPause) windEffect.Stop();
 
         //カウントダウン中にADキーが押され、そのままゲームが開始すると最初動かないのでそれの解決
         if (!countEnd)
@@ -251,6 +249,10 @@ public class PlayerController : MonoBehaviour
         //Dキー入力かつ移動方向が右
         if (Input.GetKey(KeyCode.D) && isRight)
         {
+            //エフェクトの向き変更
+            windEffect.transform.localPosition = new Vector3(-7.0f, -6.5f, 0);
+            windEffect.transform.rotation = Quaternion.Euler(0.0f, -90.0f, 90.0f);
+
             RightDeceleration = false;
             LeftDeceleration = false;
 
@@ -329,6 +331,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) && isLeft)
         {
+            //エフェクトの向き変更
+            windEffect.transform.localPosition = new Vector3(7.0f, -6.5f, 0);
+            windEffect.transform.rotation = Quaternion.Euler(0.0f, 90.0f, -90.0f);
+
             RightDeceleration = false;
             LeftDeceleration = false;
 

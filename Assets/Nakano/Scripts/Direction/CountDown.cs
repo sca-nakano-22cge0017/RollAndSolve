@@ -7,8 +7,10 @@ public class CountDown : MonoBehaviour
     Animator anim;
     PlayerController player;
     bool isPause = false;
-    [HideInInspector] public bool gameStart = false;
+    bool gameStart = false;
     bool canStart = true;
+
+    [SerializeField] PoseEnd pauseWindow;
 
     private void Start()
     {
@@ -25,8 +27,8 @@ public class CountDown : MonoBehaviour
             isPause = !isPause;
         }
 
-        if(isPause) anim.SetFloat("Speed", 0);
-        else anim.SetFloat("Speed", 1);
+        if(isPause) anim.speed = 0;
+        else anim.speed = 1;
 
         if (gameStart && canStart)
         {
@@ -50,11 +52,7 @@ public class CountDown : MonoBehaviour
     public void CountEnd()
     {
         gameStart = true;
-    }
-
-    public void Stop()
-    {
-        isPause = true;
+        pauseWindow.GameStart = true;
     }
 
     public void Restart()

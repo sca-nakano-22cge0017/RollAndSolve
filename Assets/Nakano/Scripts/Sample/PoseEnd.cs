@@ -9,13 +9,12 @@ public class PoseEnd : MonoBehaviour
 
     PlayerController playerController;
 
-    CountDown countDown;
+    bool gameStart = false;
+    public bool GameStart { set { gameStart = value; } }
 
     private void Start()
     {
         playerController = GameObject.FindObjectOfType<PlayerController>();
-
-        countDown = GameObject.FindObjectOfType<CountDown>();
     }
 
     public void OnClick()
@@ -23,7 +22,7 @@ public class PoseEnd : MonoBehaviour
         var isActive = Panel.activeInHierarchy; // Panelがアクティブか取得
         if (isActive == true)
         {
-            if(countDown.gameStart)
+            if (gameStart)
             {
                 playerController.IsPause = false;
                 Time.timeScale = 1;

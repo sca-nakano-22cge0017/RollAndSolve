@@ -19,6 +19,10 @@ public class BonusClear : MonoBehaviour
     bool isMove = false;
     bool isStart = false;
 
+    [SerializeField] PoseEnd pauseWindow;
+
+    bool isPause = false;
+
     void Start()
     {
         playerController = GameObject.FindObjectOfType<PlayerController>();
@@ -41,6 +45,7 @@ public class BonusClear : MonoBehaviour
             Time.timeScale = 1;
             playerController.IsPause = false;
             isStart = true;
+            pauseWindow.GameStart = true;
         }
 
         if(isMove)
@@ -49,6 +54,22 @@ public class BonusClear : MonoBehaviour
             {
                 playerController.gameObject.transform.Translate(new Vector3(10, 0, 0) * Time.deltaTime);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPause = !isPause;
+        }
+
+        if (isPause)
+        {
+            start[0].speed = 0;
+            start[1].speed = 0;
+        }
+        else
+        {
+            start[0].speed = 1;
+            start[1].speed = 1;
         }
     }
 
@@ -77,5 +98,10 @@ public class BonusClear : MonoBehaviour
         fade.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         SceneManager.LoadScene("Title");
+    }
+
+    public void Restart()
+    {
+        isPause = false;
     }
 }
