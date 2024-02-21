@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1056710983648706243}
   - component: {fileID: 6777032260172238476}
   - component: {fileID: 7858934982959277245}
-  - component: {fileID: 4381665393631817166}
+  - component: {fileID: 1770327160720409431}
   m_Layer: 0
   m_Name: Slope2
   m_TagString: Slope
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   num: 1
   size: {x: 2, y: 1}
---- !u!60 &4381665393631817166
+--- !u!60 &1770327160720409431
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
