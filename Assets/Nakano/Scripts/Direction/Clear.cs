@@ -22,6 +22,10 @@ public class Clear : MonoBehaviour
 
     bool textAnimEnd = false;
 
+    [SerializeField] AudioClip clearSE;
+    AudioSource audioSource;
+    bool isSound = true;
+
     //「ステージクリア」の文字の演出が終了したかどうかを貰う
     public bool TextAnimEnd
     {
@@ -31,6 +35,7 @@ public class Clear : MonoBehaviour
     void Start()
     {
         treasureController = GameObject.FindWithTag("Treasure").GetComponent<TreasureController>();
+        audioSource = GetComponent<AudioSource>();
         textAnim = clearText.GetComponent<Animator>();
         effectLeftAnim = effectLeft.GetComponent<Animator>();
         effectRightAnim = effectRight.GetComponent<Animator>();
@@ -45,6 +50,12 @@ public class Clear : MonoBehaviour
         //クリアしたら
         if(isClear)
         {
+            if(isSound)
+            {
+                audioSource.PlayOneShot(clearSE);
+                isSound = false;
+            }
+            
             clearText.enabled = true;
             textAnim.SetTrigger("TextMove");
         }
@@ -68,7 +79,7 @@ public class Clear : MonoBehaviour
     //ステージに応じたシーン遷移・ステージクリアについての情報保存
     IEnumerator ToSelect()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
         PlayerPrefs.SetInt("PlayingStage", 0);
 
         switch (SceneManager.GetActiveScene().name)

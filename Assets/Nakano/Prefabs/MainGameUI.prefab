@@ -815,7 +815,7 @@ GameObject:
   - component: {fileID: 4593959411110321561}
   - component: {fileID: 1872857542784667396}
   - component: {fileID: 2291297970867974888}
-  - component: {fileID: 3938481567084038116}
+  - component: {fileID: 5318051765372477762}
   m_Layer: 5
   m_Name: MainGameUI
   m_TagString: Untagged
@@ -912,7 +912,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3938481567084038116
+--- !u!114 &5318051765372477762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -921,13 +921,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6272442893460427262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a389ba8e97f07db41a4fecf1adb9895c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fd0c85bfae287540918e1d40839c221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &6754187395027648637
 GameObject:
   m_ObjectHideFlags: 0

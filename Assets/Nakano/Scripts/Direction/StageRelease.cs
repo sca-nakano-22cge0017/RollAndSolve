@@ -60,13 +60,4 @@ public class StageRelease : MonoBehaviour
             }
         }
     }
-
-    private void Update()
-    {
-        //Debug用　進行状況のデータを削除
-        if(Input.GetKeyDown(KeyCode.Delete))
-        {
-            PlayerPrefs.DeleteAll();
-        }
-    }
 }

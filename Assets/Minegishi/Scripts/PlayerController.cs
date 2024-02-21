@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour
         {
             //エフェクトの向き変更
             windEffect.transform.localPosition = new Vector3(-7.0f, -6.5f, 0);
-            windEffect.transform.rotation = Quaternion.Euler(0.0f, -90.0f, 90.0f);
+            windEffect.transform.rotation = Quaternion.Euler(angle, -90.0f, 90.0f);
 
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -333,7 +333,7 @@ public class PlayerController : MonoBehaviour
         {
             //エフェクトの向き変更
             windEffect.transform.localPosition = new Vector3(7.0f, -6.5f, 0);
-            windEffect.transform.rotation = Quaternion.Euler(0.0f, 90.0f, -90.0f);
+            windEffect.transform.rotation = Quaternion.Euler(-angle, 90.0f, -90.0f);
 
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -435,23 +435,6 @@ public class PlayerController : MonoBehaviour
         transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
 
         Spine();
-
-        RayDraw();
-    }
-
-    /// <summary>
-    /// Debug用
-    /// </summary>
-    void RayDraw()
-    {
-        //進行方向にRayを飛ばす
-        Ray ray = new Ray(this.transform.position, Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0));
-
-        //Rayの長さ
-        float maxDistance = 10;
-
-        //Rayを画面に表示
-        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.green, 2, false);
     }
 
     /// <summary>
