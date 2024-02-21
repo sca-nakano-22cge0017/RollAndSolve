@@ -34,8 +34,8 @@ public class TreasureController : MonoBehaviour
 
     void Update()
     {
-        //宝箱に触れて、Pキーを押したらクリア
-        if (/*Input.GetKeyDown(KeyCode.P) && */isOpen)
+        //宝箱に触れたらクリア
+        if (isOpen)
         {
             anim.SetTrigger("Open");
 
@@ -62,14 +62,6 @@ public class TreasureController : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.mass = 0;
             rb.gravityScale = 0;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            isOpen = false;
         }
     }
 }
