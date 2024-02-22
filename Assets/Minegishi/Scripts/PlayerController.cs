@@ -435,6 +435,15 @@ public class PlayerController : MonoBehaviour
         transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
 
         Spine();
+
+        RayDraw();
+    }
+
+    void RayDraw()
+    {
+        Ray ray = new Ray(transform.position, Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0));
+
+        Debug.DrawRay(ray.origin, ray.direction * 5, Color.green, 3);
     }
 
     /// <summary>
