@@ -35700,7 +35700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obj: {fileID: 1869534803}
   speed: 5
-  coolTime: 0.8
+  coolTime: 1
   topPos: 0
   downPos: -7.5
 --- !u!4 &2019451116 stripped
