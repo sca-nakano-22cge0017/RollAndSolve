@@ -317,6 +317,7 @@ public class PlayerController : MonoBehaviour
 
                 //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
             }
+            else speed = 0; //’´‰ß•ª‚ğ–ß‚·
         }
 
         // ¶•ûŒü‚ÖˆÚ“® 
@@ -394,9 +395,14 @@ public class PlayerController : MonoBehaviour
                 {
                     speed += CirclesDeceleration * Time.deltaTime;
                 }
+
                 //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
             }
+            else speed = 0;
         }
+
+        //•¡”ŒÂŠ‚É‘‚©‚ê‚Ä‚¢‚½‚Ì‚ğ‚Ü‚Æ‚ß‚½
+        transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
 
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
@@ -431,8 +437,6 @@ public class PlayerController : MonoBehaviour
             //    speed = 0;
             //}
         }
-
-        transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
 
         Spine();
 

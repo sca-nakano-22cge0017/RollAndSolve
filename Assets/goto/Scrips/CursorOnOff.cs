@@ -23,11 +23,13 @@ public class CursorOnOff : MonoBehaviour
         if (isOn)
         {//カーソルを表示しない
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
             //カーソルを表示しない
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }

@@ -15,4 +15,14 @@ public class ElevetorDownChecker : MonoBehaviour
     {
         elevetor.IsMin = false;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        elevetor.IsMin = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        elevetor.IsMin = false;
+    }
 }
