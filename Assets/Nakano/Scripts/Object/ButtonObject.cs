@@ -100,6 +100,31 @@ public class ButtonObject : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Player") && !isActive)
+        {
+            var p = collision.gameObject.GetComponent<PlayerController>();
+
+            if (p.playerstate == PlayerController.PlayerState.Human)
+            {
+                isPush = true;
+                rb.isKinematic = false;
+                rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+            }
+            else
+            {
+                isPush = false;
+                rb.isKinematic = true;
+                rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Box"))
+        {
+            isPush = true;
+            rb.isKinematic = false;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+        }
+
         if (collision.gameObject.name == "Button_Base")
         {
             isActive = true;
