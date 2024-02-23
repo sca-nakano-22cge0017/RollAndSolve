@@ -8,6 +8,7 @@ public class Elevetor : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField, Tooltip("一番上/下に着いてからまた動き始めるまでのクールタイム")] float coolTime;
     [SerializeField, Header("一番上のY座標")] float topPos;
+    [SerializeField, Header("一番下のY座標")] float downPos;
 
     ButtonObject button;
 
@@ -43,6 +44,11 @@ public class Elevetor : MonoBehaviour
         if(obj.transform.position.y >= topPos)
         {
             isMax = true;
+        }
+
+        if (obj.transform.position.y <= downPos)
+        {
+            isMin = true;
         }
 
         if (isMax) { StartCoroutine(StateChange(STATE.down)); }
