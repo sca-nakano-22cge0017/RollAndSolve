@@ -11,11 +11,17 @@ public class ObjDestroy : MonoBehaviour
     Vector3 tr;
     BoxesRecreate boxesRecreate;
     SEController seController;
+    Rigidbody2D rb;
 
     [SerializeField, Header("”j‰óŒã•œŠˆ‚·‚é‚©‚Ç‚¤‚©")] bool isRecreate = true;
     bool rec = false;
 
     CinemachineImpulseSource impulse;
+
+    bool isFall = false; //“]‚ª‚è—‚¿‚éƒtƒ‰ƒO
+    bool isFallCr = false; //ª‚Ì‚Æ‚«‚Ì•œŠˆ—p‚Ìƒtƒ‰ƒO
+
+    [SerializeField, Header("â‚ğ“]‚ª‚è—‚¿‚é‚Æ‚«‚Ì‰ñ“]‘¬“x")] float rotateSpeed = -180;
 
     void Start()
     {
@@ -25,6 +31,7 @@ public class ObjDestroy : MonoBehaviour
         playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         tr = GetComponent<Transform>().position;
         boxesRecreate = GameObject.FindObjectOfType<BoxesRecreate>();
+        rb = GetComponent<Rigidbody2D>();
 
         seController = GameObject.FindObjectOfType<SEController>();
 
@@ -33,16 +40,30 @@ public class ObjDestroy : MonoBehaviour
 
     private void Update()
     {
+        //–Ø” ‚Ì•œŠˆ
         if(rec)
         {
             rec = false;
             boxesRecreate.Recreate(tr);
         }
+
+        //â‚©‚ç“]‚ª‚è—‚¿‚é‚Æ‚«‚Ìˆ—
+        if(isFall)
+        {
+            if (!isFallCr)
+            {
+                boxesRecreate.FallBox(tr, true);
+                isFallCr = true;
+            }
+
+            //‰ñ“]
+            rb.angularVelocity = rotateSpeed;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Hole")
+        if(collision.gameObject.tag == "Hole" && !isFall)
         {
             if (this.gameObject.tag == "Box")
             {
@@ -81,6 +102,11 @@ public class ObjDestroy : MonoBehaviour
                 anim.SetTrigger("Break");
                 Destroy(col);
             }
+        }
+
+        if(collision.gameObject.CompareTag("Slope") && !isFall)
+        {
+            isFall = true;
         }
     }
 

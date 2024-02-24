@@ -12,6 +12,7 @@ public class ButtonObject : MonoBehaviour
 
     bool isPush = false;
 
+    [SerializeField, Header("–Ø” ‚Æ‚Ì”»’è‚ð‚È‚µ‚É‚·‚é")] bool isBox = false;
     [SerializeField, Header("Debug—p")] bool isActive = false;
 
     public bool IsPush
@@ -82,7 +83,7 @@ public class ButtonObject : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.CompareTag("Box"))
+        if (collision.gameObject.CompareTag("Box") && !isBox)
         {
             isPush = true;
             rb.isKinematic = false;
@@ -118,7 +119,7 @@ public class ButtonObject : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.CompareTag("Box"))
+        if (collision.gameObject.CompareTag("Box") && !isBox)
         {
             isPush = true;
             rb.isKinematic = false;
