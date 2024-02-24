@@ -29387,7 +29387,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -624010125082267731, guid: 4328a8bf11b402d468ff93f14e587790, type: 3}
       propertyPath: m_Mass
-      value: 0.001
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -624010125082267731, guid: 4328a8bf11b402d468ff93f14e587790, type: 3}
       propertyPath: m_AngularDrag
@@ -29395,11 +29395,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -624010125082267731, guid: 4328a8bf11b402d468ff93f14e587790, type: 3}
       propertyPath: m_Constraints
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -624010125082267731, guid: 4328a8bf11b402d468ff93f14e587790, type: 3}
       propertyPath: m_GravityScale
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 786438533755210522, guid: 4328a8bf11b402d468ff93f14e587790, type: 3}
       propertyPath: m_LocalScale.x

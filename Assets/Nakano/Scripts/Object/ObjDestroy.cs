@@ -63,14 +63,16 @@ public class ObjDestroy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Hole" && !isFall)
+        if(collision.gameObject.tag == "Hole" && this.gameObject.tag == "Box")
         {
-            if (this.gameObject.tag == "Box")
+            if (!isFall)
             {
                 if (isRecreate) { rec = true; } //–Ø” •œŠˆ
 
                 StartCoroutine(BoxFall());
             }
+
+            else { Destroy(this); }
         }
     }
 
@@ -107,6 +109,10 @@ public class ObjDestroy : MonoBehaviour
         if(collision.gameObject.CompareTag("Slope") && !isFall)
         {
             isFall = true;
+            rb.mass = 0.001f;
+            rb.angularDrag = 0;
+            rb.gravityScale = 3;
+            rb.constraints = RigidbodyConstraints2D.None;
         }
     }
 
