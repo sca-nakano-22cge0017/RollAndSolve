@@ -7,14 +7,13 @@ public class BoxesRecreate : MonoBehaviour
     [SerializeField] GameObject parent;
     [SerializeField] GameObject prefab;
 
-    void Start()
+    public void FallBox(Vector3 tr, bool create)
     {
-        
-    }
-
-    void Update()
-    {
-        
+        if(create)
+        {
+            Instantiate(prefab, tr, Quaternion.identity, parent.transform);
+            create = false;
+        }
     }
 
     public void Recreate(Vector3 tr)
