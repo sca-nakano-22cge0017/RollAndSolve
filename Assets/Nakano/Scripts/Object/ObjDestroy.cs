@@ -21,6 +21,8 @@ public class ObjDestroy : MonoBehaviour
     bool isFall = false; //転がり落ちるフラグ
     bool isFallCr = false; //↑のときの復活用のフラグ
 
+    [SerializeField] bool isFallBox = false;
+
     [SerializeField, Header("坂を転がり落ちるときの回転速度")] float rotateSpeed = -180;
 
     void Start()
@@ -48,7 +50,7 @@ public class ObjDestroy : MonoBehaviour
         }
 
         //坂から転がり落ちるときの処理
-        if(isFall)
+        if(isFall && isFallBox)
         {
             if (!isFallCr)
             {
