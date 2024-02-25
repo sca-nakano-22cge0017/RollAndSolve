@@ -50,7 +50,7 @@ public class ObjDestroy : MonoBehaviour
         }
 
         //â‚©‚ç“]‚ª‚è—‚¿‚é‚Æ‚«‚Ìˆ—
-        if(isFall && isFallBox)
+        if(isFall)
         {
             if (!isFallCr)
             {
@@ -108,7 +108,7 @@ public class ObjDestroy : MonoBehaviour
             }
         }
 
-        if(collision.gameObject.CompareTag("Slope") && !isFall)
+        if(collision.gameObject.CompareTag("Slope") && !isFall && isFallBox)
         {
             isFall = true;
             rb.mass = 0.001f;
