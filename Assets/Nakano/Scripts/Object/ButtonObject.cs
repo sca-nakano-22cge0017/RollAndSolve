@@ -2,25 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ボタン本体の制御
+/// </summary>
 public class ButtonObject : MonoBehaviour
 {
     public enum BUTTON { red = 0, blue };
     public BUTTON buttonType = 0;
 
-    Rigidbody2D rb;
     Vector3 defaultPosition;
 
-    bool isPush = false;
-
     [SerializeField, Header("木箱との判定をなしにする")] bool isBox = false;
-    [SerializeField, Header("Debug用")] bool isActive = false;
+    [SerializeField, Header("Debug用"), Tooltip("チェックを入れるとボタンが作動")] bool isActive = false;
 
-    public bool IsPush
-    {
-        get { return isPush; }
-        set { isPush = value; }
-    }
+    Vector3 pushPos = new Vector3(0, -0.1f, 0); //押したとき、ボタン部分がどのくらい下に移動するか
 
+    PlayerController playerController;
+
+    /// <summary>
+    /// ボタンが作動しているときはtrue
+    /// </summary>
     public bool IsActive
     {
         get { return isActive; }
@@ -29,35 +30,29 @@ public class ButtonObject : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        defaultPosition = this.transform.position;
+        playerController = GameObject.FindObjectOfType<PlayerController>();
 
-        rb.isKinematic = true;
+        //元々のボタン部分の座標を保存
+        defaultPosition = this.transform.position;
     }
 
     void Update()
     {
-        if (transform.position.y >= defaultPosition.y)
+        //押されてるときはボタン部分が下に移動
+        if(isActive)
         {
-            transform.position = defaultPosition;
-            rb.velocity = Vector3.zero;
+            transform.position = defaultPosition + pushPos;
         }
 
-        if (isPush && !isActive)
+        //押されていない
+        else
         {
-            transform.Translate(Vector3.down * 5 * Time.deltaTime);
-        }
-
-        if (!isPush)
-        {
-            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-
-            if(buttonType == ButtonObject.BUTTON.blue)
+            //青ボタンの場合、元の位置に戻る
+            if (buttonType == ButtonObject.BUTTON.blue)
             {
                 if (transform.position.y <= defaultPosition.y)
                 {
                     transform.position = defaultPosition;
-                    rb.velocity = Vector3.zero;
                 }
             }
         }
@@ -65,68 +60,24 @@ public class ButtonObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && !isActive)
+        //判定相手がプレイヤー
+        if (collision.gameObject.CompareTag("Player"))
         {
-            var p = collision.gameObject.GetComponent<PlayerController>();
-            
-            if (p.playerstate == PlayerController.PlayerState.Human)
+            //プレイヤーが人型のとき
+            if (playerController.playerstate == PlayerController.PlayerState.Human)
             {
-                isPush = true;
-                rb.isKinematic = false;
-                rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+                //押す
+                isActive = true;
             }
             else
             {
-                isPush = false;
-                rb.isKinematic = true;
-                rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+                //カプセル状態なら押さない
+                isActive = false;
             }
         }
 
+        //判定相手が木箱かつ、木箱と判定を取る場合
         if (collision.gameObject.CompareTag("Box") && !isBox)
-        {
-            isPush = true;
-            rb.isKinematic = false;
-            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-        }
-
-        if (collision.gameObject.name == "Button_Base")
-        {
-            isActive = true;
-            rb.velocity = Vector2.zero;
-            //押されたら位置を固定する
-            rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player") && !isActive)
-        {
-            var p = collision.gameObject.GetComponent<PlayerController>();
-
-            if (p.playerstate == PlayerController.PlayerState.Human)
-            {
-                isPush = true;
-                rb.isKinematic = false;
-                rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-            }
-            else
-            {
-                isPush = false;
-                rb.isKinematic = true;
-                rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-            }
-        }
-
-        if (collision.gameObject.CompareTag("Box") && !isBox)
-        {
-            isPush = true;
-            rb.isKinematic = false;
-            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
-        }
-
-        if (collision.gameObject.name == "Button_Base")
         {
             isActive = true;
         }
@@ -134,17 +85,13 @@ public class ButtonObject : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        //青ボタンのときはプレイヤーや木箱が離れたらoff
         if (buttonType == ButtonObject.BUTTON.blue)
         {
             if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Box"))
             {
-                isPush = false;
+                isActive = false;
             }
-        }
-
-        if (collision.gameObject.name == "Button_Base")
-        {
-            isActive = false;
         }
     }
 }
