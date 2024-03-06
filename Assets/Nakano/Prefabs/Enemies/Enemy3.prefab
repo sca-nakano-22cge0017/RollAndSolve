@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: -1, y: 0}
-  maxRange: 0.1
+  maxRange: 0.5
   isHit: 0
 --- !u!1 &6388872423720123494
 GameObject:
@@ -366,5 +366,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 1, y: 0}
-  maxRange: 0.1
+  maxRange: 0.5
   isHit: 0
