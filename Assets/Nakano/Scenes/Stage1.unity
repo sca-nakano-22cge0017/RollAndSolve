@@ -7025,7 +7025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8588236405485418778, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.88
+      value: -3.722
       objectReference: {fileID: 0}
     - target: {fileID: 8588236405485418778, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13453,7 +13453,7 @@ GameObject:
   - component: {fileID: 1368387335}
   m_Layer: 0
   m_Name: CameraMove
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18787,7 +18787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8588236405485418778, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.7785113
+      value: -3.69
       objectReference: {fileID: 0}
     - target: {fileID: 8588236405485418778, guid: e645160b4fd16244d896ca9240d6cde2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20580,7 +20580,7 @@ GameObject:
   - component: {fileID: 2033685235}
   m_Layer: 0
   m_Name: StartMove
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
