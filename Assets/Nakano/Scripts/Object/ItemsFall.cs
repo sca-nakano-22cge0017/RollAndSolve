@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ボタンを押したらアイテムが落ちる
+/// </summary>
 public class ItemsFall : MonoBehaviour
 {
     [SerializeField] GameObject obj;
 
     Rigidbody2D rb;
-    Vector3 defaultPos;
+    Vector3 defaultPos; //アイテム初期位置
     ButtonObject button;
 
     void Start()
@@ -25,10 +28,12 @@ public class ItemsFall : MonoBehaviour
         {
             if (button.IsActive)
             {
+                //落下
                 rb.isKinematic = false;
             }
             else
             {
+                //初期位置に戻る
                 obj.transform.position = defaultPos;
                 rb.isKinematic = true;
             }

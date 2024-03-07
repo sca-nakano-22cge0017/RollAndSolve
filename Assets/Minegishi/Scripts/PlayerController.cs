@@ -439,15 +439,6 @@ public class PlayerController : MonoBehaviour
         }
 
         Spine();
-
-        RayDraw();
-    }
-
-    void RayDraw()
-    {
-        Ray ray = new Ray(transform.position, Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0));
-
-        Debug.DrawRay(ray.origin, ray.direction * 5, Color.green, 3);
     }
 
     /// <summary>
@@ -687,29 +678,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(!invincible) //無敵状態じゃないとき
-        {
-            //衝突相手が敵かつ人型かつ速度７割未満のとき、ダメージ処理
-            if(collision.gameObject.tag == "Enemy" && !objectBreak)
-            {
-                //カプセル状態解除
-                if (playerstate == PlayerState.Circle)
-                {
-                    playerstate = PlayerState.Human;
-                    anim = playerAnims[1];
-                    playerMeshs[1].enabled = true;
-                    playerMeshs[0].enabled = false;
-                    playerMeshs[2].enabled = false;
-                }
-
-                speed -= speed * 0.5f;
-                invincible = true;
-                HpController.IsDamage = true;
-
-                anim.SetTrigger("Damage");
-            }
-        }
-
         //着地アニメーション
         if (collision.gameObject.tag == "Ground" ||
             collision.gameObject.tag == "Slope")
@@ -863,15 +831,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!invincible) //無敵状態じゃないとき
         {
-            //衝突相手がトゲのとき、ダメージ処理
-            if (collision.gameObject.tag == "Thorn")
+            //衝突相手が敵かつ人型かつ速度７割未満のとき　または衝突相手がトゲのとき、ダメージ処理
+            if ((collision.gameObject.tag == "Enemy" && !objectBreak) || collision.gameObject.tag == "Thorn")
             {
-                anim.SetTrigger("Damage");
-
                 //カプセル状態解除
                 if (playerstate == PlayerState.Circle)
                 {
                     playerstate = PlayerState.Human;
+                    anim = playerAnims[1];
                     playerMeshs[1].enabled = true;
                     playerMeshs[0].enabled = false;
                     playerMeshs[2].enabled = false;
@@ -880,6 +847,8 @@ public class PlayerController : MonoBehaviour
                 speed -= speed * 0.5f;
                 invincible = true;
                 HpController.IsDamage = true;
+
+                anim.SetTrigger("Damage");
             }
         }
 

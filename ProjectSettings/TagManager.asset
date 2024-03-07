@@ -16,6 +16,8 @@ TagManager:
   - Box
   - Thorn
   - SecretCoin
+  - Slope
+  - Camera
   layers:
   - Default
   - TransparentFX

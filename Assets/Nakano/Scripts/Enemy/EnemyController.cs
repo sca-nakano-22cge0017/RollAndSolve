@@ -11,8 +11,14 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField, Header("移動速度")] float speed;
     [SerializeField, Header("追跡範囲")] float dis;
-    [SerializeField, Header("左へのRayの位置")] GameObject leftRay;
-    [SerializeField, Header("右へのRayの位置")] GameObject rightRay;
+    [SerializeField, Header("左側のCollider")] GameObject leftCol;
+    [SerializeField, Header("右側のCollider")] GameObject rightCol;
+
+    Vector3 toPlayer, moveDir; //敵からプレイヤーへのベクトル、移動方向
+    float distance; //敵とプレイヤーの直線距離
+    bool isChase; //プレイヤーを追いかけているかどうか
+    bool isMove; //移動できるか
+    bool leftHit, rightHit; //左右方向に衝突物があるか
 
     [SerializeField, Header("飛んでいく方向 (ベクトル)")] Vector3 flyDir;
     Vector3 dir; //飛んでいく処理をする用の変数
@@ -22,7 +28,6 @@ public class EnemyController : MonoBehaviour
 
     PlayerController playerController;
     GameObject player;
-    Vector3 playerPos;
 
     Collider2D col;
     Rigidbody2D rb;
@@ -30,12 +35,6 @@ public class EnemyController : MonoBehaviour
     //イラストの向き
     Vector3 facingRight = new Vector3(-0.05f, 0.05f, 1); //右向き
     Vector3 facingLeft = new Vector3(0.05f, 0.05f, 1); //左向き
-
-    Vector3 moveDir; //移動方向
-    bool isChase; //プレイヤーを追いかけているかどうか
-
-    bool isMove; //移動できるか
-    bool leftHit, rightHit; //左右方向に衝突物があるか
 
     //Spine
     SkeletonAnimation skeletonAnimation;
@@ -57,7 +56,6 @@ public class EnemyController : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
-        col.isTrigger = false;
 
         isWalk = false;
         isChase = false;
@@ -68,43 +66,9 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        //左側のRayになにかぶつかったとき
-        if (leftHit)
-        {
-            //移動方向が左のとき
-            if (moveDir.x < 0)
-                isMove = false; //動けない
-        }
-        else { isMove = true; }
-
-        //右側のRayになにかぶつかったとき
-        if (rightHit)
-        {
-            //移動方向が右のとき
-            if (moveDir.x > 0)
-                isMove = false;
-        }
-        else { isMove = true; }
-
-        playerPos = player.transform.position;
-
-        //左右方向の衝突を検知するRayが子オブジェクトについているため、Enemy本体が反転するとRayの向きも反転してしまうので
-        //Enemyが向いてる方向に応じてRayを入れ替える
-        //左向きのときは通常
-        if (transform.localScale.x > 0)
-        {
-            leftHit = leftRay.GetComponent<EnemyRay>().isHit;
-            rightHit = rightRay.GetComponent<EnemyRay>().isHit;
-        }
-        //右向きのとき反転
-        else
-        {
-            leftHit = rightRay.GetComponent<EnemyRay>().isHit;
-            rightHit = leftRay.GetComponent<EnemyRay>().isHit;
-        }
-
-        //プレイヤーとの直線距離算出
-        var distance = (playerPos - this.transform.position).sqrMagnitude;
+        toPlayer = player.transform.position - this.transform.position;
+        moveDir = toPlayer.normalized; //移動方向算出
+        distance = toPlayer.sqrMagnitude; //プレイヤーとの直線距離算出
 
         //プレイヤーとの距離が一定以下だと追跡する
         if (distance <= dis * dis)
@@ -122,26 +86,35 @@ public class EnemyController : MonoBehaviour
             //移動可能なとき
             if (isMove)
             {
-                //移動方向算出、移動
-                moveDir = (playerPos - this.transform.position).normalized;
                 transform.Translate(new Vector3(moveDir.x, 0, 0) * speed * Time.deltaTime);
-
-                //移動方向に応じてEnemyの向きを変える
-                if (moveDir.x > 0)
-                {
-                    this.transform.localScale = facingRight;
-                }
-                else if (moveDir.x <= 0)
-                {
-                    this.transform.localScale = facingLeft;
-                }
             }
 
             //歩きモーションを再生していない場合は再生
+            //追っている間は再生し続ける
             if (!isWalk)
             {
                 skeletonAnimation.AnimationState.SetAnimation(0, "walk", true);
                 isWalk = true;
+            }
+
+            //右へ移動するとき
+            if (moveDir.x > 0)
+            {
+                //移動方向に応じてEnemyの向きを変える
+                this.transform.localScale = facingRight;
+
+                //左右方向の衝突を検知するColliderが子オブジェクトについているため、Enemy本体が反転すると左右反転してしまうので
+                //Enemyが向いてる方向に応じてColliderを入れ替える
+                leftHit = rightCol.GetComponent<EnemyCol>().IsHit;
+                rightHit = leftCol.GetComponent<EnemyCol>().IsHit;
+            }
+            //左へ移動するとき
+            else
+            {
+                this.transform.localScale = facingLeft;
+
+                leftHit = leftCol.GetComponent<EnemyCol>().IsHit;
+                rightHit = rightCol.GetComponent<EnemyCol>().IsHit;
             }
         }
 
@@ -156,6 +129,15 @@ public class EnemyController : MonoBehaviour
             }
         }
 
+        //左側のColliderになにかぶつかったとき　かつ移動方向が左のとき
+        //右側のColliderになにかぶつかったとき　かつ移動方向が右のとき
+        if ((leftHit && moveDir.x < 0) || (rightHit && moveDir.x > 0))
+        {
+            isMove = false; //動けなくなる
+        }
+        else if ((!leftHit && moveDir.x < 0) || (!rightHit && moveDir.x > 0))
+            { isMove = true; }
+
         //飛ばされているとき
         if (isFly)
         {
@@ -163,11 +145,7 @@ public class EnemyController : MonoBehaviour
             skeletonAnimation.AnimationState.SetAnimation(0, "damage", true);
 
             //斜め上方向に飛ばす
-            Transform myTrans = this.transform;
-            Vector3 pos = myTrans.position;
-            pos.x += dir.x * flySpeed * Time.deltaTime;
-            pos.y += dir.y * flySpeed * Time.deltaTime;
-            myTrans.position = pos;
+            transform.Translate(dir * flySpeed * Time.deltaTime, Space.World);
 
             //ある程度飛んだら消す
             if (transform.position.y >= 10)
@@ -234,6 +212,37 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        //プレイヤーにぶつかったとき
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //プレイヤーがオブジェクト破壊可能なとき
+            if (playerController.ObjectBreak)
+            {
+                //画面揺れ再生
+                impulse.GenerateImpulse();
+
+                //吹き飛ばした後に他のものにぶつからないようにRigidbody2D、Colliderを削除
+                Destroy(rb);
+                Destroy(col);
+
+                isFly = true;
+
+                //プレイヤーが右へ移動しているとき ＝ 左側からぶつかられたとき、右へ飛んでいく
+                if (playerController.Speed < 0)
+                {
+                    transform.Rotate(0, 0, -flyAngle, Space.World); //飛んでいく方向に向けて回転
+                    dir = new Vector3(-flyDir.x, flyDir.y, flyDir.z).normalized; //左右方向だけ逆にする
+                }
+
+                //右からぶつかられたら左へ飛んでいく
+                else
+                {
+                    transform.Rotate(0, 0, flyAngle, Space.World);
+                    dir = flyDir.normalized;
+                }
+            }
+        }
+
         //地面上にいるときは下に落ちないようにする
         if (collision.gameObject.CompareTag("Ground"))
         {
@@ -244,10 +253,10 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            col.isTrigger = false;
-        }
+        //if (collision.gameObject.tag == "Player")
+        //{
+        //    col.isTrigger = false;
+        //}
 
         //地面から離れた時は落ちるように
         if (collision.gameObject.CompareTag("Ground"))

@@ -1135,7 +1135,7 @@ GameObject:
   - component: {fileID: 85785698}
   m_Layer: 0
   m_Name: SecretCoinCameraCol
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4568,7 +4568,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2721360600900629538, guid: fc0d739db0934a540828b7af3cffa873, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.8089962
+      value: -3.96
       objectReference: {fileID: 0}
     - target: {fileID: 2721360600900629538, guid: fc0d739db0934a540828b7af3cffa873, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6481,7 +6481,7 @@ GameObject:
   - component: {fileID: 333353159}
   m_Layer: 0
   m_Name: CameraMove
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15790,7 +15790,7 @@ GameObject:
   - component: {fileID: 845260418}
   m_Layer: 0
   m_Name: StartMove1
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18142,7 +18142,7 @@ GameObject:
   - component: {fileID: 1006248387}
   m_Layer: 0
   m_Name: StartMove
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20776,7 +20776,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2721360600900629538, guid: fc0d739db0934a540828b7af3cffa873, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.8726718
+      value: -3.958
       objectReference: {fileID: 0}
     - target: {fileID: 2721360600900629538, guid: fc0d739db0934a540828b7af3cffa873, type: 3}
       propertyPath: m_LocalPosition.z
@@ -29112,7 +29112,7 @@ GameObject:
   - component: {fileID: 1735650501}
   m_Layer: 0
   m_Name: SecretCoinCameraRange
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
