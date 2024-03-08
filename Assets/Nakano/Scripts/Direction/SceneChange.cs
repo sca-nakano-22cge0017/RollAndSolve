@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// ボタンによるシーン遷移
+/// </summary>
 public class SceneChange : MonoBehaviour
 {
     public void Select()

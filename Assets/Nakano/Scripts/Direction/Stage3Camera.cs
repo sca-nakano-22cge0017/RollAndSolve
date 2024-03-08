@@ -3,29 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+/// <summary>
+/// ステージ３のカメラ制御用 CameraInstall.csをベースにして一時的な修正として追加
+/// 二枚目の隠しコインがカメラに映らなかったので突貫で追加したもの 要修正
+/// </summary>
 public class Stage3Camera : MonoBehaviour
 {
-    [SerializeField]
-    [Tooltip("切り替え後のカメラ")]
+    [SerializeField, Tooltip("初期位置のカメラ")]
     private CinemachineVirtualCamera virtualCamera;
 
-    [SerializeField] [Tooltip("切り替え後のカメラ")] private CinemachineVirtualCamera virtualCamera1;
+    [SerializeField, Tooltip("基本のカメラ")] private CinemachineVirtualCamera virtualCamera1;
 
-    [SerializeField]
-    private CinemachineVirtualCamera virtualCamera2;
+    [SerializeField, Tooltip("隠しコイン用カメラ")] private CinemachineVirtualCamera virtualCamera2;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     private void OnTriggerStay2D(Collider2D other)
     {
         // 当たった相手に"Player"タグが付いていた場合

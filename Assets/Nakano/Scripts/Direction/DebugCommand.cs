@@ -23,17 +23,16 @@ public class DebugCommand : MonoBehaviour
         {
             bonus++;
         }
-
         if(Input.GetKeyDown(KeyCode.C))
         {
             clear++;
         }
 
+        //•ÊƒL[“ü—Í‚Å“ü—Í‰ñ”‰Šú‰»
         if(bonus > 0 && Input.anyKeyDown && !Input.GetKeyDown(KeyCode.B))
         {
             bonus = 0;
         }
-
         if (clear > 0 && Input.anyKeyDown && !Input.GetKeyDown(KeyCode.C))
         {
             clear = 0;

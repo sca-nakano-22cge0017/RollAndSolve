@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class BonusClear : MonoBehaviour
 {
-    [SerializeField] Animator[] start;
     [SerializeField] Animator thank;
     [SerializeField] GameObject fade;
 
@@ -17,37 +16,23 @@ public class BonusClear : MonoBehaviour
     [SerializeField] float stopPos;
 
     bool isMove = false;
-    bool isStart = false;
 
-    [SerializeField] PoseEnd pauseWindow;
-
-    bool isPause = false;
+    PauseController pauseController;
 
     void Start()
     {
         playerController = GameObject.FindObjectOfType<PlayerController>();
-        playerController.IsPause = true;
+        pauseController = GameObject.FindObjectOfType<PauseController>();
 
         fade.SetActive(false);
 
         //隠しアイテム取得数を初期化
         PlayerPrefs.SetInt("SecretCoin", 0);
-
-        Time.timeScale = 0;
-        StartCoroutine(BonusStart());
     }
 
     void Update()
     {
-        //BonusStageアニメーション終了後、プレイヤーを動かせるようにする
-        if (start[0].GetCurrentAnimatorStateInfo(0).IsName("BonusStart") && !isStart)
-        {
-            Time.timeScale = 1;
-            playerController.IsPause = false;
-            isStart = true;
-            pauseWindow.GameStart = true;
-        }
-
+        //画面中央へ移動
         if(isMove)
         {
             if(playerController.gameObject.transform.position.x <= stopPos)
@@ -55,53 +40,39 @@ public class BonusClear : MonoBehaviour
                 playerController.gameObject.transform.Translate(new Vector3(10, 0, 0) * Time.deltaTime);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            isPause = !isPause;
-        }
-
-        if (isPause)
-        {
-            start[0].speed = 0;
-            start[1].speed = 0;
-        }
-        else
-        {
-            start[0].speed = 1;
-            start[1].speed = 1;
-        }
     }
 
-    IEnumerator BonusStart()
-    {
-        yield return new WaitForEndOfFrame();
-        //AnimationのUpdateModeをUnscaledTimeに変えた状態で、
-        //Start()で再生すると予期しない挙動になるのでワンクッション挟む
-
-        start[0].SetBool("Start", true);
-        start[1].SetBool("Start", true);
-    }
-
+    /// <summary>
+    /// ボーナスステージクリア
+    /// ボーナスステージ最後のコインを獲得したら呼び出す
+    /// </summary>
     public void Clear()
     {
-        playerController.IsPause = true;
-        
+        //プレイヤー操作不可 Animation再生の為にtimeScaleは1
+        pauseController.Pause(true, 1);
+
+        //クリア演出再生
         thank.SetBool("Clear", true);
+
+        //画面中心へ移動
+        isMove = true;
+
         StartCoroutine(SceneChange());
     }
 
+    /// <summary>
+    /// シーン遷移
+    /// </summary>
     IEnumerator SceneChange()
     {
-        isMove = true;
         yield return new WaitForSeconds(2);
-        fade.SetActive(true);
-        yield return new WaitForSeconds(2.5f);
-        SceneManager.LoadScene("Title");
-    }
 
-    public void Restart()
-    {
-        isPause = false;
+        //フェードイン再生
+        fade.SetActive(true);
+
+        yield return new WaitForSeconds(2.5f);
+
+        //遷移
+        SceneManager.LoadScene("Title");
     }
 }

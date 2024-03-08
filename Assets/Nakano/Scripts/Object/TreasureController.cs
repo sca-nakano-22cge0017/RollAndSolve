@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 宝箱の制御
+/// </summary>
 public class TreasureController : MonoBehaviour
 {
     Animator anim;
 
     [SerializeField, Header("メダル")] GameObject medal;
 
-    bool isOpen; //宝箱が開けるか
+    bool isOpen; //宝箱を開くか
     bool isClear; //クリア判定
-
-    PlayerController playerController;
 
     /// <summary>
     /// クリア判定
-    /// trueのとき、クリア
+    /// trueのときステージクリア
     /// </summary>
     public bool IsClear
     {
@@ -26,8 +27,7 @@ public class TreasureController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        playerController = GameObject.FindObjectOfType<PlayerController>();
-
+        
         isOpen = false;
         isClear = false;
     }
@@ -37,25 +37,26 @@ public class TreasureController : MonoBehaviour
         //宝箱に触れたらクリア
         if (isOpen)
         {
+            //アニメーション
             anim.SetTrigger("Open");
 
             //メダル獲得演出
             Instantiate(medal, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y + 0.1f, 0), Quaternion.identity);
+
             isClear = true;
             isOpen = false;
-            playerController.IsPause = true;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //プレイヤーが当たったら指示ウィンドウを表示し、宝箱を開くことができるかどうかのフラグをtrueにする
+        //プレイヤーが当たったら、宝箱を開くかどうかのフラグをtrueにする
         if(collision.gameObject.tag == "Player")
         {
             isOpen = true;
         }
         
-        //宝箱の落下
+        //もし高所から落下したとき地面で止まる
         if (collision.gameObject.tag == "Ground")
         {
             Rigidbody2D rb = GetComponent<Rigidbody2D>();

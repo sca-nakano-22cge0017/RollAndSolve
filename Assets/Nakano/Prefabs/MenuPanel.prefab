@@ -162,6 +162,8 @@ GameObject:
   - component: {fileID: 4250204404520461669}
   - component: {fileID: 7878843570031760564}
   - component: {fileID: 5517247224987198180}
+  - component: {fileID: 395974968064785261}
+  - component: {fileID: 6133472200036089681}
   m_Layer: 5
   m_Name: MenuPanel
   m_TagString: Untagged
@@ -256,6 +258,32 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &395974968064785261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726277659293537644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de13244b7f2f424fb644788a4157cf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuPanel: {fileID: 4642308424432115431}
+  StartButton: {fileID: 3715464862604748110}
+--- !u!114 &6133472200036089681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726277659293537644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e558f82530af444945ade8f7357c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1077497605759185819
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +619,6 @@ GameObject:
   - component: {fileID: 4736469621351746337}
   - component: {fileID: 6799155804202159382}
   - component: {fileID: 3004184844292576422}
-  - component: {fileID: 8562527036907040456}
   m_Layer: 5
   m_Name: MainGameButton
   m_TagString: Untagged
@@ -701,9 +728,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8562527036907040456}
-        m_TargetAssemblyTypeName: PoseEnd, Assembly-CSharp
-        m_MethodName: OnClick
+      - m_Target: {fileID: 395974968064785261}
+        m_TargetAssemblyTypeName: PauseWindow, Assembly-CSharp
+        m_MethodName: PauseEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -734,19 +761,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8562527036907040456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2217768579509056457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6de13244b7f2f424fb644788a4157cf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Panel: {fileID: 4642308424432115431}
 --- !u!1 &2401799362540367358
 GameObject:
   m_ObjectHideFlags: 0
