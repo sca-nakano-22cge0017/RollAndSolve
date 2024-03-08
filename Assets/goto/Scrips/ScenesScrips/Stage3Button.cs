@@ -28,7 +28,6 @@ public class Stage3Button : MonoBehaviour
         else
         {
             SceneManager.LoadScene("Stage3");
-            PlayerPrefs.SetInt("PlayingStage", 3);
         }
     }
 }

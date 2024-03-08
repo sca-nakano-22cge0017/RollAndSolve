@@ -10,6 +10,9 @@ public class ClearEffectEnd : MonoBehaviour
 {
     [SerializeField] Clear clear;
 
+    /// <summary>
+    /// クリアアニメーション終了
+    /// </summary>
     public void TextAnimEnd()
     {
         clear.TextAnimEnd = true;

@@ -2,61 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// カウントダウン
+/// </summary>
 public class CountDown : MonoBehaviour
 {
     Animator anim;
     PlayerController player;
-    bool isPause = false;
-    bool gameStart = false;
-    bool canStart = true;
 
-    [SerializeField] PoseEnd pauseWindow;
+    PauseWindow pauseWindow;
+    PauseController pauseController;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         player = GameObject.FindObjectOfType<PlayerController>();
+        pauseWindow = GameObject.FindObjectOfType<PauseWindow>();
+        pauseController = GameObject.FindObjectOfType<PauseController>();
 
-        StartCoroutine(Countdown());
-    }
+        //プレイヤー操作不可, Animation再生の為にtimeScaleは1
+        pauseController.Pause(true, 1);
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            isPause = !isPause;
-        }
-
-        if(isPause) anim.speed = 0;
-        else anim.speed = 1;
-
-        if (gameStart && canStart)
-        {
-            player.IsPause = false;
-            Time.timeScale = 1;
-
-            canStart = false;
-            player.CountEnd = true;
-        }
-    }
-
-    IEnumerator Countdown()
-    {
-        yield return new WaitForEndOfFrame();
-
+        //カウントダウン
         anim.SetBool("Start", true);
-        player.IsPause = true;
-        Time.timeScale = 0;
     }
 
+    /// <summary>
+    /// カウントダウン終了
+    /// </summary>
     public void CountEnd()
     {
-        gameStart = true;
+        player.CountEnd = true; //カウントダウンが終了したことを伝える
         pauseWindow.GameStart = true;
-    }
 
-    public void Restart()
-    {
-        isPause = false;
+        //ポーズ解除
+        pauseController.Pause(false, 1);
     }
 }

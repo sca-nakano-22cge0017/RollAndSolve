@@ -27,7 +27,7 @@ public class ItemCatch : MonoBehaviour
             seController.ItemCatch();
 
             //HP回復アイテム
-            if (this.gameObject.tag == "HealHeart" && hpController.Hp < hpController.HpLimit)
+            if (this.gameObject.tag == "HealHeart")
             {
                 hpController.IsHeal = true;
             }
@@ -35,7 +35,7 @@ public class ItemCatch : MonoBehaviour
             //HP上限解放アイテム
             if(this.gameObject.tag == "EmptyHeart")
             {
-                hpController.HpLimit++;
+                hpController.IsLimitBreak = true;
             }
 
             //隠しコイン

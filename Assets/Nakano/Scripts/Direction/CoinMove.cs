@@ -12,13 +12,14 @@ public class CoinMove : MonoBehaviour
     [SerializeField, Header("メダル縮小速度")] float redSpeed;
     [SerializeField, Header("プレイヤーに近付く速度")] float speed;
 
-    float move = 0;
+    float move = 0; //相対的な移動距離
 
     GameObject player;
     Vector3 playerPos;
     Vector3 medalPos;
+    Vector3 dis;
 
-    bool isMove = false;
+    bool isApproach = false; //プレイヤーに接近する
 
     void Start()
     {
@@ -30,20 +31,27 @@ public class CoinMove : MonoBehaviour
         MedalDirection();
     }
 
+    /// <summary>
+    /// メダル移動
+    /// </summary>
     void MedalDirection()
     {
         playerPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
         medalPos = transform.position;
 
-        //上昇
+        //上昇 y軸方向に+1移動
         if (move < 1.0f)
         {
             move += medalSpeed * Time.deltaTime;
             transform.Translate(Vector3.up * medalSpeed * Time.deltaTime);
         }
-        if(move >= 1.0f) { isMove = true; }
+        //上昇が終わったらプレイヤーに近付く
+        else if(move >= 1.0f && !isApproach)
+        {
+            isApproach = true;
+        }
 
-        if(isMove)
+        if(isApproach)
         {
             //縮小
             if (transform.localScale.x > 0)
@@ -54,7 +62,7 @@ public class CoinMove : MonoBehaviour
             //プレイヤーの位置へ移動
             if (Vector3.Distance(medalPos, playerPos) >= 0)
             {
-                Vector3 dis = (playerPos - medalPos).normalized;
+                dis = (playerPos - medalPos).normalized;
                 transform.Translate(dis * speed * Time.deltaTime);
             }
         }
