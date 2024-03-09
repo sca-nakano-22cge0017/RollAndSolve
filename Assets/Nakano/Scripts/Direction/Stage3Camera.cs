@@ -4,8 +4,7 @@ using UnityEngine;
 using Cinemachine;
 
 /// <summary>
-/// ステージ３のカメラ制御用 CameraInstall.csをベースにして一時的な修正として追加
-/// 二枚目の隠しコインがカメラに映らなかったので突貫で追加したもの 要修正
+/// ステージ３のカメラ制御用 CameraInstall.csをベースに、二枚目の隠しコインがカメラに映らなかったので修正したものを作成
 /// </summary>
 public class Stage3Camera : MonoBehaviour
 {
@@ -18,25 +17,39 @@ public class Stage3Camera : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        // 当たった相手に"Player"タグが付いていた場合
-        if (other.gameObject.tag == "Player")
+        //特定の範囲に入ったらカメラ変更
+        //初期位置カメラ
+        if(other.gameObject.name == "Camera1")
         {
-            // 他のvirtualCameraよりも高い優先度にすることで切り替わる
+            virtualCamera.Priority = 1;
+            virtualCamera1.Priority = 0;
+            virtualCamera2.Priority = 0;
+        }
+
+        //デフォルトのカメラ
+        if (other.gameObject.name == "Camera2")
+        {
+            virtualCamera.Priority = 0;
+            virtualCamera1.Priority = 1;
+            virtualCamera2.Priority = 0;
+        }
+
+        //隠しコイン表示用カメラ
+        if (other.gameObject.name == "Camera3")
+        {
             virtualCamera.Priority = 0;
             virtualCamera1.Priority = 0;
-            virtualCamera2.Priority = 100;
+            virtualCamera2.Priority = 1;
         }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
-        // 当たった相手に"Player"タグが付いていた場合
-        if (other.gameObject.tag == "Player")
+        //範囲外に出たらデフォルトのカメラに戻す
+        if(other.gameObject.name == "Camera1" || other.gameObject.name == "Camera3")
         {
-            // 元のpriorityに戻す]
             virtualCamera.Priority = 0;
-            virtualCamera1.Priority = 100;
+            virtualCamera1.Priority = 1;
             virtualCamera2.Priority = 0;
         }
-
     }
 }

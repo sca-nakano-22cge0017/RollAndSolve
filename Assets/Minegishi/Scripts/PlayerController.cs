@@ -7,10 +7,13 @@ public class PlayerController : MonoBehaviour
 {
     Box box;
     HPController HpController;
+
+    //アニメーション
     Animator anim;
     [SerializeField] GameObject[] playerForms;
     [SerializeField] Animator[] playerAnims;
     [SerializeField] MeshRenderer[] playerMeshs;
+    ChangeAnimEnd changeAnimEnd;
 
     public enum PlayerState { Human, Circle}
     public PlayerState playerstate;
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    //坂を登る時に使用する　移動角度
     float angle = 0.0f;
 
     private float speed = 0;
@@ -118,6 +122,8 @@ public class PlayerController : MonoBehaviour
         playerMeshs[0].enabled = true; //カプセル
         playerMeshs[1].enabled = false; //右向き人型
         playerMeshs[2].enabled = false; //左向き人型
+
+        changeAnimEnd = playerForms[1].GetComponent<ChangeAnimEnd>();
     }
 
     void Update()
@@ -132,7 +138,7 @@ public class PlayerController : MonoBehaviour
             MoveSound();
         }
 
-        if(HpController.IsDown) anim.SetBool("Dead", true);
+        if(HpController.IsDown) anim.SetBool("Dead", true); //HP0になったらダウンアニメーション再生
 
         if (speedUp)
         {
@@ -157,7 +163,7 @@ public class PlayerController : MonoBehaviour
         if(Mathf.Abs(speed) >= CirclesMaxSpeed * 0.7 && playerstate == PlayerState.Circle)
         {
             objectBreak = true;
-            windEffect.Play();
+            windEffect.Play(); //移動エフェクト
         }
         else
         {
@@ -168,8 +174,10 @@ public class PlayerController : MonoBehaviour
         if(isPause) windEffect.Stop();
 
         //カウントダウン中にADキーが押され、そのままゲームが開始すると最初動かないのでそれの解決
+        //カウントダウンが終わっていないとき
         if (!countEnd)
         {
+            //ADキーが押されたら左右方向へ移動可能にしておく
             if (Input.GetKeyDown(KeyCode.D))
             {
                 isRight = true;
@@ -404,39 +412,39 @@ public class PlayerController : MonoBehaviour
         //複数個所に書かれていたのをまとめた
         transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
-        {
-            ////左方向に移動していたら
-            //if (speed < 0)
-            //{
-            //    //逆方向に速度追加
-            //    if (playerstate == PlayerState.Human)
-            //    {
-            //        speed += HumansSpeed * Time.deltaTime;
-            //    }
-            //    else if (playerstate == PlayerState.Circle)
-            //    {
-            //        speed += CirclesSpeed * Time.deltaTime;
-            //    }
-            //    transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
-            //}
-            //if(speed > 0)
-            //{
-            //    if (playerstate == PlayerState.Human)
-            //    {
-            //        speed -= HumansSpeed * Time.deltaTime;
-            //    }
-            //    else if (playerstate == PlayerState.Circle)
-            //    {
-            //        speed -= CirclesSpeed * Time.deltaTime;
-            //    }
-            //    transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
-            //}
-            //if(playerstate == PlayerState.Human)
-            //{
-            //    speed = 0;
-            //}
-        }
+        //if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        //{
+        //    //左方向に移動していたら
+        //    if (speed < 0)
+        //    {
+        //        //逆方向に速度追加
+        //        if (playerstate == PlayerState.Human)
+        //        {
+        //            speed += HumansSpeed * Time.deltaTime;
+        //        }
+        //        else if (playerstate == PlayerState.Circle)
+        //        {
+        //            speed += CirclesSpeed * Time.deltaTime;
+        //        }
+        //        transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
+        //    }
+        //    if (speed > 0)
+        //    {
+        //        if (playerstate == PlayerState.Human)
+        //        {
+        //            speed -= HumansSpeed * Time.deltaTime;
+        //        }
+        //        else if (playerstate == PlayerState.Circle)
+        //        {
+        //            speed -= CirclesSpeed * Time.deltaTime;
+        //        }
+        //        transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
+        //    }
+        //    if (playerstate == PlayerState.Human)
+        //    {
+        //        speed = 0;
+        //    }
+        //}
 
         Spine();
     }
@@ -499,79 +507,49 @@ public class PlayerController : MonoBehaviour
             box = null;
             anim.SetBool("Push",false);
         }
-
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
-        {
-            if (playerstate == PlayerState.Human)
-            {
-                anim = playerAnims[2]; //左向きのアニメーション
-                playerMeshs[2].enabled = true;
-                playerMeshs[0].enabled = false;
-                playerMeshs[1].enabled = false;
-            }
-        }
-        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
-        {
-            if (playerstate == PlayerState.Human)
-            {
-                anim = playerAnims[1]; //右向きのアニメーション
-                playerMeshs[1].enabled = true;
-                playerMeshs[0].enabled = false;
-                playerMeshs[2].enabled = false;
-            }
-        }
     }
+
+    //プレイヤーイラスト位置調整用変数
+    Vector3 pushAjustR = new Vector3(5.0f, -3.0f, 0); //木箱を押しているとき
+    Vector3 pushAjustL = new Vector3(-5.0f, -3.0f, 0);
+    Vector3 dashAjust = new Vector3(0, -2.0f, 0); //走っているとき
+    Vector3 normalAjust = new Vector3(0, -1.0f, 0); //通常状態
 
     /// <summary>
     /// 一部Spineの制御
     /// </summary>
     void Spine()
     {
-        //プレイヤー位置調整　Spineの都合上浮いて見えるので
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("push") || anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
+        //プレイヤー位置調整　Spineの都合上浮いて見えるので 左右方向それぞれのイラストを位置調整する
+        for(int i = 1; i <= 2; i++)
         {
-            playerForms[1].transform.localPosition = new Vector3(0, -3, 0);
-            playerForms[2].transform.localPosition = new Vector3(0, -3, 0);
-        }
-        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("dash") || anim.GetCurrentAnimatorStateInfo(0).IsName("dash_motion"))
-        {
-            playerForms[1].transform.localPosition = new Vector3(0, -2, 0);
-            playerForms[2].transform.localPosition = new Vector3(0, -2, 0);
-        }
-        else
-        {
-            playerForms[1].transform.localPosition = new Vector3(0, -1, 0);
-            playerForms[2].transform.localPosition = new Vector3(0, -1, 0);
-        }
-
-        
-        //Spine キーが押された瞬間アニメーション・表示イラストを切り替える
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (playerstate == PlayerState.Human)
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("push") || anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
             {
-                playerAnims[1].SetBool("Change", false);
-                playerAnims[1].SetBool("Jump", false);
-                playerAnims[1].SetBool("Dash", false);
-
-                anim = playerAnims[2]; //左向きのアニメーション
-                playerMeshs[2].enabled = true;
-                playerMeshs[0].enabled = false;
-                playerMeshs[1].enabled = false;
+                if(speed >= 0)
+                    playerForms[i].transform.localPosition = pushAjustR;
+                else playerForms[i].transform.localPosition = pushAjustL;
+            }
+            else if (anim.GetCurrentAnimatorStateInfo(0).IsName("dash") || anim.GetCurrentAnimatorStateInfo(0).IsName("dash_motion"))
+            {
+                playerForms[i].transform.localPosition = dashAjust;
+            }
+            else
+            {
+                playerForms[i].transform.localPosition = normalAjust;
             }
         }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (playerstate == PlayerState.Human)
-            {
-                playerAnims[2].SetBool("Change", false);
-                playerAnims[2].SetBool("Jump", false);
-                playerAnims[2].SetBool("Dash", false);
 
-                anim = playerAnims[1]; //右向きのアニメーション
-                playerMeshs[1].enabled = true;
-                playerMeshs[0].enabled = false;
-                playerMeshs[2].enabled = false;
+        //ADキーが押されたとき、アニメーション・表示イラストを左右切り替える
+        if(playerstate == PlayerState.Human)
+        {
+            //キーを押した瞬間、逆方向のキーが押されていない状態のとき
+            if (Input.GetKeyDown(KeyCode.A) || (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)))
+            {
+                AnimFlipped("left");
+            }
+            if (Input.GetKeyDown(KeyCode.D) || (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)))
+            {
+                AnimFlipped("right");
             }
         }
 
@@ -583,13 +561,53 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("Dash", true);
             }
         }
-        if (speed <= 5f && speed >= -5f && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+
+        //一定速度以下でアニメーションを停止する
+        float animMinSpeed = 5.0f;
+        if (speed <= animMinSpeed && speed >= -animMinSpeed && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
             anim.SetBool("Dash", false);
         }
 
         //速度に合わせて走りモーションの速度を上昇
         anim.SetFloat("Speed", Mathf.Abs(speed) * 0.1f + 1);
+    }
+
+    /// <summary>
+    /// 人型アニメーションの左右反転
+    /// </summary>
+    /// <param name="key">入力されたキー</param>
+    void AnimFlipped(string leftOrRight)
+    {
+        int lastAnim = 0; //前のアニメーション
+        int nextAnim = 0; //次のアニメーション
+
+        switch (leftOrRight)
+        {
+            //左移動
+            case "left":
+                lastAnim = 1;
+                nextAnim = 2;
+                break;
+            //右移動
+            case "right":
+                lastAnim = 2;
+                nextAnim = 1;
+                break;
+        }
+
+        //アニメーションを初期状態にする
+        playerAnims[lastAnim].SetBool("Change", false);
+        playerAnims[lastAnim].SetBool("Jump", false);
+        playerAnims[lastAnim].SetBool("Dash", false);
+
+        anim = playerAnims[nextAnim]; //逆向きのアニメーションを操作できるように変更
+        playerMeshs[nextAnim].enabled = true; //逆向きのイラストにする
+        changeAnimEnd = playerForms[nextAnim].GetComponent<ChangeAnimEnd>(); //アニメーション終了判定を貰うスクリプトを変える
+
+        //他のイラストは非表示
+        playerMeshs[0].enabled = false;
+        playerMeshs[lastAnim].enabled = false;
     }
 
     /// <summary>
@@ -888,8 +906,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ToBall()
     {
-        //アニメーション再生中待機
-        yield return new WaitForSeconds(1.0f);
+        //アニメーションが終わるまで待機
+        yield return new WaitUntil(() => changeAnimEnd.IsEnd);
 
         //球体->人型になったとき、変形モーションの再生から始まらないように
         playerAnims[1].SetBool("Change", false);
@@ -909,6 +927,9 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ToHuman()
     {
+        //フォームチェンジアニメーション終了フラグをfalseにする
+        changeAnimEnd.IsEnd = false;
+
         //エフェクト再生
         changeEffect.Play();
 
