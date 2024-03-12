@@ -3,28 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+//! 担当箇所説明用のコピー
+//! 「担当箇所---」～「---担当箇所」で括られている部分が担当した部分
+public class PlayerController_Copy : MonoBehaviour
 {
     Box box;
     HPController HpController;
 
-    //アニメーション
-    Animator anim;
-    [SerializeField] GameObject[] playerForms;
-    [SerializeField] Animator[] playerAnims;
-    [SerializeField] MeshRenderer[] playerMeshs;
-    ChangeAnimEnd changeAnimEnd;
-
-    public enum PlayerState { Human, Circle}
+    public enum PlayerState { Human, Circle }
     public PlayerState playerstate;
-
-    //ポーズ状態のときtrue
-    bool isPause = false;
-    public bool IsPause { get { return isPause;} set { isPause = value;} }
-
-    //カウントダウン終了のフラグ
-    bool countEnd = false;
-    public bool CountEnd { set { countEnd = value; } }
 
     private Rigidbody2D rb;
 
@@ -41,8 +28,8 @@ public class PlayerController : MonoBehaviour
     private bool objectBreak = false;
     public bool ObjectBreak
     {
-        get { return objectBreak;}
-        set { objectBreak = value;}
+        get { return objectBreak; }
+        set { objectBreak = value; }
     }
 
     bool isRight = false;
@@ -66,7 +53,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float HumansDeceleration;
     [SerializeField] private float CirclesDeceleration;
     bool RightDeceleration = false;
-    bool LeftDeceleration  = false;
+    bool LeftDeceleration = false;
 
     [Header("人型ブレーキ")]
     [SerializeField] private float Brake;
@@ -78,10 +65,10 @@ public class PlayerController : MonoBehaviour
 
     bool speedUp = false;
     float speedUpCount = 7.0f; //スピードアップのアイテムを取った時の上昇する時間
-    [SerializeField, Header("スピードアップ倍率")] float speedUpNum = 1.2f; 
+    [SerializeField, Header("スピードアップ倍率")] float speedUpNum = 1.2f;
 
     bool isGround = false;
-    
+
     [Header("サウンド")]
     [SerializeField] AudioClip Move;
     [SerializeField] AudioClip Jump;
@@ -89,11 +76,27 @@ public class PlayerController : MonoBehaviour
     AudioSource audioSource;
     float soundSpan = 0.0f;
     bool run = false;
-    
+
     bool invincible = false; //無敵状態
     float invincibleTime = 3.0f; //無敵時間
     //int alpha = 255;
     float interval = 0.15f;
+
+    //!担当箇所---
+    //アニメーション
+    Animator anim;
+    [SerializeField] GameObject[] playerForms;
+    [SerializeField] Animator[] playerAnims;
+    [SerializeField] MeshRenderer[] playerMeshs;
+    ChangeAnimEnd changeAnimEnd;
+
+    //ポーズ状態のときtrue
+    bool isPause = false;
+    public bool IsPause { get { return isPause; } set { isPause = value; } }
+
+    //カウントダウン終了のフラグ
+    bool countEnd = false;
+    public bool CountEnd { set { countEnd = value; } }
 
     //木箱を押す
     bool isPushing = false; //木箱を押している最中ならtrue
@@ -103,6 +106,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField, Header("変身エフェクト")] ParticleSystem changeEffect;
     [SerializeField, Header("風エフェクト")] ParticleSystem windEffect;
+    //!---担当箇所
 
     void Start()
     {
@@ -116,6 +120,7 @@ public class PlayerController : MonoBehaviour
         HumansSpeedUp = HumansAccelertion * speedUpNum; //スピードアップした時の速度
         CirclesSpeedUp = CirclesAccelertion * speedUpNum; //スピードアップした時の速度
 
+        //!担当箇所---
         //Spine
         anim = playerAnims[0];
         //現在の形態以外はMeshRendererをオフにして非表示にする
@@ -124,6 +129,7 @@ public class PlayerController : MonoBehaviour
         playerMeshs[2].enabled = false; //左向き人型
 
         changeAnimEnd = playerForms[1].GetComponent<ChangeAnimEnd>();
+        //!---担当箇所
     }
 
     void Update()
@@ -138,7 +144,7 @@ public class PlayerController : MonoBehaviour
             MoveSound();
         }
 
-        if(HpController.IsDown) anim.SetBool("Dead", true); //HP0になったらダウンアニメーション再生
+        if (HpController.IsDown) anim.SetBool("Dead", true); //HP0になったらダウンアニメーション再生
 
         if (speedUp)
         {
@@ -148,11 +154,11 @@ public class PlayerController : MonoBehaviour
         if (invincible) //無敵状態
         {
             invincibleTime -= Time.deltaTime;
-            if(invincibleTime > 0)
+            if (invincibleTime > 0)
             {
                 Invincible();
             }
-            else if(invincibleTime <= 0)
+            else if (invincibleTime <= 0)
             {
                 invincibleTime = 3.0f;
                 invincible = false;
@@ -160,17 +166,25 @@ public class PlayerController : MonoBehaviour
         }
 
         //球体形態で最高速度の７割以上の時オブジェクトを破壊できる
-        if(Mathf.Abs(speed) >= CirclesMaxSpeed * 0.7 && playerstate == PlayerState.Circle)
+        if (Mathf.Abs(speed) >= CirclesMaxSpeed * 0.7 && playerstate == PlayerState.Circle)
         {
             objectBreak = true;
-            windEffect.Play(); //移動エフェクト
+
+            //!担当箇所---
+            windEffect.Play(); //移動エフェクト再生
+            //!---担当箇所
         }
         else
         {
             objectBreak = false;
-            windEffect.Stop();
+
+            //!担当箇所---
+            windEffect.Stop(); //移動エフェクト停止
+            //!---担当箇所
         }
 
+        //!担当箇所---
+        //ポーズ状態のときはエフェクト停止
         if (isPause)
         {
             windEffect.Stop();
@@ -194,19 +208,18 @@ public class PlayerController : MonoBehaviour
                 isLeft = true;
             }
         }
+        //!---担当箇所
     }
 
     //人型
     void Human()
     {
-        //speed = HumansSpeed;
         jumpForce = HumansJump;
     }
 
     //球体
     void Circle()
     {
-        //speed = CirclesSpeed;
         jumpForce = CirclesJump;
     }
 
@@ -220,9 +233,11 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Human:
                 if (Input.GetKeyDown(KeyCode.W))
                 {
+                    //!担当箇所---
                     anim.SetBool("Change", true);
                     anim.SetBool("Dash", false);
                     anim.SetBool("Push", false);
+                    //!---担当箇所
 
                     StartCoroutine(ToBall());
                 }
@@ -243,27 +258,31 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Run()
     {
-        if(speed >= 1.0f || speed <= -1.0f)
+        if (speed >= 1.0f || speed <= -1.0f)
         {
             run = true;
         }
 
+        //!担当箇所---
         // 右方向へ移動
         // 押した瞬間に移動方向上書き
         if (Input.GetKeyDown(KeyCode.D))
         {
             isRight = true;
             isLeft = false;
-            if(speed < 0)
+            if (speed < 0)
                 speed = 0;
         }
+        //!---担当箇所
 
         //Dキー入力かつ移動方向が右
         if (Input.GetKey(KeyCode.D) && isRight)
         {
+            //!担当箇所---
             //エフェクトの向き変更
             windEffect.transform.localPosition = new Vector3(-7.0f, -6.5f, 0);
             windEffect.transform.rotation = Quaternion.Euler(angle, -90.0f, 90.0f);
+            //!---担当箇所
 
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -282,7 +301,7 @@ public class PlayerController : MonoBehaviour
                     speed = HumansMaxSpeed;
                 }
             }
-            else if(playerstate == PlayerState.Circle)
+            else if (playerstate == PlayerState.Circle)
             {
                 speed += CirclesSpeed * Time.deltaTime;
 
@@ -298,24 +317,24 @@ public class PlayerController : MonoBehaviour
 
                 playerForms[0].GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
             }
-            //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0,0) * Time.deltaTime);
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
             //減速
             RightDeceleration = true;
 
+            //!担当箇所---
             isRight = false;
             isLeft = true;
 
             //方向転換
             if (Input.GetKey(KeyCode.A) && speed > 0) speed = 0;
+            //!---担当箇所
         }
 
         // 右方向減速
         if (RightDeceleration)
         {
-            //Debug.Log("Dを離す");
             if (speed > 0)
             {
                 if (playerstate == PlayerState.Human)
@@ -326,27 +345,29 @@ public class PlayerController : MonoBehaviour
                 {
                     speed -= CirclesDeceleration * Time.deltaTime;
                 }
-
-                //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
             }
             else speed = 0; //超過分を戻す
         }
 
+        //!担当箇所---
         // 左方向へ移動 
         // 押した瞬間に移動方向上書き
         if (Input.GetKeyDown(KeyCode.A))
         {
             isLeft = true;
             isRight = false;
-            if(speed > 0)
+            if (speed > 0)
                 speed = 0;
         }
+        //!---担当箇所
 
         if (Input.GetKey(KeyCode.A) && isLeft)
         {
+            //!担当箇所---
             //エフェクトの向き変更
             windEffect.transform.localPosition = new Vector3(7.0f, -6.5f, 0);
             windEffect.transform.rotation = Quaternion.Euler(-angle, 90.0f, -90.0f);
+            //!---担当箇所
 
             RightDeceleration = false;
             LeftDeceleration = false;
@@ -381,7 +402,6 @@ public class PlayerController : MonoBehaviour
 
                 playerForms[0].GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
             }
-            //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
         }
         if (Input.GetKeyUp(KeyCode.A))
         {
@@ -396,7 +416,6 @@ public class PlayerController : MonoBehaviour
         // 左方向減速
         if (LeftDeceleration)
         {
-            //Debug.Log("Aを離す");
             if (speed < 0)
             {
                 if (playerstate == PlayerState.Human)
@@ -407,52 +426,18 @@ public class PlayerController : MonoBehaviour
                 {
                     speed += CirclesDeceleration * Time.deltaTime;
                 }
-
-                //transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
             }
             else speed = 0;
         }
 
-        //複数個所に書かれていたのをまとめた
         transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
 
-        //if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
-        //{
-        //    //左方向に移動していたら
-        //    if (speed < 0)
-        //    {
-        //        //逆方向に速度追加
-        //        if (playerstate == PlayerState.Human)
-        //        {
-        //            speed += HumansSpeed * Time.deltaTime;
-        //        }
-        //        else if (playerstate == PlayerState.Circle)
-        //        {
-        //            speed += CirclesSpeed * Time.deltaTime;
-        //        }
-        //        transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
-        //    }
-        //    if (speed > 0)
-        //    {
-        //        if (playerstate == PlayerState.Human)
-        //        {
-        //            speed -= HumansSpeed * Time.deltaTime;
-        //        }
-        //        else if (playerstate == PlayerState.Circle)
-        //        {
-        //            speed -= CirclesSpeed * Time.deltaTime;
-        //        }
-        //        transform.Translate(Quaternion.Euler(0, 0, angle) * new Vector3(speed, 0, 0) * Time.deltaTime);
-        //    }
-        //    if (playerstate == PlayerState.Human)
-        //    {
-        //        speed = 0;
-        //    }
-        //}
-
+        //!担当箇所---
         Spine();
+        //!---担当箇所
     }
 
+    //!担当箇所---
     /// <summary>
     /// 木箱を押すアニメーションの再生・停止、木箱の移動
     /// </summary>
@@ -467,12 +452,12 @@ public class PlayerController : MonoBehaviour
             //木箱移動
             if (Input.GetKey(KeyCode.D) && box != null)
             {
-                box.BoxRightMove();
+                box.BoxRightMove(); //右移動
             }
 
-            if(Input.GetKey(KeyCode.A) && box != null)
+            if (Input.GetKey(KeyCode.A) && box != null)
             {
-                box.BoxLeftMove();
+                box.BoxLeftMove(); //左移動
             }
 
             //木箱引きずりのSE
@@ -484,19 +469,24 @@ public class PlayerController : MonoBehaviour
             if (soundSpan <= 0.0f)
             {
                 audioSource.PlayOneShot(Box);
-                soundSpan = 1.752f;
+                float se_length = 1.752f;
+                soundSpan = se_length;
             }
         }
         else
         {
+            //押しているor押し始めのアニメーションが再生中であれば
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("push") || anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
-                anim.SetBool("Push", false);
+                anim.SetBool("Push", false); //アニメーション停止
         }
 
-        if(isPushCount)
+        //木箱に触れているとき　かつ　ADキーを押しているとき
+        if (isPushCount)
         {
+            //時間を計測
             pTime += Time.deltaTime;
 
+            //一定時間キーを押し続けたら木箱を押せるようになる
             if (pTime >= pushTime) isPushing = true;
             else isPushing = false;
         }
@@ -508,14 +498,14 @@ public class PlayerController : MonoBehaviour
         {
             isPushCount = false;
             isPushing = false;
-            box = null;
-            anim.SetBool("Push",false);
+            box = null; //木箱を押せないようにnullにする
+            anim.SetBool("Push", false); //アニメーション停止
         }
     }
 
     //プレイヤーイラスト位置調整用変数
-    Vector3 pushAjustR = new Vector3(5.0f, -3.0f, 0); //木箱を押しているとき
-    Vector3 pushAjustL = new Vector3(-5.0f, -3.0f, 0);
+    Vector3 pushAjustR = new Vector3(5.0f, -3.0f, 0); //右に木箱を押しているとき
+    Vector3 pushAjustL = new Vector3(-5.0f, -3.0f, 0); //左に木箱を押しているとき
     Vector3 dashAjust = new Vector3(0, -2.0f, 0); //走っているとき
     Vector3 normalAjust = new Vector3(0, -1.0f, 0); //通常状態
 
@@ -525,11 +515,11 @@ public class PlayerController : MonoBehaviour
     void Spine()
     {
         //プレイヤー位置調整　Spineの都合上浮いて見えるので 左右方向それぞれのイラストを位置調整する
-        for(int i = 1; i <= 2; i++)
+        for (int i = 1; i <= 2; i++)
         {
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("push") || anim.GetCurrentAnimatorStateInfo(0).IsName("push_motion"))
             {
-                if(speed >= 0)
+                if (speed >= 0)
                     playerForms[i].transform.localPosition = pushAjustR;
                 else playerForms[i].transform.localPosition = pushAjustL;
             }
@@ -544,9 +534,9 @@ public class PlayerController : MonoBehaviour
         }
 
         //ADキーが押されたとき、アニメーション・表示イラストを左右切り替える
-        if(playerstate == PlayerState.Human)
+        if (playerstate == PlayerState.Human)
         {
-            //キーを押した瞬間、逆方向のキーが押されていない状態のとき
+            //キーを押した瞬間、逆方向のキーが押されていない状態のとき、進行方向を向いたイラストに変える
             if (Input.GetKeyDown(KeyCode.A) || (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)))
             {
                 AnimFlipped("left");
@@ -557,24 +547,26 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //走りモーション
+        //ADキーを押している間
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
+            //走りアニメーションが再生中でなければ
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("dash"))
             {
-                anim.SetBool("Dash", true);
+                anim.SetBool("Dash", true); //走りアニメーション再生
             }
         }
 
         //一定速度以下でアニメーションを停止する
         float animMinSpeed = 5.0f;
-        if (speed <= animMinSpeed && speed >= -animMinSpeed && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        if (Mathf.Abs(speed) < animMinSpeed && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
             anim.SetBool("Dash", false);
         }
 
         //速度に合わせて走りモーションの速度を上昇
-        anim.SetFloat("Speed", Mathf.Abs(speed) * 0.1f + 1);
+        float coe = 0.1f;
+        anim.SetFloat("Speed", Mathf.Abs(speed) * coe + 1);
     }
 
     /// <summary>
@@ -600,7 +592,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        //アニメーションを初期状態にする
+        //アニメーションを初期状態にする　playerAnims[lastAnim]に遷移した時に、アイドリング状態から開始するように
         playerAnims[lastAnim].SetBool("Change", false);
         playerAnims[lastAnim].SetBool("Jump", false);
         playerAnims[lastAnim].SetBool("Dash", false);
@@ -614,6 +606,8 @@ public class PlayerController : MonoBehaviour
         playerMeshs[lastAnim].enabled = false;
     }
 
+    //!---担当箇所
+
     /// <summary>
     /// ジャンプ
     /// </summary>
@@ -624,7 +618,6 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Jump", true);
             this.rb.AddForce(transform.up * jumpForce);
             audioSource.PlayOneShot(Jump);
-            //Debug.Log(jumpForce);
         }
     }
 
@@ -634,7 +627,7 @@ public class PlayerController : MonoBehaviour
     private void MoveSound()
     {
         //再生が終了したらまた再生
-        if(soundSpan >= 0)
+        if (soundSpan >= 0)
         {
             soundSpan -= Time.deltaTime;
         }
@@ -686,8 +679,8 @@ public class PlayerController : MonoBehaviour
     private void Invincible()
     {
         interval -= Time.deltaTime;
-        
-        if(interval <= 0)
+
+        if (interval <= 0)
         {
             //if(alpha == 255)
             //{
@@ -700,6 +693,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //!担当箇所---
         //着地アニメーション
         if (collision.gameObject.tag == "Ground" ||
             collision.gameObject.tag == "Slope")
@@ -707,6 +701,7 @@ public class PlayerController : MonoBehaviour
             isGround = true;
             anim.SetBool("Jump", false);
         }
+        //!---担当箇所
 
         if (collision.gameObject.tag == "Ground")
         {
@@ -719,37 +714,44 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.D) && objectBreak)
             {
                 speed -= speed * 0.2f;
-                //Debug.Log("箱を破壊");
-                //Destroy(collision.gameObject);
             }
             if (Input.GetKey(KeyCode.A) && objectBreak)
             {
                 speed -= speed * 0.2f;
-                //Debug.Log("箱を破壊");
-                //Destroy(collision.gameObject);
             }
 
+            //!担当箇所---
             //着地アニメーション 木箱の上での着地判定
             foreach (ContactPoint2D contact in collision.contacts)
             {
                 var hitPoint = contact.point;
                 var sub = hitPoint.y - transform.position.y;
 
+                //衝突位置を確認し、プレイヤーの下方向だった場合は着地したということにする
                 if (sub < -0.7f)
                 {
                     isGround = true;
-                    anim.SetBool("Jump", false);
+                    anim.SetBool("Jump", false); //着地アニメーション再生
                 }
             }
+            //!---担当箇所
         }
 
+        //!担当箇所---
+        //坂にぶつかったら
         if (collision.gameObject.tag == "Slope")
         {
+            //コンポーネント取得
             var slope = collision.gameObject.GetComponent<Slope>();
+
+            //坂の角度取得
             angle = slope.Angle;
+
+            //物理演算を無くす
             rb.gravityScale = 0;
             rb.velocity = Vector2.zero;
         }
+        //!---担当箇所
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -765,17 +767,10 @@ public class PlayerController : MonoBehaviour
             speed = 0.0f; //壁に当たったら速度をリセット
         }
 
-        //坂に当たったら坂を上るための角度を取得
-        if (collision.gameObject.tag == "Slope")
-        {
-            var slope = collision.gameObject.GetComponent<Slope>();
-            angle = slope.Angle;
-            rb.gravityScale = 0;
-        }
-
+        //!担当箇所---
         if (collision.gameObject.tag == "Box")
         {
-            foreach(ContactPoint2D contact in collision.contacts)
+            foreach (ContactPoint2D contact in collision.contacts)
             {
                 //衝突位置を取得
                 var hitPoint = contact.point;
@@ -793,10 +788,14 @@ public class PlayerController : MonoBehaviour
                         //D長押しで右に木箱を押す
                         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
                         {
+                            //長押しかどうかを判定するための時間計測を開始
                             isPushCount = true;
 
+                            //動かす木箱のコンポーネントを取得
                             var obj = collision.gameObject;
                             box = obj.GetComponent<Box>();
+
+                            //移動速度固定化
                             speed = 1.0f;
                         }
 
@@ -807,12 +806,14 @@ public class PlayerController : MonoBehaviour
 
                             var obj = collision.gameObject;
                             box = obj.GetComponent<Box>();
+
                             speed = -1.0f;
                         }
                     }
                 }
             }
         }
+        //!---担当箇所
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -823,8 +824,11 @@ public class PlayerController : MonoBehaviour
             isGround = false;
         }
 
-        if(collision.gameObject.tag == "Box")
+        //!担当箇所---
+        //木箱から離れた時
+        if (collision.gameObject.tag == "Box")
         {
+            //衝突位置を確認し、プレイヤーの下方向だった場合は木箱の上からジャンプしたということにする
             foreach (ContactPoint2D contact in collision.contacts)
             {
                 var hitPoint = contact.point;
@@ -837,16 +841,21 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+            //木箱を押す判定やアニメーションを初期化
             isPushing = false;
             isPushCount = false;
             anim.SetBool("Push", false);
         }
 
+        //坂から離れた時
         if (collision.gameObject.tag == "Slope")
         {
             rb.gravityScale = 2;
+
+            //移動角度を初期状態にする
             angle = 0;
         }
+        //!---担当箇所
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -856,6 +865,7 @@ public class PlayerController : MonoBehaviour
             //衝突相手が敵かつ人型かつ速度７割未満のとき　または衝突相手がトゲのとき、ダメージ処理
             if ((collision.gameObject.tag == "Enemy" && !objectBreak) || collision.gameObject.tag == "Thorn")
             {
+                //!担当箇所---
                 //カプセル状態解除
                 if (playerstate == PlayerState.Circle)
                 {
@@ -865,24 +875,27 @@ public class PlayerController : MonoBehaviour
                     playerMeshs[0].enabled = false;
                     playerMeshs[2].enabled = false;
                 }
+                //!---担当箇所
 
                 speed -= speed * 0.5f;
                 invincible = true;
                 HpController.IsDamage = true;
 
+                //!担当箇所---
                 anim.SetTrigger("Damage");
+                //!---担当箇所
             }
         }
 
-        //穴に落ちた
+        //穴に落ちたとき
         if (collision.gameObject.tag == "Hole")
         {
             HpController.IsFall = true;
         }
 
-        if (collision.gameObject.tag == "SpeedUP") //スピードアップ
+        //スピードアップアイテム取得
+        if (collision.gameObject.tag == "SpeedUP")
         {
-            //Destroy(collision.gameObject);
             speedUpCount = 7.0f;
             speedUp = true;
         }
@@ -894,6 +907,7 @@ public class PlayerController : MonoBehaviour
         {
             if (collision.gameObject.tag == "Poison")
             {
+                //!担当箇所---
                 anim.SetTrigger("Damage");
                 //カプセル状態解除
                 if (playerstate == PlayerState.Circle)
@@ -904,6 +918,7 @@ public class PlayerController : MonoBehaviour
                     playerMeshs[0].enabled = false;
                     playerMeshs[2].enabled = false;
                 }
+                //!---担当箇所
 
                 speed -= speed * 0.5f;
                 invincible = true;
@@ -914,6 +929,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ToBall()
     {
+        //!担当箇所---
         //アニメーションが終わるまで待機
         yield return new WaitUntil(() => changeAnimEnd.IsEnd);
 
@@ -927,15 +943,16 @@ public class PlayerController : MonoBehaviour
         playerMeshs[0].enabled = true;
         playerMeshs[1].enabled = false;
         playerMeshs[2].enabled = false;
+        //!---担当箇所
 
         playerstate = PlayerState.Circle;
-        //sr.sprite = Circles;
-        Debug.Log("球体です");
     }
 
     IEnumerator ToHuman()
     {
+        //!担当箇所---
         //フォームチェンジアニメーション終了フラグをfalseにする
+        //次に人型->カプセル変形時、trueのままだとアニメーションが再生されないので
         changeAnimEnd.IsEnd = false;
 
         //エフェクト再生
@@ -950,9 +967,9 @@ public class PlayerController : MonoBehaviour
         playerMeshs[1].enabled = true;
         playerMeshs[0].enabled = false;
         playerMeshs[2].enabled = false;
+        //!---担当箇所
 
         playerstate = PlayerState.Human;
-        //sr.sprite = Humans;
-        Debug.Log("人です");
     }
 }
+
