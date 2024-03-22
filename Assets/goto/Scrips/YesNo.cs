@@ -22,14 +22,13 @@ public class YesNo : MonoBehaviour
         //EventSystem.current.SetSelectedGameObject(null);
 
         StartButton.Select();
-        if (isActive == false)
-        {
-            Time.timeScale = 1;
-        }
-        else
-        {
-            Time.timeScale = 0;
-        }
-
+        //if (isActive == false)
+        //{
+        //    Time.timeScale = 1;
+        //}
+        //else
+        //{
+        //    Time.timeScale = 0;
+        //}
     }
 }
