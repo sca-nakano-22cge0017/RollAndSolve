@@ -11,12 +11,7 @@ public class PauseController : MonoBehaviour
 
     public bool IsPause { get { return isPause; } }
 
-    PlayerController playerController;
-
-    private void Start()
-    {
-        playerController = GameObject.FindObjectOfType<PlayerController>();
-    }
+    [SerializeField] PlayerController playerController;
 
     /// <summary>
     /// ポーズ状態の設定と解除
@@ -25,7 +20,7 @@ public class PauseController : MonoBehaviour
     /// <param name="scale">timeScaleの値</param>
     public void Pause(bool playerPause, int scale)
     {
-        if(playerPause) playerController.IsPause = true;
+        if (playerPause) playerController.IsPause = true;
         else playerController.IsPause = false;
 
         Time.timeScale = scale;

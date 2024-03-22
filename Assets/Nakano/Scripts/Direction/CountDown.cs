@@ -8,17 +8,14 @@ using UnityEngine;
 public class CountDown : MonoBehaviour
 {
     Animator anim;
-    PlayerController player;
+    [SerializeField] PlayerController player;
 
-    PauseWindow pauseWindow;
-    PauseController pauseController;
+    [SerializeField] PauseWindow pauseWindow;
+    [SerializeField] PauseController pauseController;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
-        player = GameObject.FindObjectOfType<PlayerController>();
-        pauseWindow = GameObject.FindObjectOfType<PauseWindow>();
-        pauseController = GameObject.FindObjectOfType<PauseController>();
 
         //プレイヤー操作不可, Animation再生の為にtimeScaleは1
         pauseController.Pause(true, 1);
