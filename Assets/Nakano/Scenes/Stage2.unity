@@ -3844,9 +3844,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2463790550181844073, guid: 2019eab8af31f024b82522c7bd3a3bf0, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1267007845}
+    - target: {fileID: 2463790550181844073, guid: 2019eab8af31f024b82522c7bd3a3bf0, type: 3}
       propertyPath: pauseWindow
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1289065105}
+    - target: {fileID: 2463790550181844073, guid: 2019eab8af31f024b82522c7bd3a3bf0, type: 3}
+      propertyPath: pauseController
+      value: 
+      objectReference: {fileID: 1289065104}
     - target: {fileID: 8522413608993349356, guid: 2019eab8af31f024b82522c7bd3a3bf0, type: 3}
       propertyPath: m_Name
       value: CountDown
@@ -12567,6 +12575,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5989111228865137183, guid: c7e6eaf86fba9f049ab86231943c1f8c, type: 3}
   m_PrefabInstance: {fileID: 1263099573}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1267007845 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7680632907006680057, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
+  m_PrefabInstance: {fileID: 199611280}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96eb6a8d60ec50c439c745aa07765019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1273478688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12772,6 +12791,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6218528139730314830, guid: 8618821649401a74ebaf1076a18e83d2, type: 3}
   m_PrefabInstance: {fileID: 1284504539}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1289065104 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6133472200036089681, guid: 5ab7680c4c0362b41a20179673b821b7, type: 3}
+  m_PrefabInstance: {fileID: 1692896319}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e558f82530af444945ade8f7357c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1289065105 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 395974968064785261, guid: 5ab7680c4c0362b41a20179673b821b7, type: 3}
+  m_PrefabInstance: {fileID: 1692896319}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de13244b7f2f424fb644788a4157cf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1290583448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2670431559856498230, guid: d295bca64cf743040a5a68536b4964c5, type: 3}
@@ -17881,6 +17922,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6133472200036089681, guid: 5ab7680c4c0362b41a20179673b821b7, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 1267007845}
     - target: {fileID: 6799155804202159382, guid: 5ab7680c4c0362b41a20179673b821b7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
