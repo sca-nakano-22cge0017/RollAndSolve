@@ -1955,6 +1955,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6133472200036089681, guid: 5ab7680c4c0362b41a20179673b821b7, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 879833778}
     - target: {fileID: 6799155804202159382, guid: 5ab7680c4c0362b41a20179673b821b7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -8537,6 +8541,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
+--- !u!114 &879833778 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7680632907006680057, guid: fec3e451e977fb946970f6447e24c7b3, type: 3}
+  m_PrefabInstance: {fileID: 879833777}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96eb6a8d60ec50c439c745aa07765019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &895102972
 GameObject:
   m_ObjectHideFlags: 0
@@ -8588,6 +8603,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055f6ae382059d64095b1a479a094a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  pauseWindow: {fileID: 0}
+  pauseController: {fileID: 0}
 --- !u!95 &895102975
 Animator:
   serializedVersion: 5
