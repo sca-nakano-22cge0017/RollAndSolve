@@ -3840,7 +3840,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 0
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1994729001}
@@ -8603,9 +8603,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055f6ae382059d64095b1a479a094a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  pauseWindow: {fileID: 0}
-  pauseController: {fileID: 0}
+  player: {fileID: 879833778}
+  pauseWindow: {fileID: 1050443300}
+  pauseController: {fileID: 1050443299}
 --- !u!95 &895102975
 Animator:
   serializedVersion: 5
@@ -10591,6 +10591,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1958636520904767837, guid: 35eea5fcedb638640a9323b425bd6d53, type: 3}
   m_PrefabInstance: {fileID: 1036542790}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1050443299 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6133472200036089681, guid: 5ab7680c4c0362b41a20179673b821b7, type: 3}
+  m_PrefabInstance: {fileID: 210048968}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e558f82530af444945ade8f7357c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1050443300 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 395974968064785261, guid: 5ab7680c4c0362b41a20179673b821b7, type: 3}
+  m_PrefabInstance: {fileID: 210048968}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de13244b7f2f424fb644788a4157cf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1052207662
 PrefabInstance:
   m_ObjectHideFlags: 0
