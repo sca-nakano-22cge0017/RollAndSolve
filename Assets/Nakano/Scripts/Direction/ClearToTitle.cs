@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// クリア画面からタイトル画面/ボーナスステージへの遷移
@@ -9,12 +10,20 @@ using UnityEngine.SceneManagement;
 public class ClearToTitle : MonoBehaviour
 {
     bool canChange = false; //遷移可能かどうか
+    [SerializeField] Text explain;
+
+    private void Start()
+    {
+        explain.enabled = false;
+    }
 
     void Update()
     {
         if(canChange)
         {
-            if(Input.GetKeyDown(KeyCode.Return))
+            explain.enabled = true;
+
+            if (Input.GetKeyDown(KeyCode.Return))
             {
                 //隠しコインが全て集まっていたらボーナスステージへ
                 if(PlayerPrefs.GetInt("SecretCoin", 0) >= 9)
